@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_beranda"
+        android:icon="@drawable/ic_home"
+        android:title="Beranda" />
+    <item
+        android:id="@+id/nav_acara"
+        android:icon="@drawable/ic_event"
+        android:title="Acara" />
+    <item
+        android:id="@+id/nav_info"
+        android:icon="@drawable/ic_info"
+        android:title="Informasi Masjid" />
+    <item
+        android:id="@+id/nav_pemesanan"
+        android:icon="@drawable/ic_booking"
+        android:title="Pemesanan" />
+    <item
+        android:id="@+id/nav_lainnya"
+        android:icon="@drawable/ic_more"
+        android:title="Lainnya" />
+</menu>
