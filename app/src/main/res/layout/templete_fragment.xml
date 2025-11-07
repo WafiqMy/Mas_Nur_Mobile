@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- 🔷 HEADER -->
+    <include layout="@layout/header" />
+
+
+    <!-- 🔽 KONTEN BERITA (Kosong dulu) -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtJudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Judul"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:textStyle="bold"
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <!-- Konten berita akan ditambahkan di sini nanti -->
+            <Button
+                android:id="@+id/btnMasuk"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:text="Fragment1"
+                android:textColor="@color/colortextButton"
+                android:background="@drawable/bg_button_login"
+                android:textAllCaps="false"
+                android:textSize="18sp"/>
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="0dp"
+                 />
+
+            <Button
+                android:id="@+id/btnfragment2"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:text="Fragment2"
+                android:textColor="@color/colortextButton"
+                android:background="@drawable/bg_button_login"
+                android:textAllCaps="false"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#EEEEEE" />
+
+
+
+    <include layout="@layout/footer" />
+
+
+
+</LinearLayout>
