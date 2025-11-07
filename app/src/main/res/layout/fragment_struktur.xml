@@ -21,7 +21,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="170dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -29,18 +29,18 @@
                 android:id="@+id/btnUbahStruktur"
                 android:text="Ubah Gambar Struktur Organisasi"
                 android:backgroundTint="#BFE0DA"
-                android:textColor="#000000"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/colortextButton"
+                android:layout_width="290dp"
+                android:layout_height="60dp" />
 
             <Button
                 android:id="@+id/btnHapusStruktur"
                 android:text="Hapus Gambar Struktur Organisasi"
                 android:backgroundTint="#F3C4C4"
-                android:textColor="#000000"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/colortextButton"
+                android:layout_marginTop="30dp"
+                android:layout_width="290dp"
+                android:layout_height="60dp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

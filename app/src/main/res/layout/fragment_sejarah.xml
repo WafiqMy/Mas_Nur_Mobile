@@ -15,9 +15,8 @@
             android:id="@+id/imgMasjid"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:backgroundTint="@color/cardview_light_background"
             android:scaleType="centerCrop"
-            android:src="@drawable/gambar_masjid"
-            android:backgroundTint="@drawable/gambar_masjid"
             android:clipToOutline="true" />
 
         <!-- Judul -->
@@ -34,7 +33,7 @@
         <TextView
             android:id="@+id/tvDeskripsiSejarah"
             android:layout_marginTop="8dp"
-            android:text="Sejarah Masjid Nurul Huda (yang berarti 'Cahaya Petunjuk') kemungkinan besar dimulai dari..."
+            android:text="Deskripsi"
             android:textColor="#666666"
             android:textAlignment="center"
             android:lineSpacingExtra="4dp"
@@ -45,9 +44,25 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="150dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnKelolaStruktur"
+                android:text="Kelola Informasi Masjid"
+                android:backgroundTint="#BFE0DA"
+                android:textColor="@color/colortextButton"
+                android:layout_width="290dp"
+                android:layout_height="60dp" />
+
+            <Button
+                android:id="@+id/btnHapusStruktur"
+                android:text="Hapus Informasi Masjid"
+                android:backgroundTint="#F3C4C4"
+                android:textColor="@color/colortextButton"
+                android:layout_marginTop="30dp"
+                android:layout_width="290dp"
+                android:layout_height="60dp" />
         </LinearLayout>
 
     </LinearLayout>
