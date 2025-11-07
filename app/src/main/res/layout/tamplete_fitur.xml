@@ -9,26 +9,41 @@
     <!-- 🔷 HEADER -->
     <include layout="@layout/header" />
 
-
-    <!-- 🔽 KONTEN BERITA (Kosong dulu) -->
-
+    <!-- 🔽 KONTEN BERITA -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1d">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 🖼️ ImageView -->
 
 
+            <!-- 📰 Judul Berita -->
+            <TextView
+                android:id="@+id/newsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Judul Berita"
+                android:textSize="28sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000000" />
 
+            <!-- 📄 Isi Berita -->
+
+
+        </LinearLayout>
     </ScrollView>
 
-
-
-
-
-
-
+    <!-- 🔻 FOOTER -->
     <include layout="@layout/footer" />
-
-
 
 </LinearLayout>
