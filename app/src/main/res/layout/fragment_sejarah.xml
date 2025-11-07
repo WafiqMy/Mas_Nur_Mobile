@@ -1,0 +1,54 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Gambar Masjid -->
+        <ImageView
+            android:id="@+id/imgMasjid"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gambar_masjid"
+            android:backgroundTint="@drawable/gambar_masjid"
+            android:clipToOutline="true" />
+
+        <!-- Judul -->
+        <TextView
+            android:layout_marginTop="12dp"
+            android:text="Masjid Nurul Huda"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Deskripsi -->
+        <TextView
+            android:id="@+id/tvDeskripsiSejarah"
+            android:layout_marginTop="8dp"
+            android:text="Sejarah Masjid Nurul Huda (yang berarti 'Cahaya Petunjuk') kemungkinan besar dimulai dari..."
+            android:textColor="#666666"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Tombol CRUD (opsional jika mau di dalam fragment) -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
