@@ -1,261 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    tools:context=".Fitur_Dashboard.Dashboard_Activity">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFFFFF">
-
-        <!-- 🔷 HEADER -->
+    <!-- 🔷 HEADER -->
     <include layout="@layout/header"/>
 
+    <!-- 🔽 KONTEN -->
 
-    <!-- 🔽 KONTEN BERITA (Kosong dulu) -->
+    <ScrollView
+        android:id="@+id/beritaContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:background="#FFFFFF">
 
-
-        <ScrollView
-            android:id="@+id/beritaContent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1d"
-            android:background="#FFFFFF">
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="24dp">
 
-            <LinearLayout
+            <!-- Judul Halaman -->
+            <TextView
+                android:id="@+id/newsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <!-- Konten berita akan ditambahkan di sini nanti -->
-    <!-- Judul Halaman Utama -->
-    <TextView
-        android:id="@+id/page_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Halaman Utama"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Sub-judul Status Pemesanan Terbaru -->
-    <TextView
-        android:id="@+id/status_section_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="Status Pemesanan Terbaru"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/page_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Kartu Status 1: Pemesanan Gedung (Diterima) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_status_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/status_section_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp">
-            <TextView
-                android:id="@+id/status_1_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="1. Pemesanan Gedung"
-                android:textSize="16sp"
-                android:textColor="#0066CC"
+                android:text="Halaman Utama"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/badge_1"/>
-            <TextView
-                android:id="@+id/status_1_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Atas Nama: Yogi Surya Wijaya"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@id/status_1_title"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/badge_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diterima"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:background="@drawable/rectanglee"
-                android:textColor="@android:color/black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                android:gravity="center"
+                android:textColor="#000000"
+                android:layout_marginBottom="12dp"/>
 
-    <!-- Kartu Status 2: Permintaan Alat (Ditolak) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_status_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/card_status_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp">
+            <!-- Subjudul -->
             <TextView
-                android:id="@+id/status_2_title"
-                android:layout_width="0dp"
+                android:id="@+id/status_section_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2. Permintaan Alat"
-                android:textSize="16sp"
-                android:textColor="#996600"
+                android:text="Status Pemesanan Terbaru"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/badge_2"/>
-            <TextView
-                android:id="@+id/status_2_detail"
-                android:layout_width="wrap_content"
+                android:textColor="@android:color/black"/>
+            <ScrollView
+                android:id="@+id/status_pemesanan_terbaru"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:background="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="24dp">
+
+            <!-- Card 1: Pemesanan Gedung -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Atas Nama: Yogi Surya Wijaya"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@id/status_2_title"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/badge_2"
-                android:layout_width="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/status_1_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="1. Pemesanan Gedung"
+                        android:textSize="16sp"
+                        android:textColor="#0066CC"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/badge_1"/>
+
+                    <TextView
+                        android:id="@+id/status_1_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Atas Nama: Yogi Surya Wijaya"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintTop_toBottomOf="@id/status_1_title"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/badge_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diterima"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@drawable/rectanglee"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Card 2: Permintaan Alat -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ditolak"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:background="@drawable/rectanglemerah"
-                android:textColor="@android:color/black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
 
-    <!-- MENU KATEGORI - GRID 2x1 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
 
-    <!-- 3. Informasi Masjid (Kolom Kiri) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/menu_info_masjid"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="12dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/card_status_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/menu_pemesanan">
+                    <TextView
+                        android:id="@+id/status_2_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="2. Permintaan Alat"
+                        android:textSize="16sp"
+                        android:textColor="#996600"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/badge_2"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="16dp">
+                    <TextView
+                        android:id="@+id/status_2_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Atas Nama: Yogi Surya Wijaya"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintTop_toBottomOf="@id/status_2_title"
+                        app:layout_constraintStart_toStartOf="parent"/>
 
-            <ImageView android:layout_width="50dp" android:layout_height="50dp" android:src="@drawable/inpomasjid" tools:ignore="ContentDescription" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Informasi Masjid" android:textStyle="bold" android:textAlignment="center" android:layout_marginTop="8dp"/>
-            <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="0dp" android:paddingTop="8dp" android:paddingBottom="8dp" android:text="Kelola" android:textSize="12sp" android:layout_marginTop="8dp" android:backgroundTint="#E0F2F1" android:textColor="@android:color/black" app:cornerRadius="8dp"/>
+                    <TextView
+                        android:id="@+id/badge_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ditolak"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@drawable/rectanglemerah"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </ScrollView>
+
+            <!-- 🔸 GRID MENU 3 KOLOM -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:layout_marginTop="24dp"
+                android:useDefaultMargins="true">
+
+                <!-- Informasi Masjid -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/inpomasjid"
+                            tools:ignore="ContentDescription"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Informasi Masjid"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:textAlignment="center"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kelola"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"
+                            android:backgroundTint="#E0F2F1"
+                            android:textColor="@android:color/black"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pemesanan -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/square"
+                            tools:ignore="ContentDescription"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pemesanan"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:textAlignment="center"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kelola"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"
+                            android:backgroundTint="#E0F2F1"
+                            android:textColor="@android:color/black"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Berita -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp"
+                    android:layout_columnSpan="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/paper"
+                            tools:ignore="ContentDescription"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Berita"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:textAlignment="center"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kelola"
+                            android:textSize="12sp"
+                            android:layout_marginTop="8dp"
+                            android:backgroundTint="#E0F2F1"
+                            android:textColor="@android:color/black"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
+
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
-    <!-- 4. Pemesanan (Kolom Kanan) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/menu_pemesanan"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/card_status_2"
-        app:layout_constraintStart_toEndOf="@id/menu_info_masjid"
-        app:layout_constraintEnd_toEndOf="parent">
+    <!-- 🔷 FOOTER -->
+    <include layout="@layout/footer"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="16dp">
-
-            <ImageView android:layout_width="50dp" android:layout_height="50dp" android:src="@drawable/square" tools:ignore="ContentDescription" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pemesanan" android:textStyle="bold" android:textAlignment="center" android:layout_marginTop="8dp"/>
-            <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="0dp" android:paddingTop="8dp" android:paddingBottom="8dp" android:text="Kelola" android:textSize="12sp" android:layout_marginTop="8dp" android:backgroundTint="#E0F2F1" android:textColor="@android:color/black" app:cornerRadius="8dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- 5. Berita (Kolom Tunggal, Di bawah tengah) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/menu_berita"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/menu_info_masjid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.45">
-        <!-- Gunakan percent untuk lebar agar seukuran kolom di atasnya dan tetap di tengah -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="16dp">
-            <ImageView android:layout_width="50dp" android:layout_height="50dp" android:src="@drawable/paper" tools:ignore="ContentDescription" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Berita" android:textStyle="bold" android:textAlignment="center" android:layout_marginTop="8dp"/>
-            <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="0dp" android:paddingTop="8dp" android:paddingBottom="8dp" android:text="Kelola" android:textSize="12sp" android:layout_marginTop="8dp" android:backgroundTint="#E0F2F1" android:textColor="@android:color/black" app:cornerRadius="8dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-            </LinearLayout>
-        </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+</LinearLayout>
