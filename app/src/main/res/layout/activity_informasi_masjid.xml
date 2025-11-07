@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#F9F9F9"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- HEADER -->
+    <include layout="@layout/header" />
+
+    <!-- TAB NAVIGASI -->
+    <LinearLayout
+        android:id="@+id/tabLayoutContainer"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/tab_container_bg"
+        android:elevation="4dp"
+        android:padding="6dp"
+        android:clipToOutline="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnSejarah"
+            android:text="Sejarah Masjid"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:textColorLink="@color/black"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00A9A5" />
+
+        <Button
+            android:id="@+id/btnStruktur"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:textColorLink="@color/black"
+            android:text="Struktur Oranisasi"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00A9A5"/>
+    </LinearLayout>
+
+    <!-- FRAGMENT KONTEN -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/fragment_container_bg"
+        android:layout_marginTop="20dp" />
+
+    <!-- FOOTER -->
+    <include layout="@layout/footer" />
+
+</LinearLayout>
