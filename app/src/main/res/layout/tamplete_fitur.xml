@@ -12,21 +12,20 @@
 
     <!-- 🔽 KONTEN BERITA (Kosong dulu) -->
 
-
     <ScrollView
-        android:id="@+id/beritaContent"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FFFFFF">
+        android:layout_height="wrap_content"
+        android:layout_weight="1d">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- Konten berita akan ditambahkan di sini nanti -->
-        </LinearLayout>
+
+
     </ScrollView>
+
+
+
+
+
+
 
     <include layout="@layout/footer" />
 
