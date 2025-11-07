@@ -1,72 +1,54 @@
-package com.example.masnur.Fitur_Dashboard;
-
-public class Dashboard_Activity {
+package com.example.masnur;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import androidx.cardview.widget.CardView;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ImageView;
+import android.content.Intent;
 
-    public class ProfilActivity extends AppCompatActivity {
+public class Dashboard_Activity extends AppCompatActivity {
 
-        // Deklarasi komponen
-        private TextView userNameText, userRoleText;
-        private ImageView masjidLogo;
-        private Button btnGantiNama, btnGantiSandi, btnKeluar;
+    private ImageView headerImage, masjidLogo;
+    private TextView userName, userRole;
+    private Button btnGantiNama, btnGantiSandi, btnKeluar;
+    private LinearLayout footerContainer;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_profil);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profil);
 
-            // Inisialisasi komponen dari XML
-            userNameText = findViewById(R.id.user_name);
-            userRoleText = findViewById(R.id.user_role);
-            masjidLogo = findViewById(R.id.masjid_logo);
-            btnGantiNama = findViewById(R.id.btn_ganti_nama);
-            btnGantiSandi = findViewById(R.id.btn_ganti_sandi);
-            btnKeluar = findViewById(R.id.btn_keluar);
+        headerImage = findViewById(R.id.header_image);
+        masjidLogo = findViewById(R.id.masjid_logo);
+        userName = findViewById(R.id.user_name);
+        userRole = findViewById(R.id.user_role);
+        btnGantiNama = findViewById(R.id.btn_ganti_nama);
+        btnGantiSandi = findViewById(R.id.btn_ganti_sandi);
+        btnKeluar = findViewById(R.id.btn_keluar);
+        footerContainer = findViewById(R.id.footer_container);
 
-            // Contoh: Set data user (bisa diambil dari SharedPreferences / API nanti)
-            userNameText.setText("M. Wafiq Marzuq Yuwono");
-            userRoleText.setText("Marbot Masjid");
+        // Contoh data profil (bisa diganti dari SharedPreferences / Database)
+        userName.setText("M. Wafiq Marzuq Yuwono");
+        userRole.setText("Marbot Masjid");
 
-            // --- EVENT HANDLER ---
+        btnGantiNama.setOnClickListener(v -> {
+            Toast.makeText(this, "Menu Ganti Nama diklik", Toast.LENGTH_SHORT).show();
 
-            btnGantiNama.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Contoh aksi: pindah ke halaman ubah nama
-                    Toast.makeText(ProfilActivity.this, "Menu Ganti Nama ditekan", Toast.LENGTH_SHORT).show();
+        });
 
-                    // Contoh jika kamu punya activity lain:
-                    // startActivity(new Intent(ProfilActivity.this, GantiNamaActivity.class));
-                }
-            });
+        // Aksi tombol Ganti Kata Sandi
+        btnGantiSandi.setOnClickListener(v -> {
+            Toast.makeText(this, "Menu Ganti Kata Sandi diklik", Toast.LENGTH_SHORT).show();
 
-            btnGantiSandi.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(ProfilActivity.this, "Menu Ganti Kata Sandi ditekan", Toast.LENGTH_SHORT).show();
-                }
-            });
+        });
 
-            btnKeluar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(ProfilActivity.this, "Anda telah keluar", Toast.LENGTH_SHORT).show();
+        btnKeluar.setOnClickListener(v -> {
+            Toast.makeText(this, "Anda telah keluar", Toast.LENGTH_SHORT).show();
 
-                    // Contoh logika keluar: kembali ke halaman login
-                    // startActivity(new Intent(ProfilActivity.this, LoginActivity.class));
-                    // finish();
-                }
-            });
-        }
+        });
     }
-
 }
