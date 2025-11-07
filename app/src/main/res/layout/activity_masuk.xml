@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".Masuk">
+
+<!--Logo Masjid-->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_masjid"
+        android:contentDescription="@string/logo_masjid"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+<!--bg putih bawah-->
+    <LinearLayout
+        android:id="@+id/linearLayoutForm"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_card_top_rounded"
+        android:orientation="vertical"
+        android:padding="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgLogo"
+        app:layout_constraintVertical_bias="1.0">
+
+<!--Judul Masuk-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masuk"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+<!--Username-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/iconUsername"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/profile"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                app:tint="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/edtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/iconUsername"
+                android:hint="Nama Pengguna"
+                android:background="@android:color/transparent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:inputType="text" />
+        </RelativeLayout>
+
+<!--Kata Sandi-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/iconPassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/lock"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                app:tint="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/iconPassword"
+                android:hint="Kata Sandi"
+                android:background="@android:color/transparent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:inputType="textPassword" />
+        </RelativeLayout>
+
+<!--Lupa Kata Sandi-->
+        <TextView
+            android:id="@+id/tvLupaSandi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="24dp"
+            android:text="Lupa Kata Sandi?"
+            android:textColor="@android:color/darker_gray" />
+
+<!--Button Masuk-->
+        <Button
+            android:id="@+id/btnMasuk"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Masuk"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_button_login"
+            android:textAllCaps="false"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

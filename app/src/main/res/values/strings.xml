@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Mas Nur</string>
+    <string name="app_name">MasNur</string>
+    <string name="logo_masjid">Logo Masjid Besar Nurul Huda</string>
+
 </resources>
