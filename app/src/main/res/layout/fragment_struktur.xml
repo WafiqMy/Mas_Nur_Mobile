@@ -9,21 +9,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Kotak gambar -->
         <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_weight="1"
+            android:id="@+id/frameStruktur"
+            android:layout_width="332dp"
+            android:layout_height="249dp"
             android:background="@drawable/fragment_container_bg"
-            android:layout_marginTop="50dp" >
-        <!-- Gambar Struktur -->
-        <ImageView
-            android:id="@+id/imgStruktur"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/struktur_organisasi" />
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="24dp">
+
+            <!-- Gambar Struktur -->
+            <ImageView
+                android:id="@+id/imgStruktur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Gambar Struktur" />
+
+            <!-- Tulisan yang muncul kalau tidak ada gambar -->
+            <TextView
+                android:id="@+id/txtNoImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Tidak ada gambar"
+                android:textSize="16sp"
+                android:textColor="#555555"
+                android:visibility="gone" />
         </FrameLayout>
+
         <!-- Tombol -->
         <LinearLayout
             android:orientation="vertical"

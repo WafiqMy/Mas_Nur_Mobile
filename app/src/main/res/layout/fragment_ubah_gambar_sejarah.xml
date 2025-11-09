@@ -1,0 +1,81 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Gambar Lama -->
+        <TextView
+            android:text="Gambar Lama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#333333"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <ImageView
+            android:id="@+id/imgLama"
+            android:layout_width="350dp"
+            android:layout_height="230dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="80dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/tab_container_bg"
+            android:contentDescription="Gambar Lama"/>
+
+        <!-- Gambar Baru -->
+        <TextView
+            android:text="Unggah Gambar Baru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="18dp"
+            android:textColor="#333333"
+            android:textAlignment="center"/>
+
+        <ImageView
+            android:id="@+id/imgBaru"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/ic_gambar_unggah"
+            android:contentDescription="Gambar Baru" />
+
+        <!-- Tombol -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnKembali"
+                android:text="Kembali"
+                android:textColor="@color/black"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="#E5D7C4"/>
+
+            <Button
+                android:id="@+id/btnUnggah"
+                android:text="Unggah"
+                android:textColor="@color/black"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:backgroundTint="#BFE0DA"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
