@@ -1,18 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".tambah_acara">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/included_header"
+        layout="@layout/header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentTop="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/bottom_nav_container"
+        layout="@layout/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/included_header"
+        android:layout_above="@id/bottom_nav_container"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Tambah Acara" android:textSize="20sp" android:textStyle="bold"
+                android:textColor="@android:color/black" android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent" android:layout_height="180dp"
+                app:cardCornerRadius="8dp" app:cardElevation="2dp" android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_tambah_gambar" android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:gravity="center"
+                    android:orientation="vertical" android:background="#F0F0F0">
+
+                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
+                        android:src="@drawable/logo_plus" app:tint="#A0A0A0"
+                        android:contentDescription="Tambahkan Gambar" />
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Tambahkan Gambar" android:textColor="#A0A0A0" android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Judul" android:textColor="@android:color/black" android:textSize="16sp" android:layout_marginBottom="4dp" />
+
+            <EditText android:id="@+id/et_judul" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:hint="Pengajian Rutin" android:padding="12dp" android:background="@drawable/rounded_edittext_bg"
+                android:singleLine="true" android:layout_marginBottom="20dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Deskripsi" android:textColor="@android:color/black" android:textSize="16sp" android:layout_marginBottom="4dp" />
+
+            <EditText android:id="@+id/et_deskripsi" android:layout_width="match_parent" android:layout_height="150dp"
+                android:hint="Pengajian ini...." android:padding="12dp" android:gravity="top|start"
+                android:background="@drawable/rounded_edittext_bg" android:layout_marginBottom="32dp" />
+
+            <Button
+                android:id="@+id/btnUnggah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unggah"
+                android:textColor="#1E1F22"
+                android:textSize="16sp"
+                android:background="@drawable/unggah"
+                android:paddingStart="36dp"
+                android:paddingEnd="36dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".acara1">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Konten Scroll -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
+
+
+            <!-- Judul Halaman -->
+            <TextView
+                android:id="@+id/tvJudul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acara"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Acara 1 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Buka Bersama Menjelang Maghrib"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"
+                android:gravity="start" />
+
+            <ImageView
+                android:id="@+id/imgBukaBersamaMenjelangMagrib"
+                android:layout_width="350dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="16dp" />
+
+
+            <!-- Acara 2 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Pengajian Bersama"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"
+                android:gravity="start" />
+
+            <ImageView
+                android:id="@+id/imgPengajianBersama"
+                android:layout_width="350dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="16dp" />
+
+
+            <!-- Tombol Kelola Acara -->
+            <Button
+                android:id="@+id/btnKelolaAcara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kelola Acara"
+                android:textColor="#4C4C4C"
+                android:textSize="14sp"
+                android:paddingVertical="10dp"
+                android:backgroundTint="#DCEAE7"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:textAllCaps="false"
+                android:elevation="0dp" />
+
+        </LinearLayout>
+    </ScrollView>
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

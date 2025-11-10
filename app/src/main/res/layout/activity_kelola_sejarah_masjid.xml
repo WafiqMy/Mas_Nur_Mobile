@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".tambah_acara">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Konten Scroll -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="16dp">
+
+            <!-- Judul Halaman -->
+            <TextView
+                android:id="@+id/tvJudul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daftar Acara"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Acara 1 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Buka Bersama Menjelang Magrib"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"
+                android:gravity="start" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:paddingVertical="16dp">
+
+                <Button
+                    android:id="@+id/btnUbah1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ubah"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+
+                    android:elevation="0dp"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/btnHapus1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hapus"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/hapus"
+                    android:elevation="0dp"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+
+            <!-- Acara 2 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Pengajian Bersama"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"
+                android:gravity="start" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:paddingVertical="16dp"
+                android:layout_marginBottom="48dp">
+
+                <Button
+                    android:id="@+id/btnUbah2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ubah"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+                    android:elevation="0dp"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/btnHapus2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hapus"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/hapus"
+                    android:elevation="0dp"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+
+            <!-- Tombol Bawah -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:paddingVertical="16dp">
+
+                <Button
+                    android:id="@+id/btnKembali"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Kembali"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/kembali"
+                    android:elevation="0dp"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/btnTambahAcara"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tambah Acara"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+                    android:elevation="0dp"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Footer -->
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

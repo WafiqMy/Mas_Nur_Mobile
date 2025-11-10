@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".kelola_sejarah_masjid">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Konten Scroll -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Judul Halaman -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acara"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Gambar Lama -->
+            <ImageView
+                android:id="@+id/imgGambarLama"
+                android:layout_width="350dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Tombol Ubah Gambar -->
+            <Button
+                android:id="@+id/btnUbahGambar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubah Gambar"
+                android:textColor="#4C4C4C"
+                android:textSize="14sp"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="10dp"
+                android:background="@drawable/ubah_gambar"
+                android:elevation="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Label Judul -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Judul"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Input Judul -->
+            <EditText
+                android:id="@+id/etJudul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan judul acara"
+                android:background="@drawable/buka_bersamaa"
+                android:padding="10dp"
+                android:text="Buka Bersama Menjelang Maghrib"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Label Deskripsi -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Input Deskripsi -->
+            <EditText
+                android:id="@+id/etDeskripsi"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/buka_bersama"
+                android:gravity="top"
+                android:hint="Masukkan deskripsi acara"
+                android:padding="10dp"
+                android:text="Buka Bersama Menjelang Maghrib" />
+
+            <!-- Dua Tombol (Kembali & Simpan Perubahan) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="50dp">
+
+                <Button
+                    android:id="@+id/btnKembali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kembali"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/kembali"
+                    android:elevation="0dp"
+                    android:layout_marginEnd="16dp" />
+
+
+                <Button
+                    android:id="@+id/btnSimpan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simpan Perubahan"
+                    android:textColor="#4C4C4C"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/simpan_perubahan"
+                    android:elevation="0dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <!-- Footer -->
+<include
+layout="@layout/footer"
+android:id="@+id/footer"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
