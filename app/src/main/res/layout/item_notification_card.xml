@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Ini adalah desain untuk SATU BARIS notifikasi.
+  Berdasarkan screenshot 'Notifikasi.png' Anda.
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:backgroundTint="#FFFFFF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Tombol "Lihat" di sebelah kanan -->
+        <Button
+            android:id="@+id/btn_lihat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lihat"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="#E0F2F1"
+            android:textColor="#00695C"
+            app:cornerRadius="8dp"/>
+
+        <!-- Teks di sebelah kiri tombol -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/btn_lihat"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <!-- Judul (Permintaan Gedung / Alat) -->
+            <TextView
+                android:id="@+id/tv_jenis_permintaan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Permintaan Pemesanan Gedung"
+                android:textColor="#0D47A1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Nama Pengguna -->
+            <TextView
+                android:id="@+id/tv_nama_pengguna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Atas Nama: Racka Bintang"
+                android:textColor="#424242"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
