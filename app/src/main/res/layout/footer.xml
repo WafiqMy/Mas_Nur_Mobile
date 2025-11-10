@@ -16,6 +16,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/iconBeranda"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/home"
@@ -40,6 +41,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/iconEvent"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/kalender"
@@ -64,6 +66,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/iconInformasi"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/info"
@@ -88,6 +91,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/iconReservasi"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/square"
@@ -112,6 +116,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/iconBerita"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/paper"

@@ -29,6 +29,8 @@
 
         <!-- MainActivity sebagai halaman setelah login -->
         <activity android:name=".Fitur_Halaman_Utama.Halaman_Utama_Activity" />
+        <activity android:name=".Fitur_Profil_Admin.Profil_Admin_Activity" />
+        <activity android:name=".Fitur_Notifikasi.Notifikasi_Activity" />
 
     </application>
 </manifest>
