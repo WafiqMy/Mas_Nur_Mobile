@@ -9,7 +9,6 @@
     <!-- 🔷 HEADER -->
     <include layout="@layout/header" />
 
-
     <!-- 🔽 KONTEN BERITA (Kosong dulu) -->
 
     <LinearLayout

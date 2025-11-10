@@ -31,6 +31,15 @@
         <activity android:name=".Fitur_Halaman_Utama.Halaman_Utama_Activity" />
         <activity android:name=".Fitur_Profil_Admin.Profil_Admin_Activity" />
         <activity android:name=".Fitur_Notifikasi.Notifikasi_Activity" />
+        <activity android:name=".Fitur_Berita.Berita_Activity" />
+        <activity android:name=".Fitur_Event.Event_Activity" />
+        <activity android:name=".Fitur_Informasi_Masjid.Informasi_Masjid_Activity" />
+        <activity android:name=".Fitur_Reservasi.Reservasi_Activity" />
+
+
+
+
+
 
     </application>
 </manifest>

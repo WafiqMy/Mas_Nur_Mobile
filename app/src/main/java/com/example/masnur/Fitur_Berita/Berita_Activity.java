@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.masnur.Header_dan_Footer.Footer;
+import com.example.masnur.Header_dan_Footer.Header;
 import com.example.masnur.R;
 
 public class Berita_Activity extends AppCompatActivity {
@@ -11,5 +13,8 @@ public class Berita_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_berita); // pastikan nama file XML-nya benar
+
+        Footer.setupFooter(this);
+        Header.setupHeader(this);
     }
 }
