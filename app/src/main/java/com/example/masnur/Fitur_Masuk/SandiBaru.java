@@ -1,4 +1,4 @@
-package com.example.masnur;
+package com.example.masnur.Fitur_Masuk;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.masnur.R;
 
 public class SandiBaru extends AppCompatActivity {
 
@@ -43,7 +45,7 @@ public class SandiBaru extends AppCompatActivity {
             Toast.makeText(this, "Kata sandi berhasil dibuat!", Toast.LENGTH_SHORT).show();
 
             // Pindah ke halaman login (Masuk)
-            Intent intent = new Intent(SandiBaru.this, Masuk.class);
+            Intent intent = new Intent(SandiBaru.this, MasukActivity.class);
             startActivity(intent);
             finish(); // Tutup activity agar tidak bisa kembali ke halaman ini
         });

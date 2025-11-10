@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    tools:context=".Fitur_Dashboard.Dashboard_Activity">
+    tools:context=".Fitur_Halaman_Utama.Halaman_Utama_Activity">
 
     <!-- 🔷 HEADER -->
     <include layout="@layout/header"/>

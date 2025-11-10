@@ -21,10 +21,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtJudul"
+            android:id="@+id/txtberita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Judul"
+            android:text="Berita"
             android:gravity="center"
             android:textSize="28sp"
             android:textStyle="bold">
@@ -41,10 +41,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnMasuk"
+            android:id="@+id/btnFberita"
             android:layout_width="150dp"
             android:layout_height="45dp"
-            android:text="Fragment1"
+            android:text="Berita"
             android:textColor="@color/colortextButton"
             android:background="@drawable/bg_button_login"
             android:textAllCaps="false"
@@ -56,10 +56,10 @@
             />
 
         <Button
-            android:id="@+id/btnfragment2"
+            android:id="@+id/btnFkelolaberita"
             android:layout_width="150dp"
             android:layout_height="45dp"
-            android:text="Fragment2"
+            android:text="Kelola Berita"
             android:textColor="@color/colortextButton"
             android:background="@drawable/bg_button_login"
             android:textAllCaps="false"

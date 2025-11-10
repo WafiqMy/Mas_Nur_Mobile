@@ -1,4 +1,4 @@
-package com.example.masnur;
+package com.example.masnur.Fitur_Masuk;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.masnur.R;
 
 public class KodeOtp extends AppCompatActivity {
 

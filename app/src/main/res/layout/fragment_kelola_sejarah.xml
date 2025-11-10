@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/gambar_masjid"
             android:layout_marginBottom="12dp"
             android:background="@drawable/fragment_container_bg"/>
 
@@ -58,7 +57,6 @@
             android:id="@+id/edtJudul"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/edittext_border"
             android:padding="10dp"
             android:textSize="14sp"
             android:hint="Masukkan judul sejarah"
@@ -74,18 +72,18 @@
             android:layout_marginBottom="8dp"/>
 
         <!-- Input Deskripsi -->
+
+        <!-- Tombol Aksi -->
         <EditText
             android:id="@+id/edtDeskripsi"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/edittext_border"
+            android:layout_marginBottom="32dp"
             android:gravity="top|start"
-            android:padding="10dp"
             android:hint="Tuliskan deskripsi sejarah masjid"
-            android:textSize="14sp"
-            android:layout_marginBottom="32dp"/>
+            android:padding="10dp"
+            android:textSize="14sp" />
 
-        <!-- Tombol Aksi -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
