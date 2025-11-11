@@ -1,5 +1,20 @@
 package com.example.masnur.Fitur_Berita;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.masnur.R;
+
+import java.util.List;
+
 public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.ViewHolder> {
     private List<BeritaModel> beritaList;
     private Context context;
@@ -19,12 +34,12 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BeritaModel berita = beritaList.get(position);
-        holder.textJudul.setText(berita.getJudul());
-        holder.textTanggal.setText(berita.getTanggal());
+        holder.textJudul.setText(berita.getJudulBerita());
+        holder.textTanggal.setText(berita.getTanggalBerita());
 
         Glide.with(context)
-                .load(berita.getFoto())
-                .placeholder(R.drawable.placeholder)
+                .load(berita.getFotoBerita())
+                .placeholder(R.drawable.ic_gambar_unggah) // pastikan ada gambar default
                 .into(holder.imageBerita);
     }
 
@@ -36,6 +51,8 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textJudul, textTanggal;
         ImageView imageBerita;
+
+        String baseUrl = "http://masnurhuda.atwebpages.com/images/";
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

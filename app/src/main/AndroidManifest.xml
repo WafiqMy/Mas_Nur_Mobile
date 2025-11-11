@@ -34,7 +34,7 @@
         <activity android:name=".Fitur_Berita.Berita_Activity" />
         <activity android:name=".Fitur_Event.Event_Activity" />
         <activity android:name=".Fitur_Informasi_Masjid.Informasi_Masjid_Activity" />
-        <activity android:name=".Fitur_Reservasi.Reservasi_Activity" />
+        <activity android:name=".Fitur_Pemesanan.Pemesanan_Activity" />
 
 
 

@@ -12,7 +12,7 @@ public class Event_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_informasi_masjid); // pastikan nama file XML-nya benar
+        setContentView(R.layout.activity_acara1); // pastikan nama file XML-nya benar
         Footer.setupFooter(this);
         Header.setupHeader(this);
     }

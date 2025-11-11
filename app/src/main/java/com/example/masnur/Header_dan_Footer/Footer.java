@@ -9,7 +9,7 @@ import com.example.masnur.R;
 import com.example.masnur.Fitur_Halaman_Utama.Halaman_Utama_Activity;
 import com.example.masnur.Fitur_Event.Event_Activity;
 import com.example.masnur.Fitur_Informasi_Masjid.Informasi_Masjid_Activity;
-import com.example.masnur.Fitur_Reservasi.Reservasi_Activity;
+import com.example.masnur.Fitur_Pemesanan.Pemesanan_Activity;
 import com.example.masnur.Fitur_Berita.Berita_Activity;
 
 public class Footer {
@@ -40,7 +40,7 @@ public class Footer {
         });
 
         iconReservasi.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, Reservasi_Activity.class);
+            Intent intent = new Intent(activity, Pemesanan_Activity.class);
             activity.startActivity(intent);
         });
 
