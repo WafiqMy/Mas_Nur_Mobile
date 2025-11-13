@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/iconProfil"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/profile"
             android:contentDescription="Profil" />
 
@@ -64,8 +64,8 @@
 
         <ImageView
             android:id="@+id/iconNotifikasi"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/notifikasi"
             android:contentDescription="Notifikasi" />
 
