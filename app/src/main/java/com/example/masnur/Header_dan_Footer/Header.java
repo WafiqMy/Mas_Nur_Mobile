@@ -7,7 +7,6 @@ import android.widget.ImageView;
 
 import com.example.masnur.R;
 import com.example.masnur.Fitur_Profil_Admin.Profil_Admin_Activity;
-import com.example.masnur.Fitur_Notifikasi.Notifikasi_Activity;
 
 public class Header {
 

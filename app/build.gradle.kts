@@ -40,11 +40,16 @@ dependencies {
     implementation(libs.cardview)
     implementation(libs.viewpager2)
     implementation(libs.recyclerview)
+    implementation(libs.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.android.volley:volley:1.2.1")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0") // <-- keep ini
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
 }
