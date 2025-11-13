@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class MasukActivity extends AppCompatActivity {
 
     EditText edtUsername, edtPassword;
     Button btnMasuk;
+    private TextView tvLupaPassword;
 
     String URL_LOGIN = "http://masnurhuda.atwebpages.com/login_admin1.php";
 
@@ -37,10 +39,17 @@ public class MasukActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnMasuk = findViewById(R.id.btnMasuk);
+        tvLupaPassword = findViewById(R.id.tvLupaSandi);
 
         btnMasuk.setOnClickListener(view -> {
             String username = edtUsername.getText().toString().trim();
             String password = edtPassword.getText().toString().trim();
+
+            // 🔹 Aksi ke halaman lupa password
+            tvLupaPassword.setOnClickListener(v -> {
+                Intent intent = new Intent(MasukActivity.this, KonfirmasiEmail.class);
+                startActivity(intent);
+            });
 
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Username dan password wajib diisi", Toast.LENGTH_SHORT).show();
