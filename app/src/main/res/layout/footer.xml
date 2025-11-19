@@ -3,7 +3,7 @@
     android:id="@+id/footerLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#DEEDEC"
+    android:background="#99D5F9"
     android:paddingVertical="15dp"
     android:orientation="horizontal">
 

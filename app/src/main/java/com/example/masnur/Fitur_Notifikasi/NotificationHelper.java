@@ -19,12 +19,14 @@ public final class NotificationHelper {
     private NotificationHelper() {}
 
     public static final String CHANNEL_ID = "reservasi_notif";
+    private static final String CHANNEL_NAME = "Reservasi Notifikasi";
+    private static final String CHANNEL_DESC = "Notifikasi data reservasi baru";
 
     public static void createChannel(Context ctx) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel ch = new NotificationChannel(
-                    CHANNEL_ID, "Reservasi Notifikasi", NotificationManager.IMPORTANCE_DEFAULT);
-            ch.setDescription("Notifikasi data reservasi baru");
+                    CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            ch.setDescription(CHANNEL_DESC);
             ch.enableLights(true);
             ch.setLightColor(Color.BLUE);
             ch.enableVibration(true);
@@ -35,12 +37,10 @@ public final class NotificationHelper {
     }
 
     public static void showNewReservasi(Context ctx, String title, String content) {
-        // >>> PERMISSION CHECK YANG BENAR (pakai ContextCompat + ctx)
         if (Build.VERSION.SDK_INT >= 33) {
             int granted = ContextCompat.checkSelfPermission(
                     ctx, android.Manifest.permission.POST_NOTIFICATIONS);
             if (granted != PackageManager.PERMISSION_GRANTED) {
-                // izin belum diberikan — jangan crash, cukup batal kirim notif
                 return;
             }
         }
@@ -55,13 +55,14 @@ public final class NotificationHelper {
         );
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)        // ganti ke icon kamu kalau ada
+                .setSmallIcon(R.drawable.notifikasi) // ganti ke icon kamu
                 .setContentTitle(title)
                 .setContentText(content)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                 .setAutoCancel(true)
                 .setContentIntent(pi)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER);
 
         NotificationManagerCompat.from(ctx).notify(
                 (int) System.currentTimeMillis(),

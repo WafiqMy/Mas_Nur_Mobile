@@ -9,27 +9,69 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Kotak gambar -->
+        <!-- Judul dan Gambar Struktur Pengurus -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Struktur Pengurus"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="24dp"
+            android:gravity="center" />
+
         <FrameLayout
-            android:id="@+id/frameStruktur"
-            android:layout_width="332dp"
+            android:id="@+id/frameStrukturPengurus"
+            android:layout_width="match_parent"
             android:layout_height="249dp"
             android:background="@drawable/fragment_container_bg"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="24dp">
+            android:layout_marginTop="16dp">
 
-            <!-- Gambar Struktur -->
             <ImageView
-                android:id="@+id/imgStruktur"
+                android:id="@+id/imgStrukturPengurus"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:contentDescription="Gambar Struktur" />
+                android:contentDescription="Gambar Struktur Pengurus" />
 
-            <!-- Tulisan yang muncul kalau tidak ada gambar -->
             <TextView
-                android:id="@+id/txtNoImage"
+                android:id="@+id/txtNoImagePengurus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Tidak ada gambar"
+                android:textSize="16sp"
+                android:textColor="#555555"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- Judul dan Gambar Struktur Remas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Struktur Remas"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="32dp"
+            android:gravity="center" />
+
+        <FrameLayout
+            android:id="@+id/frameStrukturRemas"
+            android:layout_width="match_parent"
+            android:layout_height="249dp"
+            android:background="@drawable/fragment_container_bg"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/imgStrukturRemas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Gambar Struktur Remas" />
+
+            <TextView
+                android:id="@+id/txtNoImageRemas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -43,7 +85,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

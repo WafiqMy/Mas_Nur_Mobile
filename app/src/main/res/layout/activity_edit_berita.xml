@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Edit Berita"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/edtJudul"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Judul Berita"
+            android:padding="12dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTanggal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/edtIsi"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="Isi Berita"
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gambar Saat Ini"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="#f0f0f0"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnPilihGambar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Ganti Gambar (Opsional)"
+            android:background="@drawable/bg_button_login"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Simpan Perubahan"
+            android:background="@drawable/bg_button_login"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>

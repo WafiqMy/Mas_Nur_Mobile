@@ -4,6 +4,7 @@
     package="com.example.masnur">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -31,11 +32,28 @@
         <!-- MainActivity sebagai halaman setelah login -->
         <activity android:name=".Fitur_Halaman_Utama.Halaman_Utama_Activity" />
         <activity android:name=".Fitur_Profil_Admin.Profil_Admin_Activity" />
-        <activity android:name=".Fitur_Notifikasi.Notifikasi_Activity" />
+        <activity android:name=".Fitur_Notifikasi.MainNotifikasi" />
         <activity android:name=".Fitur_Berita.Berita_Activity" />
-        <activity android:name=".Fitur_Event.Event_Activity" />
+        <activity android:name=".Fitur_Acara.Event_Activity" />
         <activity android:name=".Fitur_Informasi_Masjid.Informasi_Masjid_Activity" />
-        <activity android:name=".Fitur_Pemesanan.Pemesanan_Activity" />
+        <activity android:name=".Fitur_Persewaan.Pemesanan_Activity" />
+        <activity android:name=".Fitur_Masuk.KonfirmasiEmail" />
+        <activity android:name=".Fitur_Masuk.KodeOtp" />
+        <activity android:name=".Fitur_Masuk.SandiBaru" />
+        <activity android:name=".Fitur_Persewaan.FragmentKelolaPersewaan" />
+        <activity android:name=".Fitur_Persewaan.TambahBarangActivity" />
+        <activity android:name=".Fitur_Persewaan.EditBarangActivity" />
+        <activity android:name=".Fitur_Berita.TambahBeritaActivity" />
+        <activity android:name=".Fitur_Berita.EditBeritaActivity" />
+        <activity android:name=".Fitur_Acara.AcaraActivity" />
+        <activity android:name=".Fitur_Acara.TambahAcaraActivity" />
+        <activity android:name=".Fitur_Informasi_Masjid.Informasi_Masjid_Activity" />
+        <activity android:name=".Fitur_Informasi_Masjid.EditProfilMasjidActivity" />
+        <activity android:name=".Fitur_Informasi_Masjid.EditStrukturOrganisasiActivity" />
+
+
+
+
 
 
 

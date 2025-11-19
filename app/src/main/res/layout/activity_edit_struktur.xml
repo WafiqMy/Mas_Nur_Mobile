@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Edit Struktur Organisasi"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="24dp" />
+
+        <!-- Struktur Pengurus -->
+        <TextView
+            android:text="Struktur Pengurus"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+        <ImageView
+            android:id="@+id/imgPengurus"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/fragment_container_bg"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnPilihPengurus"
+            android:text="Pilih Gambar Pengurus"
+            android:textColor="#000000"
+            android:backgroundTint="#E0EFEE"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp" />
+
+        <!-- Struktur Remas -->
+        <TextView
+            android:text="Struktur Remas"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" />
+
+        <ImageView
+            android:id="@+id/imgRemas"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/fragment_container_bg"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnPilihRemas"
+            android:text="Pilih Gambar Remas"
+            android:textColor="#000000"
+            android:backgroundTint="#E0EFEE"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp" />
+
+        <!-- Tombol Simpan & Batal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="40dp">
+
+            <Button
+                android:id="@+id/btnBatal"
+                android:text="Batal"
+                android:backgroundTint="#F3C4C4"
+                android:textColor="#000000"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnSimpan"
+                android:text="Simpan Perubahan"
+                android:backgroundTint="#BFE0DA"
+                android:textColor="@color/colortextButton"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.masnur.Fitur_Notifikasi.MainNotifikasi;
 import com.example.masnur.R;
 import com.example.masnur.Fitur_Profil_Admin.Profil_Admin_Activity;
 
@@ -23,7 +24,7 @@ public class Header {
         });
 
         iconNotifikasi.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, Notifikasi_Activity.class);
+            Intent intent = new Intent(activity, MainNotifikasi.class);
             activity.startActivity(intent);
         });
     }

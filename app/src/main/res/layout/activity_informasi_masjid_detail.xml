@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:text="Informasi Masjid"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="24dp" />
+
+        <ImageView
+            android:id="@+id/imgMasjid"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/fragment_container_bg"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tvJudulSejarah"
+            android:text="Masjid Nurul Huda"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/tvDeskripsiSejarah"
+            android:text="Deskripsi"
+            android:textColor="#666666"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="8dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="40dp">
+
+            <Button
+                android:id="@+id/btnKembali"
+                android:text="Kembali"
+                android:background="@drawable/bg_button_kembali"
+                android:textColor="#000000"
+                android:layout_width="140dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnKelolaSejarah"
+                android:text="Kelola Informasi"
+                android:backgroundTint="#BFE0DA"
+                android:textColor="@color/colortextButton"
+                android:layout_width="140dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

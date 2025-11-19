@@ -8,17 +8,30 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.masnur.Api.ApiClient;
+import com.example.masnur.Api.ApiService;
 import com.example.masnur.R;
+import com.example.masnur.Fitur_Masuk.OtpResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class KodeOtp extends AppCompatActivity {
 
     private EditText otp1, otp2, otp3, otp4;
     private Button buttonLanjut;
+    private String email;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kode_otp);
+
+        // Ambil email dari intent
+        email = getIntent().getStringExtra("email");
+        apiService = ApiClient.getService();
 
         // Inisialisasi komponen
         otp1 = findViewById(R.id.otp1);
@@ -27,7 +40,6 @@ public class KodeOtp extends AppCompatActivity {
         otp4 = findViewById(R.id.otp4);
         buttonLanjut = findViewById(R.id.buttonLanjut);
 
-        // Saat tombol diklik
         buttonLanjut.setOnClickListener(v -> {
             String kodeOTP = otp1.getText().toString().trim() +
                     otp2.getText().toString().trim() +
@@ -39,17 +51,34 @@ public class KodeOtp extends AppCompatActivity {
                 return;
             }
 
-            // Contoh verifikasi: OTP benar jika "1234"
-            if (kodeOTP.equals("1234")) {
-                Toast.makeText(this, "Verifikasi berhasil!", Toast.LENGTH_SHORT).show();
+            // Panggil API untuk verifikasi OTP
+            verifyOtp(email, kodeOTP);
+        });
+    }
 
-                // Arahkan ke halaman Buat Kata Sandi Baru
-                Intent intent = new Intent(KodeOtp.this, SandiBaru.class);
-                startActivity(intent);
-                finish(); // Tutup halaman OTP agar tidak bisa kembali ke sini
+    private void verifyOtp(String email, String kodeOTP) {
+        Call<OtpResponse> call = apiService.verifyOtp(email, kodeOTP);
+        call.enqueue(new Callback<OtpResponse>() {
+            @Override
+            public void onResponse(Call<OtpResponse> call, Response<OtpResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if ("valid".equals(response.body().getStatus())) {
+                        Toast.makeText(KodeOtp.this, "Verifikasi berhasil!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(KodeOtp.this, SandiBaru.class);
+                        intent.putExtra("email", email);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(KodeOtp.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(KodeOtp.this, "Respons tidak valid dari server", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-            } else {
-                Toast.makeText(this, "Kode OTP salah, coba lagi!", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onFailure(Call<OtpResponse> call, Throwable t) {
+                Toast.makeText(KodeOtp.this, "Gagal verifikasi OTP: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

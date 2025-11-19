@@ -28,7 +28,7 @@ import java.util.List;
 public class BeritaFragment extends Fragment {
     RecyclerView recyclerView;
     List<BeritaModel> beritaList = new ArrayList<>();
-    String URL = "http://masnurhuda.atwebpages.com/get_berita.php"; // ganti dengan URL asli kamu
+    String URL = "http://masnurhuda.atwebpages.com/API/get_berita.php"; // ganti dengan URL asli kamu
 
     @Nullable
     @Override
@@ -45,8 +45,7 @@ public class BeritaFragment extends Fragment {
     private void loadBerita() {
         RequestQueue queue = Volley.newRequestQueue(requireContext());
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URL, null,
-                response -> {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URL, null, response -> {
                     beritaList.clear();
                     for (int i = 0; i < response.length(); i++) {
                         try {

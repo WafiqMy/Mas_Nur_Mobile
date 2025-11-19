@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.masnur.Fitur_Acara.AcaraActivity;
 import com.example.masnur.R;
 import com.example.masnur.Fitur_Halaman_Utama.Halaman_Utama_Activity;
-import com.example.masnur.Fitur_Event.Event_Activity;
 import com.example.masnur.Fitur_Informasi_Masjid.Informasi_Masjid_Activity;
-import com.example.masnur.Fitur_Pemesanan.Pemesanan_Activity;
+import com.example.masnur.Fitur_Persewaan.Pemesanan_Activity;
 import com.example.masnur.Fitur_Berita.Berita_Activity;
 
 public class Footer {
@@ -30,7 +30,7 @@ public class Footer {
         });
 
         iconEvent.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, Event_Activity.class);
+            Intent intent = new Intent(activity, AcaraActivity.class);
             activity.startActivity(intent);
         });
 

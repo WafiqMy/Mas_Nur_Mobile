@@ -10,26 +10,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.masnur.Api.ApiClient;
+import com.example.masnur.Api.ApiService;
+import com.example.masnur.Fitur_Halaman_Utama.Halaman_Utama_Activity;
+import com.example.masnur.Fitur_Masuk.LoginResponse;
 import com.example.masnur.R;
-import com.example.masnur.Fitur_Halaman_Utama.Halaman_Utama_Activity; // pastikan ini sesuai dengan package dashboard kamu
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MasukActivity extends AppCompatActivity {
 
     EditText edtUsername, edtPassword;
     Button btnMasuk;
-    private TextView tvLupaPassword;
-
-    String URL_LOGIN = "http://masnurhuda.atwebpages.com/login_admin1.php";
+    TextView tvLupaPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,64 +39,41 @@ public class MasukActivity extends AppCompatActivity {
         btnMasuk.setOnClickListener(view -> {
             String username = edtUsername.getText().toString().trim();
             String password = edtPassword.getText().toString().trim();
+            prosesLogin(username, password);
+        });
 
-            // 🔹 Aksi ke halaman lupa password
-            tvLupaPassword.setOnClickListener(v -> {
-                Intent intent = new Intent(MasukActivity.this, KonfirmasiEmail.class);
-                startActivity(intent);
-            });
-
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Username dan password wajib diisi", Toast.LENGTH_SHORT).show();
-            } else {
-                prosesLogin(username, password);
-            }
+        tvLupaPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(MasukActivity.this, KonfirmasiEmail.class);
+            startActivity(intent);
         });
     }
 
     private void prosesLogin(String username, String password) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN,
-                response -> {
-                    Log.d("LoginResponse", "Raw response: " + response);
+        ApiService apiService = ApiClient.getService();
+        Call<LoginResponse> call = apiService.loginAdmin(username, password);
 
-                    String raw = response.trim();
-                    int jsonStart = raw.indexOf("{");
-                    if (jsonStart != -1) {
-                        String cleanJson = raw.substring(jsonStart);
-                        try {
-                            JSONObject jsonObject = new JSONObject(cleanJson);
-                            String status = jsonObject.getString("status");
-
-                            if (status.equals("success")) {
-                                Toast.makeText(this, "Login berhasil sebagai admin", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(this, Halaman_Utama_Activity.class));
-                                finish();
-                            } else {
-                                Toast.makeText(this, "Login gagal. Hanya admin yang bisa masuk.", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(this, "Gagal parsing JSON", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(this, "Respons tidak valid dari server", Toast.LENGTH_SHORT).show();
-                    }
-                },
-                error -> {
-                    Log.e("LoginError", "Volley error: " + error.toString());
-                    Toast.makeText(this, "Gagal terhubung ke server", Toast.LENGTH_SHORT).show();
-                }
-        ) {
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String status = response.body().getStatus();
+                    if (status.equals("success")) {
+                        Toast.makeText(MasukActivity.this, "Login berhasil sebagai admin", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MasukActivity.this, Halaman_Utama_Activity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(MasukActivity.this, "Login gagal. Hanya admin yang bisa masuk.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MasukActivity.this, "Respons tidak valid dari server", Toast.LENGTH_SHORT).show();
+                }
             }
-        };
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(stringRequest);
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.e("LoginError", "Retrofit error: " + t.getMessage());
+                Toast.makeText(MasukActivity.this, "Gagal terhubung ke server", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

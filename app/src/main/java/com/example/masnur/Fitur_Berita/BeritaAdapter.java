@@ -38,10 +38,12 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.ViewHolder
         holder.textTanggal.setText(berita.getTanggalBerita());
 
         Glide.with(context)
-                .load(berita.getFotoBerita())
-                .placeholder(R.drawable.ic_gambar_unggah) // pastikan ada gambar default
+                .load(berita.getFotoBerita()) // URL lengkap dari API
+                .placeholder(R.drawable.default_image)
+                .error(R.drawable.default_image)
+                .centerCrop()
                 .into(holder.imageBerita);
-    }
+    } // ✅ penutup onBindViewHolder
 
     @Override
     public int getItemCount() {
@@ -51,8 +53,6 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textJudul, textTanggal;
         ImageView imageBerita;
-
-        String baseUrl = "http://masnurhuda.atwebpages.com/images/";
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

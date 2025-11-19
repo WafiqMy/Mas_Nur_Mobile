@@ -1,8 +1,11 @@
 package com.example.masnur.Fitur_Notifikasi;
 
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,46 +18,49 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.masnur.Fitur_Notifikasi.NotifResponse;
-import com.example.masnur.Fitur_Notifikasi.NotificationAdapter;
-import com.example.masnur.Fitur_Notifikasi.NotificationHelper;
-import com.example.masnur.Fitur_Notifikasi.NotificationItem;
 import com.example.masnur.R;
-import com.example.masnur.Fitur_Notifikasi.NotifApiService;
-import com.example.masnur.Fitur_Notifikasi.NotifRetrofitClient;
+import com.example.masnur.Api.ApiClient;
+import com.example.masnur.Api.ApiService;
 
 import java.util.Collections;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import com.example.masnur.Header_dan_Footer.Footer;
+import com.example.masnur.Header_dan_Footer.Header;
+
 public class MainNotifikasi extends AppCompatActivity {
+
 
     private static final int REQ_POST_NOTIF = 1001;
 
     private RecyclerView rv;
     private ProgressBar progress;
     private TextView tvKosong;
-    private SwipeRefreshLayout swipe; // boleh null
+    private SwipeRefreshLayout swipe;
 
     private NotificationAdapter adapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifikasi_main);
 
-        // --- minta izin notifikasi untuk Android 13+ ---
+        Footer.setupFooter(this);
+        Header.setupHeader(this);
+
         requestPostNotifIfNeeded();
 
         rv = findViewById(R.id.rv_notifications);
         progress = findViewById(R.id.progress_bar);
         tvKosong = findViewById(R.id.tv_status_kosong);
-//        swipe = findViewById(R.id.swipe_refresh); // null kalau ga ada di XML
+//        swipe = findViewById(R.id.swipe_refresh);
 
         adapter = new NotificationAdapter(item -> {
-            // TODO: ke halaman detail kalau sudah ada
-            // Intent i = new Intent(this, DetailReservasi.class);
-            // i.putExtra("ID_RESERVASI", item.getId_reservasi());
-            // startActivity(i);
+            // TODO: ke halaman detail jika sudah tersedia
         });
 
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -68,102 +74,69 @@ public class MainNotifikasi extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fetchNotifications(); // auto refresh saat balik
+        fetchNotifications();
     }
 
     private void fetchNotifications() {
+        if (!isNetworkAvailable()) {
+            showEmpty("Tidak ada koneksi internet.");
+            return;
+        }
+
         showLoading(true);
 
-        NotifApiService api = NotifRetrofitClient.getApi();
-        api.getNotificationsRaw().enqueue(new retrofit2.Callback<String>() {
+        ApiService api = ApiClient.getService();
+        api.getNotifications().enqueue(new Callback<NotifResponse>() {
             @Override
-            public void onResponse(retrofit2.Call<String> call, retrofit2.Response<String> res) {
+            public void onResponse(Call<NotifResponse> call, Response<NotifResponse> response) {
                 showLoading(false);
 
-                if (!res.isSuccessful()) {
-                    String msg = "HTTP " + res.code() + " - " + res.message();
-                    Log.e("NET", msg);
-                    showEmpty(msg);
+                if (!response.isSuccessful() || response.body() == null) {
+                    showEmpty("Gagal: " + response.code() + " - " + response.message());
                     return;
                 }
 
-                String raw = res.body();
-                if (raw == null) raw = "";
-                Log.d("NET_RAW", "<<<\n" + raw + "\n>>>");
+                NotifResponse body = response.body();
+                List<NotificationItem> list = body.getData() != null ? body.getData() : Collections.emptyList();
 
-                // --- NORMALIZE (buang BOM / HTML / iklan / noise) ---
-                raw = raw.replaceFirst("^\uFEFF", "").trim();
-                if (raw.startsWith("<")) { // hosting nyuntik HTML/warning
-                    showEmpty("Server kirim HTML/warning, bukan JSON. Cek PHP/hosting.");
-                    return;
-                }
-                int sObj = raw.indexOf('{'), sArr = raw.indexOf('['), start = -1;
-                if (sObj >= 0 && sArr >= 0) start = Math.min(sObj, sArr);
-                else if (sObj >= 0) start = sObj; else if (sArr >= 0) start = sArr;
-                if (start > 0) raw = raw.substring(start).trim();
-                int eObj = raw.lastIndexOf('}'), eArr = raw.lastIndexOf(']'), end = Math.max(eObj, eArr);
-                if (end > 0 && end < raw.length() - 1) raw = raw.substring(0, end + 1);
+                if ("success".equalsIgnoreCase(body.getStatus()) && !list.isEmpty()) {
+                    adapter.submitList(list);
+                    rv.setVisibility(View.VISIBLE);
+                    tvKosong.setVisibility(View.GONE);
 
-                // unquote kalau JSON dipetiin
-                com.google.gson.Gson tmp = new com.google.gson.Gson();
-                for (int i = 0; i < 2; i++) {
-                    if (raw.startsWith("\"") && raw.endsWith("\"")) {
-                        try { raw = tmp.fromJson(raw, String.class).trim(); } catch (Exception ignored) {}
-                    } else break;
-                }
-
-                // --- PARSE ke model ---
-                try {
-                    com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setLenient().create();
-                    NotifResponse body = gson.fromJson(raw, NotifResponse.class);
-                    List<NotificationItem> list = (body != null && body.getData() != null)
-                            ? body.getData() : Collections.emptyList();
-
-                    if (body != null && "success".equalsIgnoreCase(body.getStatus()) && !list.isEmpty()) {
-                        adapter.submitList(list);
-                        rv.setVisibility(View.VISIBLE);
-                        tvKosong.setVisibility(View.GONE);
-
-                        // --- DETEKSI DATA BARU & TAMPILKAN NOTIFIKASI ---
-                        // asumsi urutan terbaru di indeks 0
-                        String newestId = safe(list.get(0).getId_reservasi());
-                        String last = getLastSeenId();
-
-                        if (!newestId.isEmpty() && !newestId.equals(last)) {
-                            String nama = safe(list.get(0).getNama_pengguna());
-                            String jenis = safe(list.get(0).getJenis());
-
-                            // panggil helper notifikasi (channel dibuat otomatis di helper)
-                            NotificationHelper.showNewReservasi(
-                                    MainNotifikasi.this,
-                                    "Reservasi baru",
-                                    "Atas nama " + nama + " (" + jenis + ")"
-                            );
-
-                            setLastSeenId(newestId);
-                        }
-
-                    } else {
-                        showEmpty(body != null && body.getMessage() != null
-                                ? body.getMessage()
-                                : "Tidak ada notifikasi baru.");
-                    }
-                } catch (Exception e) {
-                    Log.e("NET", "Parse gagal: " + e.getMessage());
-                    showEmpty("Format respons bukan JSON valid.");
+                    Log.d("NET", "Notifikasi berhasil dimuat: " + list.size() + " item");
+                    handleNewNotification(list);
+                } else {
+                    showEmpty(body.getMessage() != null ? body.getMessage() : "Tidak ada notifikasi baru.");
                 }
             }
 
             @Override
-            public void onFailure(retrofit2.Call<String> call, Throwable t) {
+            public void onFailure(Call<NotifResponse> call, Throwable t) {
                 showLoading(false);
-                Log.e("NET", "FAIL: " + t.getClass().getSimpleName() + " -> " + t.getMessage(), t);
+                Log.e("NET", "FAIL: " + t.getMessage(), t);
                 showEmpty("Koneksi gagal: " + t.getMessage());
             }
         });
     }
 
-    // --- utils ---
+    private void handleNewNotification(List<NotificationItem> list) {
+        String newestId = safe(list.get(0).getId_reservasi());
+        String last = getLastSeenId();
+
+        if (!TextUtils.isEmpty(newestId) && !newestId.equals(last)) {
+            String nama = safe(list.get(0).getNama_pengguna());
+            String jenis = safe(list.get(0).getJenis());
+
+            NotificationHelper.showNewReservasi(
+                    this,
+                    "Reservasi baru",
+                    "Atas nama " + nama + " (" + jenis + ")"
+            );
+
+            setLastSeenId(newestId);
+        }
+    }
 
     private void showEmpty(String msg) {
         adapter.submitList(Collections.emptyList());
@@ -190,15 +163,20 @@ public class MainNotifikasi extends AppCompatActivity {
     }
 
     private void requestPostNotifIfNeeded() {
-        if (Build.VERSION.SDK_INT >= 33) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
-                        REQ_POST_NOTIF
-                );
-            }
+        if (Build.VERSION.SDK_INT >= 33 &&
+                checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                    REQ_POST_NOTIF
+            );
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm != null ? cm.getActiveNetworkInfo() : null;
+        return info != null && info.isConnected();
     }
 }

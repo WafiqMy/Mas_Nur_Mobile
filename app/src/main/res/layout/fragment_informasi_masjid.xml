@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Gambar Masjid -->
         <ImageView
             android:id="@+id/imgMasjid"
             android:layout_width="match_parent"
@@ -20,8 +19,6 @@
             android:scaleType="centerCrop"
             android:clipToOutline="true" />
 
-
-        <!-- Judul -->
         <TextView
             android:id="@+id/tvJudulSejarah"
             android:layout_marginTop="12dp"
@@ -32,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <!-- Deskripsi -->
         <TextView
             android:id="@+id/tvDeskripsiSejarah"
             android:layout_marginTop="10dp"
@@ -43,14 +39,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
-        <!-- Tombol CRUD (opsional jika mau di dalam fragment) -->
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
             android:layout_marginTop="100dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/btnKelolaSejarah"
                 android:text="Kelola Informasi Masjid"
@@ -66,8 +61,8 @@
                 android:textColor="@color/colortextButton"
                 android:layout_marginTop="30dp"
                 android:layout_width="290dp"
-                android:layout_height="60dp" />
+                android:layout_height="60dp"
+                android:visibility="gone" /> <!-- Sementara disembunyikan -->
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

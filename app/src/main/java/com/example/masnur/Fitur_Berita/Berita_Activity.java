@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.masnur.Header_dan_Footer.Footer;
 import com.example.masnur.Header_dan_Footer.Header;
 import com.example.masnur.R;
 
 public class Berita_Activity extends AppCompatActivity {
-    Button btnBerita;
+    Button btnBerita, btnKelola;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +21,25 @@ public class Berita_Activity extends AppCompatActivity {
         Header.setupHeader(this);
 
         btnBerita = findViewById(R.id.btnFberita);
+        btnKelola = findViewById(R.id.btnFkelolaberita);
 
         btnBerita.setOnClickListener(v -> {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayout, new BeritaFragment());
-            transaction.commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frameLayout, new BeritaFragment())
+                    .commit();
         });
+
+        btnKelola.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frameLayout, new KelolaBeritaFragment())
+                    .commit();
+        });
+
+        // ✅ Tampilkan fragment default saat activity dibuka
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frameLayout, new BeritaFragment())
+                    .commit();
+        }
     }
 }

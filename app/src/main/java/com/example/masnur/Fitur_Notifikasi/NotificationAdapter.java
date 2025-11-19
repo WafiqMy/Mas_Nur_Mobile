@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.masnur.R;
 
+import java.util.Objects;
+
 public class NotificationAdapter extends ListAdapter<NotificationItem, NotificationAdapter.VH> {
 
     public interface OnLihatClick { void onClick(NotificationItem item); }
@@ -27,14 +29,14 @@ public class NotificationAdapter extends ListAdapter<NotificationItem, Notificat
             new DiffUtil.ItemCallback<NotificationItem>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull NotificationItem oldItem, @NonNull NotificationItem newItem) {
-                    return oldItem.getId_reservasi().equals(newItem.getId_reservasi());
+                    return Objects.equals(oldItem.getId_reservasi(), newItem.getId_reservasi());
                 }
+
                 @Override
                 public boolean areContentsTheSame(@NonNull NotificationItem o, @NonNull NotificationItem n) {
-                    return safe(o.getNama_pengguna()).equals(safe(n.getNama_pengguna()))
-                            && safe(o.getJenis()).equals(safe(n.getJenis()));
+                    return Objects.equals(o.getNama_pengguna(), n.getNama_pengguna()) &&
+                            Objects.equals(o.getJenis(), n.getJenis());
                 }
-                private String safe(String s){ return s==null? "": s; }
             };
 
     static class VH extends RecyclerView.ViewHolder {
@@ -49,19 +51,24 @@ public class NotificationAdapter extends ListAdapter<NotificationItem, Notificat
         }
 
         void bind(NotificationItem item, OnLihatClick click) {
-            String jenis = item.getJenis() == null ? "" : item.getJenis().toLowerCase();
-            String title;
-            if (jenis.contains("gedung"))      title = "Permintaan Pemesanan Gedung";
-            else if (jenis.contains("alat"))   title = "Permintaan Peminjaman Alat";
-            else                               title = "Permintaan Reservasi";
+            tvJenis.setText(getJudul(item.getJenis()));
+            tvNama.setText(String.format("Atas Nama: %s", item.getNama_pengguna()));
+            btnLihat.setOnClickListener(v -> {
+                if (click != null) click.onClick(item);
+            });
+        }
 
-            tvJenis.setText(title);
-            tvNama.setText("Atas Nama: " + item.getNama_pengguna());
-            btnLihat.setOnClickListener(v -> { if (click != null) click.onClick(item); });
+        private String getJudul(String jenis) {
+            if (jenis == null) return "Permintaan Reservasi";
+            jenis = jenis.toLowerCase();
+            if (jenis.contains("gedung")) return "Permintaan Pemesanan Gedung";
+            if (jenis.contains("alat")) return "Permintaan Peminjaman Alat";
+            return "Permintaan Reservasi";
         }
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_notification_card, parent, false);
