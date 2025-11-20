@@ -12,6 +12,7 @@ import com.example.masnur.Fitur_Persewaan.BarangModel;
 import com.example.masnur.Fitur_Persewaan.ReservasiResponse;  // ✅ TAMBAHKAN INI
 import com.example.masnur.Fitur_Berita.BeritaResponse;  // ✅ TAMBAHKAN INI
 import com.example.masnur.Fitur_Acara.AcaraResponse;
+import com.example.masnur.Fitur_Profil_Admin.UserProfileResponse;
 
 import java.util.List;  // ✅ WAJIB
 import retrofit2.Call;
@@ -23,6 +24,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Multipart;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 
 public interface ApiService {
@@ -178,6 +180,21 @@ public interface ApiService {
     @POST("API/api_hapus_struktur.php")
     Call<StrukturOrganisasiResponse> hapusGambarStruktur(
             @Field("jenis") String jenis  // "organisasi" atau "remas"
+    );
+    // --- Profil Admin ---
+    // 🔹 GET profil
+    @GET("API/profil_admin.php")
+    Call<UserProfileResponse> getUserProfile(@Query("username") String username);
+
+    // 🔹 POST aksi (ganti_nama / ganti_password)
+    @FormUrlEncoded
+    @POST("API/profil_admin.php")
+    Call<ReservasiResponse> profilAction(
+            @Field("username") String username,
+            @Field("action") String action,
+            @Field("new_name") String new_name,
+            @Field("current_password") String current_password,
+            @Field("new_password") String new_password
     );
 
 

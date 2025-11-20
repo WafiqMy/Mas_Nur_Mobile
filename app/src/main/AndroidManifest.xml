@@ -50,6 +50,9 @@
         <activity android:name=".Fitur_Informasi_Masjid.Informasi_Masjid_Activity" />
         <activity android:name=".Fitur_Informasi_Masjid.EditProfilMasjidActivity" />
         <activity android:name=".Fitur_Informasi_Masjid.EditStrukturOrganisasiActivity" />
+        <activity android:name=".Fitur_Profil_Admin.GantiNamaActivity" />
+        <activity android:name=".Fitur_Profil_Admin.GantiKataSandiActivity" />
+        <activity android:name=".Fitur_Profil_Admin.GantiKataSandiStep2Activity" />
 
 
 

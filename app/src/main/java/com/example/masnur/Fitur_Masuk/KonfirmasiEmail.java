@@ -75,5 +75,6 @@ public class KonfirmasiEmail extends AppCompatActivity {
                 Toast.makeText(KonfirmasiEmail.this, "Gagal terhubung ke server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

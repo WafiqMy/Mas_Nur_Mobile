@@ -37,13 +37,25 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.ViewHolder
         holder.textJudul.setText(berita.getJudulBerita());
         holder.textTanggal.setText(berita.getTanggalBerita());
 
-        Glide.with(context)
-                .load(berita.getFotoBerita()) // URL lengkap dari API
-                .placeholder(R.drawable.default_image)
-                .error(R.drawable.default_image)
-                .centerCrop()
-                .into(holder.imageBerita);
-    } // ✅ penutup onBindViewHolder
+        // ✅ PERBAIKAN: Handle URL dobel & null
+        String imageUrl = berita.getFotoBerita();
+        if (imageUrl != null && imageUrl.startsWith("http")) {
+            // Fix double URL (e.g., "http://.../http://...")
+            if (imageUrl.indexOf("http://", 7) != -1) {
+                imageUrl = imageUrl.substring(imageUrl.indexOf("http://", 7));
+            } else if (imageUrl.indexOf("https://", 8) != -1) {
+                imageUrl = imageUrl.substring(imageUrl.indexOf("https://", 8));
+            }
+            Glide.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.default_image)
+                    .error(R.drawable.default_image)
+                    .centerCrop()
+                    .into(holder.imageBerita);
+        } else {
+            holder.imageBerita.setImageResource(R.drawable.default_image);
+        }
+    }
 
     @Override
     public int getItemCount() {

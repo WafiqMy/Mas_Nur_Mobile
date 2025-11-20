@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -22,15 +21,13 @@ public class KelolaBeritaAdapter extends RecyclerView.Adapter<KelolaBeritaAdapte
 
     private List<BeritaModel> beritaList;
     private Context context;
-    private OnBeritaActionListener listener; // ✅ Callback untuk edit/hapus
+    private OnBeritaActionListener listener;
 
-    // ✅ Interface callback
     public interface OnBeritaActionListener {
         void onEditClick(BeritaModel berita);
         void onDeleteClick(String idBerita);
     }
 
-    // ✅ Constructor dengan listener
     public KelolaBeritaAdapter(Context context, List<BeritaModel> beritaList, OnBeritaActionListener listener) {
         this.context = context;
         this.beritaList = beritaList;
@@ -50,16 +47,33 @@ public class KelolaBeritaAdapter extends RecyclerView.Adapter<KelolaBeritaAdapte
         holder.textJudul.setText(berita.getJudulBerita());
         holder.textTanggal.setText(berita.getTanggalBerita());
 
-        Glide.with(context)
-                .load(berita.getFotoBerita())
-                .placeholder(R.drawable.default_image)
-                .error(R.drawable.default_image)
-                .centerCrop()
-                .into(holder.imageBerita);
+        // ✅ PERBAIKAN: Handle URL dobel (http://...http://...) & null
+        String imageUrl = berita.getFotoBerita();
+        if (imageUrl != null && imageUrl.startsWith("http")) {
+            // Fix double http://
+            int secondHttpIndex = imageUrl.indexOf("http://", 7);
+            if (secondHttpIndex != -1) {
+                imageUrl = imageUrl.substring(secondHttpIndex);
+            }
+            // Fix double https://
+            int secondHttpsIndex = imageUrl.indexOf("https://", 8);
+            if (secondHttpsIndex != -1) {
+                imageUrl = imageUrl.substring(secondHttpsIndex);
+            }
+
+            Glide.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.default_image)
+                    .error(R.drawable.default_image)
+                    .centerCrop()
+                    .into(holder.imageBerita);
+        } else {
+            holder.imageBerita.setImageResource(R.drawable.default_image);
+        }
 
         holder.btnEdit.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onEditClick(berita); // ✅ Kirim ke fragment/activity
+                listener.onEditClick(berita);
             }
         });
 
@@ -69,7 +83,7 @@ public class KelolaBeritaAdapter extends RecyclerView.Adapter<KelolaBeritaAdapte
                         .setTitle("Konfirmasi Hapus")
                         .setMessage("Yakin ingin menghapus berita ini?")
                         .setPositiveButton("Ya", (dialog, which) ->
-                                listener.onDeleteClick(berita.getIdBerita()) // ✅ Kirim ID ke fragment
+                                listener.onDeleteClick(berita.getIdBerita())
                         )
                         .setNegativeButton("Batal", null)
                         .show();
@@ -82,7 +96,6 @@ public class KelolaBeritaAdapter extends RecyclerView.Adapter<KelolaBeritaAdapte
         return beritaList.size();
     }
 
-    // ✅ ViewHolder tetap sama
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textJudul, textTanggal;
         ImageView imageBerita;

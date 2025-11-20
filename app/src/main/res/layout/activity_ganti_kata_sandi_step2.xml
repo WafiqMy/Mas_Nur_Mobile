@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- 🔷 HEADER -->
+    <include layout="@layout/header" />
+
+    <!-- 🔽 KONTEN -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Judul -->
+        <TextView
+            android:id="@+id/txtJudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ganti Kata Sandi"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Input Password Baru -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masukkan Kata Sandi Baru"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password_baru"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Minimal 6 karakter"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Input Verifikasi -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verifikasi Kata Sandi Baru"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_verifikasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ulangi kata sandi"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!-- 🔽 TOMBOL SIMPAN DI BAWAH -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_simpan"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:text="Simpan"
+            android:textColor="@color/colortextButton"
+            android:background="@drawable/bg_button_kembali"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- 🔻 FOOTER -->
+    <include layout="@layout/footer" />
+
+</LinearLayout>

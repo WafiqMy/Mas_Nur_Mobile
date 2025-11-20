@@ -9,17 +9,15 @@
     <!-- 🔷 HEADER -->
     <include layout="@layout/header" />
 
-
-    <!-- 🔽 KONTEN BERITA (Kosong dulu) -->
-
+    <!-- 🔽 KONTEN BERITA -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <!-- Judul -->
         <TextView
             android:id="@+id/txtJudul"
             android:layout_width="match_parent"
@@ -27,56 +25,58 @@
             android:text="Judul"
             android:gravity="center"
             android:textSize="28sp"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
 
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnMasuk"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:text="Fragment1"
-            android:textColor="@color/colortextButton"
-            android:background="@drawable/bg_button_login"
-            android:textAllCaps="false"
-            android:textSize="18sp"/>
-
-        <View
-            android:layout_width="30dp"
+        <!-- Isi Konten -->
+        <TextView
+            android:id="@+id/txtIsiBerita"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            />
+            android:layout_weight="1"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:padding="8dp"
+            android:background="#F5F5F5" />
 
-        <Button
-            android:id="@+id/btnfragment2"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:text="Fragment2"
-            android:textColor="@color/colortextButton"
-            android:background="@drawable/bg_button_login"
-            android:textAllCaps="false"
-            android:textSize="18sp"/>
+        <!-- Tombol Navigasi -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnMasuk"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:text="Fragment1"
+                android:textColor="@color/colortextButton"
+                android:background="@drawable/bg_button_login"
+                android:textAllCaps="false"
+                android:textSize="18sp"/>
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                />
+
+            <Button
+                android:id="@+id/btnfragment2"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:text="Fragment2"
+                android:textColor="@color/colortextButton"
+                android:background="@drawable/bg_button_login"
+                android:textAllCaps="false"
+                android:textSize="18sp"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#EEEEEE" />
-
-
-
+    <!-- 🔻 FOOTER -->
     <include layout="@layout/footer" />
-
-
 
 </LinearLayout>
