@@ -1,10 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MasNur" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.MasNur" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Warna utama aplikasi -->
         <item name="colorPrimary">@color/colorButton</item>
         <item name="colorSecondary">@color/colorButton</item>
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <!-- Tambahkan warna lain sesuai kebutuhan -->
     </style>
 
     <style name="Theme.MasNur" parent="Base.Theme.MasNur" />

@@ -97,7 +97,7 @@
                 android:id="@+id/buttonLanjut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#66BBAA"
+                android:background="@drawable/bg_button_login"
                 android:paddingVertical="12dp"
                 android:text="Lanjut"
                 android:textColor="@android:color/white"

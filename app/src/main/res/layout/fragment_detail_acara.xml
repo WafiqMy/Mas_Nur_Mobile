@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/btnKembali"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Kembali"
+            android:textColor="#1E88E5"
+            android:textSize="16sp"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/tvJudul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Judul"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvTanggal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tanggal"
+                android:textColor="#666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvLokasi"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Lokasi"
+                android:textColor="#666"
+                android:textSize="14sp"
+                android:gravity="end" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgUtama"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:background="#F0F0F0"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvDeskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi..."
+            android:textColor="#333"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- ✅ DOKUMENTASI -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dokumentasi"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDokumentasi"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- ✅ VIDEO URLS -->
+        <!-- ✅ TAMBAHKAN INI DI BAWAH DOKUMENTASI -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Video"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- TAMBAHKAN INI DI BAWAH DOKUMENTASI -->
+        <!-- TAMBAHKAN DI BAWAH DOKUMENTASI -->
+        <!-- Bagian Video -->
+        <LinearLayout
+            android:id="@+id/layoutVideoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📹 Video Dokumentasi:"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Thumbnail + Judul -->
+            <LinearLayout
+                android:id="@+id/layoutVideoWithThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgVideoThumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:background="#E0E0E0"
+                    android:contentDescription="Thumbnail Video" />
+
+                <TextView
+                    android:id="@+id/tvVideoTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Judul Video"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="4dp" />
+
+            </LinearLayout>
+
+            <!-- Fallback Text -->
+            <TextView
+                android:id="@+id/tvVideoFallback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tidak ada video"
+                android:textSize="14sp"
+                android:autoLink="web"
+                android:linksClickable="true"
+                android:padding="8dp"
+                android:background="#F5F5F5" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

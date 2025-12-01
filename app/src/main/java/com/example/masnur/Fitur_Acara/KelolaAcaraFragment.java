@@ -46,10 +46,9 @@ public class KelolaAcaraFragment extends Fragment {
 
         Button btnTambah = view.findViewById(R.id.btnTambahAcara);
         btnTambah.setOnClickListener(v -> {
-            TambahAcaraFragment fragment = new TambahAcaraFragment();
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
+                    .replace(R.id.frameLayout, new TambahAcaraFragment())
                     .addToBackStack(null)
                     .commit();
         });
@@ -59,23 +58,26 @@ public class KelolaAcaraFragment extends Fragment {
 
     public void loadAcara() {
         ApiService apiService = ApiClient.getService();
-        apiService.getAcara().enqueue(new Callback<AcaraModel[]>() {
+        apiService.getAcara().enqueue(new Callback<AcaraListResponse>() {
             @Override
-            public void onResponse(Call<AcaraModel[]> call, Response<AcaraModel[]> response) {
+            public void onResponse(Call<AcaraListResponse> call, Response<AcaraListResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    acaraList.clear();
-                    for (AcaraModel acara : response.body()) {
-                        acaraList.add(acara);
+                    AcaraListResponse res = response.body();
+                    if ("success".equals(res.getStatus()) && res.getData() != null) {
+                        acaraList.clear();
+                        acaraList.addAll(res.getData());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(requireContext(), "Data kosong", Toast.LENGTH_SHORT).show();
                     }
-                    adapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(requireContext(), "Gagal: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Gagal memuat data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<AcaraModel[]> call, Throwable t) {
-                Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<AcaraListResponse> call, Throwable t) {
+                Toast.makeText(requireContext(), "Jaringan error", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -39,12 +39,16 @@ public class KonfirmasiEmail extends AppCompatActivity {
 
                 if (email.isEmpty()) {
                     Toast.makeText(KonfirmasiEmail.this, "Masukkan email terlebih dahulu", Toast.LENGTH_SHORT).show();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(KonfirmasiEmail.this, "Format email tidak valid", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Kirim OTP ke email
-                    kirimOtp(email);
+                    return;
                 }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(KonfirmasiEmail.this, "Format email tidak valid", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // ✅ Biarkan server yang validasi apakah email terdaftar
+                kirimOtp(email);
             }
         });
     }
@@ -57,13 +61,17 @@ public class KonfirmasiEmail extends AppCompatActivity {
             @Override
             public void onResponse(Call<OtpResponse> call, Response<OtpResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    if ("success".equals(response.body().getStatus())) {
-                        Toast.makeText(KonfirmasiEmail.this, "Kode verifikasi telah dikirim ke email: " + email, Toast.LENGTH_LONG).show();
+                    String status = response.body().getStatus();
+                    String message = response.body().getMessage();
+
+                    if ("success".equals(status)) {
+                        Toast.makeText(KonfirmasiEmail.this, message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(KonfirmasiEmail.this, KodeOtp.class);
                         intent.putExtra("email", email);
                         startActivity(intent);
                     } else {
-                        Toast.makeText(KonfirmasiEmail.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        // ✅ Error dari server: email tidak terdaftar, dll
+                        Toast.makeText(KonfirmasiEmail.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(KonfirmasiEmail.this, "Respons tidak valid dari server", Toast.LENGTH_SHORT).show();
@@ -72,9 +80,8 @@ public class KonfirmasiEmail extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<OtpResponse> call, Throwable t) {
-                Toast.makeText(KonfirmasiEmail.this, "Gagal terhubung ke server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(KonfirmasiEmail.this, "Gagal terhubung ke server", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

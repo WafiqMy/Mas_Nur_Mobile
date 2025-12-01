@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".Fitur_Berita.DetailBeritaActivity">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Tombol Kembali -->
+        <ImageView
+            android:id="@+id/btnKembali"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_kembali"
+            android:contentDescription="Kembali"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="4dp" />
+
+        <!-- Judul Halaman -->
+        <TextView
+            android:id="@+id/txtJudulHalaman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detail Berita"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Gambar Berita -->
+            <ImageView
+                android:id="@+id/imageDetailBerita"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="Gambar Berita"
+                android:background="#E0E0E0" />
+
+            <!-- Tanggal Berita -->
+            <TextView
+                android:id="@+id/textTanggalDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Berita"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Judul Berita -->
+            <TextView
+                android:id="@+id/textJudulDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Judul Berita"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Isi Berita -->
+            <TextView
+                android:id="@+id/textIsiDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Isi berita akan ditampilkan di sini..."
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="#333333" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Footer -->
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

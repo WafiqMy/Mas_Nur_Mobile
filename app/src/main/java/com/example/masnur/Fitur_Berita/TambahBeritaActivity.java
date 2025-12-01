@@ -1,16 +1,22 @@
 package com.example.masnur.Fitur_Berita;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,9 +29,10 @@ import com.example.masnur.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
 
 import okhttp3.MediaType;
@@ -38,25 +45,30 @@ import retrofit2.Response;
 public class TambahBeritaActivity extends AppCompatActivity {
 
     private EditText edtJudul, edtIsi;
+    private TextView tvCounter;
     private Spinner spinnerTanggal;
     private ImageView imgPreview;
     private Button btnPilihGambar, btnSimpan;
     private ApiService apiService;
-    private Bitmap bitmap;
-    private boolean gambarDiubah = false;
+    private Uri imageUri;
+    private File imageFile;
+
+    private static final int MAX_CHAR = 12000;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Uri imageUri = result.getData().getData();
+                    imageUri = result.getData().getData();
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                        // Baca bitmap dengan decode sampled untuk hemat memori
+                        Bitmap bitmap = decodeSampledBitmapFromUri(imageUri, 1200, 1200);
                         imgPreview.setImageBitmap(bitmap);
-                        imgPreview.setVisibility(android.view.View.VISIBLE);
-                        gambarDiubah = true;
+                        imgPreview.setVisibility(View.VISIBLE);
+                        imageFile = createCompressedFile(bitmap);
                     } catch (IOException e) {
                         Toast.makeText(this, "Gagal memuat gambar", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
                     }
                 }
             }
@@ -70,23 +82,24 @@ public class TambahBeritaActivity extends AppCompatActivity {
         initViews();
         setupSpinner();
         setupClickListeners();
+        setupCharacterCounter();
         apiService = ApiClient.getService();
     }
 
     private void initViews() {
         edtJudul = findViewById(R.id.edtJudul);
         edtIsi = findViewById(R.id.edtIsi);
+        tvCounter = findViewById(R.id.tvCounter);
         spinnerTanggal = findViewById(R.id.spinnerTanggal);
         imgPreview = findViewById(R.id.imgPreview);
         btnPilihGambar = findViewById(R.id.btnPilihGambar);
         btnSimpan = findViewById(R.id.btnSimpan);
-        imgPreview.setVisibility(android.view.View.GONE);
+        imgPreview.setVisibility(View.GONE);
     }
 
     private void setupSpinner() {
-        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        String[] tanggal = {today};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tanggal);
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().getTime());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{today});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTanggal.setAdapter(adapter);
     }
@@ -94,16 +107,38 @@ public class TambahBeritaActivity extends AppCompatActivity {
     private void setupClickListeners() {
         btnPilihGambar.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
             imagePickerLauncher.launch(intent);
         });
 
         btnSimpan.setOnClickListener(v -> {
             if (validateInput()) {
-                if (!gambarDiubah) {
-                    Toast.makeText(this, "Gambar belum dipilih, akan dikirim tanpa foto", Toast.LENGTH_SHORT).show();
-                }
                 simpanBerita();
+            }
+        });
+    }
+
+    private void setupCharacterCounter() {
+        tvCounter.setText("0/" + MAX_CHAR);
+        tvCounter.setTextColor(getResources().getColor(android.R.color.darker_gray));
+
+        edtIsi.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                tvCounter.setText(length + "/" + MAX_CHAR);
+                if (length > MAX_CHAR) {
+                    tvCounter.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                } else if (length > MAX_CHAR * 0.9) {
+                    tvCounter.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+                } else {
+                    tvCounter.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                }
             }
         });
     }
@@ -113,45 +148,95 @@ public class TambahBeritaActivity extends AppCompatActivity {
         String isi = edtIsi.getText().toString().trim();
 
         if (judul.isEmpty()) {
-            edtJudul.setError("Judul berita wajib diisi");
+            edtJudul.setError("Judul wajib diisi");
             return false;
         }
         if (isi.isEmpty()) {
             edtIsi.setError("Isi berita wajib diisi");
             return false;
         }
+        if (isi.length() > MAX_CHAR) {
+            Toast.makeText(this, "Isi berita maksimal " + MAX_CHAR + " karakter", Toast.LENGTH_LONG).show();
+            return false;
+        }
         return true;
+    }
+
+    // ✅ ✅ ✅ KOMPRESI OTOMATIS SAMPAI ≤ 1.8 MB
+    private File createCompressedFile(Bitmap bitmap) throws IOException {
+        File dir = getCacheDir();
+        File file = new File(dir, "berita_" + System.currentTimeMillis() + ".jpg");
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        int quality = 90;
+
+        // Kompres pertama
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
+
+        // Loop sampai ≤ 1.8 MB atau kualitas terlalu rendah
+        while (stream.size() > 1800 * 1024 && quality > 40) {
+            quality -= 10;
+            stream.reset();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
+        }
+
+        // Tulis ke file
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(stream.toByteArray());
+        }
+        return file;
+    }
+
+    // ✅ Baca gambar dengan ukuran aman (hindari OutOfMemory)
+    private Bitmap decodeSampledBitmapFromUri(Uri uri, int reqWidth, int reqHeight) throws IOException {
+        // Decode hanya ukuran (inSampleSize)
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
+
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        options.inJustDecodeBounds = false;
+        options.inPreferredConfig = Bitmap.Config.RGB_565; // Lebih ringan
+
+        return BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
+    }
+
+    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
     }
 
     private void simpanBerita() {
         ProgressDialog dialog = ProgressDialog.show(this, "Menyimpan...", "Mohon tunggu", true);
 
-        RequestBody judul = RequestBody.create(edtJudul.getText().toString(), MediaType.get("text/plain"));
-        RequestBody isi = RequestBody.create(edtIsi.getText().toString(), MediaType.get("text/plain"));
-        RequestBody tanggal = RequestBody.create(spinnerTanggal.getSelectedItem().toString(), MediaType.get("text/plain"));
-        RequestBody username = RequestBody.create("admin", MediaType.get("text/plain")); // ganti jika ada login
+        String judul = edtJudul.getText().toString().trim();
+        String isi = edtIsi.getText().toString().trim();
+        String tanggal = spinnerTanggal.getSelectedItem().toString();
+        String username = "Admin";
 
-        MultipartBody.Part filePart = null;
+        RequestBody judulRB = RequestBody.create(judul, MediaType.get("text/plain"));
+        RequestBody isiRB = RequestBody.create(isi, MediaType.get("text/plain"));
+        RequestBody tanggalRB = RequestBody.create(tanggal, MediaType.get("text/plain"));
+        RequestBody usernameRB = RequestBody.create(username, MediaType.get("text/plain"));
 
-        if (gambarDiubah && bitmap != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-            byte[] byteArray = stream.toByteArray();
-
-            File file = new File(getCacheDir(), "gambar_berita.jpg");
-            try {
-                java.io.FileOutputStream fos = new java.io.FileOutputStream(file);
-                fos.write(byteArray);
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/jpeg"));
-            filePart = MultipartBody.Part.createFormData("foto_berita", file.getName(), requestFile);
+        MultipartBody.Part fotoPart = null;
+        if (imageFile != null && imageFile.exists()) {
+            RequestBody fileRB = RequestBody.create(imageFile, MediaType.parse("image/jpeg"));
+            fotoPart = MultipartBody.Part.createFormData("foto_berita", imageFile.getName(), fileRB);
         }
 
-        Call<BeritaResponse> call = apiService.tambahBerita(judul, isi, tanggal, username, filePart);
+        Call<BeritaResponse> call = apiService.tambahBerita(judulRB, isiRB, tanggalRB, usernameRB, fotoPart);
 
         call.enqueue(new Callback<BeritaResponse>() {
             @Override
@@ -159,24 +244,23 @@ public class TambahBeritaActivity extends AppCompatActivity {
                 dialog.dismiss();
                 if (response.isSuccessful() && response.body() != null) {
                     BeritaResponse res = response.body();
-                    if ("success".equalsIgnoreCase(res.getStatus())) {
-                        Toast.makeText(TambahBeritaActivity.this, "Berita berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                    if ("success".equals(res.getStatus()) || "1".equals(res.getStatus())) {
+                        Toast.makeText(TambahBeritaActivity.this, "✓ Berita berhasil ditambah", Toast.LENGTH_SHORT).show();
                         setResult(RESULT_OK);
                         finish();
                     } else {
-                        Toast.makeText(TambahBeritaActivity.this,
-                                res.getMessage() != null ? res.getMessage() : "Gagal menambahkan berita",
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(TambahBeritaActivity.this, "✗ " + res.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(TambahBeritaActivity.this, "Gagal: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahBeritaActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<BeritaResponse> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(TambahBeritaActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(TambahBeritaActivity.this, "Jaringan error", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
             }
         });
     }

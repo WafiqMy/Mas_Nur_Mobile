@@ -16,10 +16,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.masnur.Api.ApiClient;
 import com.example.masnur.Api.ApiService;
 import com.example.masnur.Fitur_Acara.AcaraModel;
-import com.example.masnur.Fitur_Acara.UbahAcaraFragment;
 import com.example.masnur.R;
 
 import java.util.List;
@@ -58,19 +58,23 @@ public class KelolaAcaraAdapter extends RecyclerView.Adapter<KelolaAcaraAdapter.
         holder.textJudul.setText(acara.getNamaEvent());
         holder.textTanggal.setText(acara.getTanggalEventFormatted());
 
-        String url = acara.getGambarEvent();
-        if (url == null || url.trim().isEmpty() || url.endsWith("/acara/")) {
-            holder.imageView.setImageResource(R.drawable.default_image);
-        } else {
-            Glide.with(context).load(url).into(holder.imageView);
-        }
+        String url = acara.getGambarEventAbsolut(); // ✅ gunakan ini
 
-        // ✅ PERBAIKAN: Kirim Bundle berisi data acara
+        Glide.with(context)
+                .load(url)
+                .override(300, 200)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.default_image)
+                .error(R.drawable.default_image)
+                .fallback(R.drawable.default_image)
+                .into(holder.imageView);
+
         holder.btnEdit.setOnClickListener(v -> {
             Bundle args = new Bundle();
-            args.putParcelable("acara", acara); // ✅ KIRIM DATA
+            args.putParcelable("acara", acara);
             UbahAcaraFragment fragment = new UbahAcaraFragment();
-            fragment.setArguments(args); // ✅ SET ARGUMENTS
+            fragment.setArguments(args);
 
             FragmentTransaction ft = ((AcaraActivity) context).getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frameLayout, fragment)

@@ -68,9 +68,21 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:gravity="top|start"
-            android:hint="Tuliskan deskripsi sejarah masjid"
+            android:hint="Tuliskan deskripsi sejarah masjid (Maks. 13.000 karakter)"
             android:padding="10dp"
             android:textSize="14sp"
+            android:inputType="textMultiLine"
+            android:layout_marginBottom="4dp" />
+
+        <!-- ✅ Counter karakter (13.000 maks) -->
+        <TextView
+            android:id="@+id/tvCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/13000"
+            android:textSize="12sp"
+            android:textColor="#777777"
+            android:layout_gravity="end"
             android:layout_marginBottom="24dp" />
 
         <LinearLayout

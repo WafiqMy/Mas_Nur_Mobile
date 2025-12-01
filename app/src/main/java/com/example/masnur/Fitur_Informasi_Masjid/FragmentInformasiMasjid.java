@@ -1,8 +1,6 @@
 package com.example.masnur.Fitur_Informasi_Masjid;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.masnur.Api.ApiClient;
 import com.example.masnur.Api.ApiService;
 import com.example.masnur.R;
@@ -48,29 +47,36 @@ public class FragmentInformasiMasjid extends Fragment {
         btnKelola = view.findViewById(R.id.btnKelolaSejarah);
 
         apiService = ApiClient.getService();
+
+        // ✅ Tampilkan placeholder langsung — jangan biarkan blank
+        tvJudul.setText("Memuat...");
+        tvDeskripsi.setText("Tunggu sebentar...");
+        imgMasjid.setImageResource(R.drawable.default_image);
+
         loadProfilMasjid();
 
         btnKelola.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), EditProfilMasjidActivity.class);
-            intent.putExtra("profil", data);
-            startActivityForResult(intent, 200);
+            if (data != null) {
+                Intent intent = new Intent(requireActivity(), EditProfilMasjidActivity.class);
+                intent.putExtra("profil", data);
+                startActivityForResult(intent, 200);
+            } else {
+                Toast.makeText(requireContext(), "Data belum siap", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
     private void loadProfilMasjid() {
-        ProgressDialog dialog = ProgressDialog.show(requireActivity(), "Memuat...", "Mohon tunggu", true);
-
         apiService.getProfilMasjid().enqueue(new Callback<ProfilMasjidResponse>() {
             @Override
             public void onResponse(Call<ProfilMasjidResponse> call, Response<ProfilMasjidResponse> response) {
-                dialog.dismiss();
                 if (response.isSuccessful() && response.body() != null) {
                     ProfilMasjidResponse res = response.body();
                     if ("success".equals(res.getStatus()) && res.getData() != null) {
                         data = res.getData();
                         tampilkanData();
                     } else {
-                        Toast.makeText(requireContext(), res.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), res.getMessage() != null ? res.getMessage() : "Data tidak tersedia", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(requireContext(), "Gagal: " + response.code(), Toast.LENGTH_SHORT).show();
@@ -79,26 +85,40 @@ public class FragmentInformasiMasjid extends Fragment {
 
             @Override
             public void onFailure(Call<ProfilMasjidResponse> call, Throwable t) {
-                dialog.dismiss();
-                Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Gagal terhubung ke server", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void tampilkanData() {
-        tvJudul.setText(data.getJudulSejarah());
-        tvDeskripsi.setText(data.getDeskripsiSejarah());
+        tvJudul.setText(data.getJudulSejarah() != null ? data.getJudulSejarah() : "–");
+        tvDeskripsi.setText(data.getDeskripsiSejarah() != null ? data.getDeskripsiSejarah() : "–");
 
-        String fileName = data.getGambarSejarahMasjid();
-        if (fileName == null || fileName.trim().isEmpty()) {
-            fileName = "default_placeholder.png";
+        // ✅ Prioritas 1: ambil URL dari API (gambar_sejarah_masjid_url)
+        String imageUrl = data.getGambarSejarahMasjidUrl();
+
+        // ✅ Prioritas 2: fallback ke build manual
+        if (imageUrl == null || imageUrl.trim().isEmpty()) {
+            String fileName = data.getGambarSejarahMasjid();
+            if (fileName != null && !fileName.trim().isEmpty()) {
+                imageUrl = "https://masnurhudanganjuk.pbltifnganjuk.com/API/uploads/profil_masjid/" + fileName;
+            }
         }
-        String url = "http://masnurhuda.atwebpages.com/API/api_gambar_profil_masjid.php?file_name=" + Uri.encode(fileName);
 
-        Glide.with(requireActivity())  // ✅ pakai requireActivity()
-                .load(url)
+        // ✅ Prioritas 3: default
+        if (imageUrl == null || imageUrl.trim().isEmpty()) {
+            imageUrl = "https://masnurhudanganjuk.pbltifnganjuk.com/API/uploads/profil_masjid/default_placeholder.png";
+        }
+
+        // ✅ Load dengan Glide — cache aktif!
+        Glide.with(this)
+                .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(false)
                 .placeholder(R.drawable.default_image)
-                .error(R.drawable.ic_launcher_background)
+                .error(R.drawable.default_image)
+                .override(600, 400)
+                .centerCrop()
                 .into(imgMasjid);
     }
 
@@ -106,8 +126,15 @@ public class FragmentInformasiMasjid extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 200 && resultCode == getActivity().RESULT_OK) {
-            // Refresh data
-            loadProfilMasjid();
+            // ✅ Terima data hasil edit langsung — SATSET!
+            ProfilMasjidModel updated = data.getParcelableExtra("updated_profil");
+            if (updated != null) {
+                this.data = updated;
+                tampilkanData(); // langsung update UI
+            } else {
+                // Fallback: reload API
+                loadProfilMasjid();
+            }
         }
     }
 }

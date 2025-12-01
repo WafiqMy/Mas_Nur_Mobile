@@ -8,27 +8,34 @@
     android:background="#FFFFFF"
     tools:context=".Fitur_Acara.AcaraActivity">
 
-    <!-- 🔷 HEADER -->
-    <include layout="@layout/header" />
-
-    <!-- 🔽 JUDUL -->
-    <LinearLayout
+    <!-- 🔽 HEADER BAR DENGAN ICON KEMBALI DAN JUDUL -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical">
+        android:padding="10dp"
+        android:background="#FFFFFF">
 
+        <!-- Icon kembali di kiri -->
+        <ImageView
+            android:id="@+id/btnKembali"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_kembali"
+            android:contentDescription="Kembali"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="4dp" />
+
+        <!-- Judul di tengah -->
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tvJudul"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Acara"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:gravity="center" />
-
-    </LinearLayout>
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
     <!-- 🔽 FRAME LAYOUT UNTUK FRAGMENT -->
     <FrameLayout
@@ -37,9 +44,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#EEEEEE" />
-
-    <!-- 🔻 TOMBOL KELOLA ACARA -->
-
 
     <!-- 🔻 FOOTER -->
     <include layout="@layout/footer" />

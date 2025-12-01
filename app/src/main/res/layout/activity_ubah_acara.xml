@@ -2,22 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Konten Scroll -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,119 +20,168 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Judul Halaman -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Acara"
+                android:text="Ubah Acara"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Gambar Lama -->
+            <!-- Gambar Utama -->
             <ImageView
                 android:id="@+id/imgGambar"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:background="@android:color/darker_gray"
+                android:background="#F0F0F0"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Tombol Ubah Gambar -->
             <Button
                 android:id="@+id/btnUbahGambar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ubah Gambar"
-                android:textColor="#4C4C4C"
-                android:textSize="14sp"
-                android:paddingHorizontal="24dp"
-                android:paddingVertical="10dp"
-                android:background="@drawable/bg_button_login"
-                android:elevation="0dp"
+                android:text="Ubah Gambar Utama"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="24dp" />
 
-            <!-- Label Judul -->
+            <!-- Judul -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Judul"
+                android:text="Judul *"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:layout_marginBottom="4dp" />
-
-            <!-- Input Judul -->
             <EditText
                 android:id="@+id/etJudul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Masukkan judul acara"
                 android:background="@drawable/bg_card_top_rounded"
-                android:padding="10dp"
-                android:text="Buka Bersama Menjelang Maghrib"
+                android:padding="12dp"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Label Deskripsi -->
+            <!-- Lokasi -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Deskripsi"
+                android:text="Lokasi *"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/etLokasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_top_rounded"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
 
-            <!-- Input Deskripsi -->
+            <!-- Tanggal -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tanggal *"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/etTanggal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="YYYY-MM-DD"
+                android:background="@drawable/bg_card_top_rounded"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Deskripsi -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi *"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp" />
             <EditText
                 android:id="@+id/etDeskripsi"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginBottom="32dp"
+                android:layout_height="120dp"
                 android:background="@drawable/bg_card_top_rounded"
                 android:gravity="top"
-                android:hint="Masukkan deskripsi acara"
-                android:padding="10dp"
-                android:text="Buka Bersama Menjelang Maghrib" />
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
 
-            <!-- Dua Tombol (Kembali & Simpan Perubahan) -->
+            <!-- Dokumentasi -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dokumentasi"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/btnTambahDokumentasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tambah Foto Baru"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutDokumentasiContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Video -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="URL Video (pisahkan koma)"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/etVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_top_rounded"
+                android:padding="12dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Tombol -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginBottom="50dp">
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/btnKembali"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Kembali"
-                    android:textColor="#4C4C4C"
-                    android:textSize="14sp"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="10dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="Batal"
                     android:background="@drawable/bg_button_login"
-                    android:elevation="0dp"
-                    android:layout_marginEnd="16dp" />
+                    android:textColor="#4C4C4C" />
 
                 <Button
                     android:id="@+id/btnSimpan"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Simpan Perubahan"
-                    android:textColor="#4C4C4C"
-                    android:textSize="14sp"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="10dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Simpan"
                     android:background="@drawable/bg_button_login"
-                    android:elevation="0dp" />
+                    android:textColor="#4C4C4C" />
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

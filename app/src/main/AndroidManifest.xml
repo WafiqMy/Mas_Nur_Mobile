@@ -34,9 +34,9 @@
         <activity android:name=".Fitur_Profil_Admin.Profil_Admin_Activity" />
         <activity android:name=".Fitur_Notifikasi.MainNotifikasi" />
         <activity android:name=".Fitur_Berita.Berita_Activity" />
-        <activity android:name=".Fitur_Acara.Event_Activity" />
+<!--        <activity android:name=".Fitur_Acara.Event_Activity" />-->
         <activity android:name=".Fitur_Informasi_Masjid.Informasi_Masjid_Activity" />
-        <activity android:name=".Fitur_Persewaan.Pemesanan_Activity" />
+        <activity android:name=".Fitur_Persewaan.Persewaan_Activity" />
         <activity android:name=".Fitur_Masuk.KonfirmasiEmail" />
         <activity android:name=".Fitur_Masuk.KodeOtp" />
         <activity android:name=".Fitur_Masuk.SandiBaru" />
@@ -53,13 +53,7 @@
         <activity android:name=".Fitur_Profil_Admin.GantiNamaActivity" />
         <activity android:name=".Fitur_Profil_Admin.GantiKataSandiActivity" />
         <activity android:name=".Fitur_Profil_Admin.GantiKataSandiStep2Activity" />
-
-
-
-
-
-
-
+        <activity android:name=".Fitur_Berita.DetailBeritaActivity"/>
 
 
 

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detail Permintaan"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Peminjam -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Peminjam"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/tvNamaPeminjam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvTelepon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Barang -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Barang yang Dipinjam"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvBarang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvJenis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvJumlah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvHarga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Keperluan -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keperluan"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvKeperluan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- ✅ TANGGAL RESERVASI -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Reservasi"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvTanggalMulai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvTanggalSelesai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Status & Catatan -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status dan Catatan"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status: -"
+            android:textSize="16sp"
+            android:textColor="#555"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Catatan: -"
+            android:textSize="15sp"
+            android:textColor="#888"
+            android:layout_marginTop="4dp" />
+
+        <!-- Tombol -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTolak"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Tolak"
+                android:textColor="@color/colortextButton"
+                android:background="@drawable/bg_hapus"
+                android:backgroundTint="@null"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTerima"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Terima"
+                android:textColor="@color/colortextButton"
+                android:background="@drawable/bg_button_login"
+                android:backgroundTint="@null"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -12,6 +12,9 @@ public class ProfilMasjidModel implements Parcelable {
     @SerializedName("gambar_sejarah_masjid")
     private String gambarSejarahMasjid;
 
+    @SerializedName("gambar_sejarah_masjid_url") // ✅ TAMBAHAN BARU
+    private String gambarSejarahMasjidUrl;
+
     @SerializedName("judul_sejarah")
     private String judulSejarah;
 
@@ -21,7 +24,6 @@ public class ProfilMasjidModel implements Parcelable {
     @SerializedName("username")
     private String username;
 
-    // Constructor kosong
     public ProfilMasjidModel() {}
 
     // Getter & Setter
@@ -30,6 +32,9 @@ public class ProfilMasjidModel implements Parcelable {
 
     public String getGambarSejarahMasjid() { return gambarSejarahMasjid; }
     public void setGambarSejarahMasjid(String gambarSejarahMasjid) { this.gambarSejarahMasjid = gambarSejarahMasjid; }
+
+    public String getGambarSejarahMasjidUrl() { return gambarSejarahMasjidUrl; } // ✅
+    public void setGambarSejarahMasjidUrl(String gambarSejarahMasjidUrl) { this.gambarSejarahMasjidUrl = gambarSejarahMasjidUrl; }
 
     public String getJudulSejarah() { return judulSejarah; }
     public void setJudulSejarah(String judulSejarah) { this.judulSejarah = judulSejarah; }
@@ -44,6 +49,7 @@ public class ProfilMasjidModel implements Parcelable {
     protected ProfilMasjidModel(Parcel in) {
         idProfilMasjid = in.readInt();
         gambarSejarahMasjid = in.readString();
+        gambarSejarahMasjidUrl = in.readString(); // ✅
         judulSejarah = in.readString();
         deskripsiSejarah = in.readString();
         username = in.readString();
@@ -53,6 +59,7 @@ public class ProfilMasjidModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(idProfilMasjid);
         dest.writeString(gambarSejarahMasjid);
+        dest.writeString(gambarSejarahMasjidUrl); // ✅
         dest.writeString(judulSejarah);
         dest.writeString(deskripsiSejarah);
         dest.writeString(username);

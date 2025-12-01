@@ -31,61 +31,55 @@ public class GantiNamaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ganti_nama);
 
+        etNamaBaru = findViewById(R.id.et_nama_baru);
+        btnKembali = findViewById(R.id.btn_kembali);
+        btnSimpan = findViewById(R.id.btn_simpan);
         apiService = ApiClient.getService();
 
-        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
-        currentUsername = prefs.getString("username", null);
-        if (currentUsername == null) {
-            Toast.makeText(this, "Sesi tidak valid. Silakan login ulang.", Toast.LENGTH_LONG).show();
+        SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+        currentUsername = prefs.getString("username", "");
+
+        if (currentUsername.isEmpty()) {
+            Toast.makeText(this, "Sesi tidak valid", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        etNamaBaru = findViewById(R.id.et_nama_baru);
-        btnKembali = findViewById(R.id.btn_kembali);
-        btnSimpan = findViewById(R.id.btn_simpan);
-
         btnKembali.setOnClickListener(v -> finish());
 
         btnSimpan.setOnClickListener(v -> {
-            String newName = etNamaBaru.getText().toString().trim();
-            if (newName.isEmpty()) {
-                Toast.makeText(this, "Nama tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            String namaBaru = etNamaBaru.getText().toString().trim();
+            if (namaBaru.isEmpty()) {
+                Toast.makeText(this, "Nama baru tidak boleh kosong", Toast.LENGTH_SHORT).show();
                 return;
             }
-            updateName(newName);
-        });
-    }
 
-    private void updateName(String newName) {
-        apiService.profilAction(
-                currentUsername,
-                "ganti_nama",
-                newName,
-                "",
-                ""
-        ).enqueue(new Callback<ReservasiResponse>() {
-            @Override
-            public void onResponse(Call<ReservasiResponse> call, Response<ReservasiResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ReservasiResponse res = response.body();
-                    Toast.makeText(GantiNamaActivity.this,
-                            ("success".equals(res.getStatus()) ? "✅ " : "❌ ") + res.getMessage(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                    if ("success".equals(res.getStatus())) {
-                        setResult(RESULT_OK);
-                        finish();
+            // ✅ Panggil API ganti nama
+            Call<ReservasiResponse> call = apiService.gantiNama(currentUsername, namaBaru);
+            call.enqueue(new Callback<ReservasiResponse>() {
+                @Override
+                public void onResponse(Call<ReservasiResponse> call, Response<ReservasiResponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String status = response.body().getStatus();
+                        String message = response.body().getMessage();
+
+                        if ("success".equals(status)) {
+                            Toast.makeText(GantiNamaActivity.this, message, Toast.LENGTH_SHORT).show();
+                            setResult(RESULT_OK); // trigger reload di Profil_Admin_Activity
+                            finish();
+                        } else {
+                            Toast.makeText(GantiNamaActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(GantiNamaActivity.this, "Respons tidak valid dari server", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(GantiNamaActivity.this, "❌ Error server", Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ReservasiResponse> call, Throwable t) {
-                Toast.makeText(GantiNamaActivity.this, "⚠️ " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailure(Call<ReservasiResponse> call, Throwable t) {
+                    Toast.makeText(GantiNamaActivity.this, "Gagal menghubungi server", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }

@@ -6,31 +6,36 @@
     android:orientation="vertical"
     android:background="#FFFFFF">
 
-    <!-- 🔷 HEADER -->
-    <include layout="@layout/header" />
-
-
-
-    <LinearLayout
+    <!-- 🔽 HEADER BAR DENGAN ICON KEMBALI DAN JUDUL -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:padding="10dp"
+        android:background="#FFFFFF">
 
+        <!-- Icon kembali di kiri -->
+        <ImageView
+            android:id="@+id/btnKembali"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_kembali"
+            android:contentDescription="Kembali"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="4dp" />
+
+        <!-- Judul di tengah -->
         <TextView
             android:id="@+id/txtInformasiMasjid"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Informasi Masjid"
-            android:gravity="center"
             android:textSize="28sp"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
-        </TextView>
-    </LinearLayout>
-
+    <!-- 🔽 BUTTON PILIHAN -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,10 +43,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
-        <!-- Konten berita akan ditambahkan di sini nanti -->
+
         <Button
-            android:id="@+id/btnSejarahhMasjid"
-            android:layout_width="150dp"
+            android:id="@+id/btnSejarahMasjid"
+            android:layout_width="180dp"
             android:layout_height="45dp"
             android:text="Sejarah Masjid"
             android:textColor="@color/colortextButton"
@@ -51,20 +56,20 @@
 
         <View
             android:layout_width="20dp"
-            android:layout_height="0dp"
-            />
+            android:layout_height="0dp" />
 
         <Button
             android:id="@+id/btnStrukturOrganisasi"
-            android:layout_width="150dp"
+            android:layout_width="180dp"
             android:layout_height="45dp"
-            android:text="Struktur Organisasi"
-            android:textColor="@color/colortextButton"
             android:background="@drawable/bg_button_login"
+            android:text="Struktur Organisasi"
             android:textAllCaps="false"
-            android:textSize="11sp"/>
+            android:textColor="@color/colortextButton"
+            android:textSize="15sp" />
     </LinearLayout>
 
+    <!-- 🔽 FRAME LAYOUT UNTUK FRAGMENT -->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -72,10 +77,7 @@
         android:layout_weight="1"
         android:background="#EEEEEE" />
 
-
-
+    <!-- 🔻 FOOTER -->
     <include layout="@layout/footer" />
-
-
 
 </LinearLayout>

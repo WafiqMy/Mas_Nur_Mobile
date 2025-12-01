@@ -130,7 +130,7 @@ public class FragmentKelolaPersewaan extends Fragment {
         textHarga.setText("Rp " + String.format("%,d", barang.getHarga()).replace(',', '.'));
         textJumlah.setText("Stok: " + barang.getJumlah());
 
-        String imageUrl = "http://masnurhuda.atwebpages.com/API/get_gambar.php?file=" + barang.getGambar();
+        String imageUrl = "https://masnurhudanganjuk.pbltifnganjuk.com/API/get_gambar.php?file=" + barang.getGambar();
         Glide.with(this)
                 .load(imageUrl)
                 .placeholder(R.drawable.default_image)

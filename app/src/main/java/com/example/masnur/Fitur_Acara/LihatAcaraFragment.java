@@ -39,20 +39,32 @@ public class LihatAcaraFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_acara, container, false);
 
-        // Inisialisasi view
         recyclerView = view.findViewById(R.id.recyclerViewacara);
         textEmpty = view.findViewById(R.id.textEmpty);
         Button btnKelola = view.findViewById(R.id.btnKelolaAcara);
 
-        // Setup RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new AcaraAdapter(requireContext(), acaraList);
+
+        // ✅ INI SUDAH DIPERBAIKI — pakai listener
+        adapter = new AcaraAdapter(requireContext(), acaraList, new AcaraAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(AcaraModel acara) {
+                Bundle args = new Bundle();
+                args.putParcelable("acara", acara);
+                DetailAcaraFragment fragment = new DetailAcaraFragment();
+                fragment.setArguments(args);
+
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
-        // Load data
         loadAcara();
 
-        // Tombol Kelola Acara
         btnKelola.setOnClickListener(v -> {
             getParentFragmentManager()
                     .beginTransaction()
@@ -66,29 +78,23 @@ public class LihatAcaraFragment extends Fragment {
 
     private void loadAcara() {
         ApiService apiService = ApiClient.getService();
-        apiService.getAcara().enqueue(new Callback<AcaraModel[]>() {
+        apiService.getAcara().enqueue(new Callback<AcaraListResponse>() {
             @Override
-            public void onResponse(Call<AcaraModel[]> call, Response<AcaraModel[]> response) {
+            public void onResponse(Call<AcaraListResponse> call, Response<AcaraListResponse> response) {
                 Log.d("API_DEBUG", "onResponse: " + response.isSuccessful() + ", code: " + response.code());
 
                 if (response.isSuccessful() && response.body() != null) {
-                    AcaraModel[] body = response.body();
-                    Log.d("API_DEBUG", "Jumlah data: " + body.length);
+                    AcaraListResponse res = response.body();
+                    if ("success".equals(res.getStatus()) && res.getData() != null) {
+                        acaraList.clear();
+                        acaraList.addAll(res.getData());
+                        adapter.notifyDataSetChanged();
 
-                    acaraList.clear();
-                    for (int i = 0; i < body.length; i++) {
-                        AcaraModel acara = body[i];
-                        Log.d("API_DEBUG", "Data [" + i + "]: id=" + acara.getIdEvent() + ", judul=" + acara.getNamaEvent());
-                        acaraList.add(acara);
-                    }
-
-                    adapter.notifyDataSetChanged();
-
-                    // Tampilkan/hide placeholder
-                    if (acaraList.isEmpty()) {
-                        textEmpty.setVisibility(View.VISIBLE);
+                        textEmpty.setVisibility(acaraList.isEmpty() ? View.VISIBLE : View.GONE);
                     } else {
-                        textEmpty.setVisibility(View.GONE);
+                        Toast.makeText(requireContext(), "Data kosong", Toast.LENGTH_SHORT).show();
+                        textEmpty.setVisibility(View.VISIBLE);
+                        textEmpty.setText("Tidak ada acara");
                     }
                 } else {
                     Toast.makeText(requireContext(), "Gagal: " + response.code(), Toast.LENGTH_SHORT).show();
@@ -99,7 +105,7 @@ public class LihatAcaraFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<AcaraModel[]> call, Throwable t) {
+            public void onFailure(Call<AcaraListResponse> call, Throwable t) {
                 Log.e("API_ERROR", "onFailure: ", t);
                 Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 textEmpty.setVisibility(View.VISIBLE);

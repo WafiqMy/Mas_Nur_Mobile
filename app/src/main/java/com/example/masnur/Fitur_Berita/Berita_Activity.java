@@ -1,12 +1,14 @@
 package com.example.masnur.Fitur_Berita;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.masnur.Fitur_Halaman_Utama.Halaman_Utama_Activity;
 import com.example.masnur.Header_dan_Footer.Footer;
-import com.example.masnur.Header_dan_Footer.Header;
 import com.example.masnur.R;
 
 public class Berita_Activity extends AppCompatActivity {
@@ -18,10 +20,17 @@ public class Berita_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_berita);
 
         Footer.setupFooter(this);
-        Header.setupHeader(this);
 
         btnBerita = findViewById(R.id.btnFberita);
         btnKelola = findViewById(R.id.btnFkelolaberita);
+
+        ImageView btnKembali = findViewById(R.id.btnKembali);
+
+        btnKembali.setOnClickListener(v -> {
+            Intent intent = new Intent(Berita_Activity.this, Halaman_Utama_Activity.class);
+            startActivity(intent);
+            finish(); // supaya tidak kembali ke Informasi_Masjid_Activity lagi
+        });
 
         btnBerita.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction()

@@ -1,4 +1,3 @@
-// com.example.masnur.Fitur_Informasi_Masjid.StrukturOrganisasiModel.java
 package com.example.masnur.Fitur_Informasi_Masjid;
 
 import android.os.Parcel;
@@ -16,7 +15,13 @@ public class StrukturOrganisasiModel implements Parcelable {
     @SerializedName("gambar_struktur_remas")
     private String gambarStrukturRemas;
 
-    // Constructor
+    // ✅ TAMBAHKAN FIELD URL ABSOLUT
+    @SerializedName("gambar_struktur_organisasi_url")
+    private String gambarStrukturOrganisasiUrl;
+
+    @SerializedName("gambar_struktur_remas_url")
+    private String gambarStrukturRemasUrl;
+
     public StrukturOrganisasiModel() {}
 
     // Getter & Setter
@@ -29,11 +34,20 @@ public class StrukturOrganisasiModel implements Parcelable {
     public String getGambarStrukturRemas() { return gambarStrukturRemas; }
     public void setGambarStrukturRemas(String gambarStrukturRemas) { this.gambarStrukturRemas = gambarStrukturRemas; }
 
+    // ✅ Getter & Setter URL
+    public String getGambarStrukturOrganisasiUrl() { return gambarStrukturOrganisasiUrl; }
+    public void setGambarStrukturOrganisasiUrl(String gambarStrukturOrganisasiUrl) { this.gambarStrukturOrganisasiUrl = gambarStrukturOrganisasiUrl; }
+
+    public String getGambarStrukturRemasUrl() { return gambarStrukturRemasUrl; }
+    public void setGambarStrukturRemasUrl(String gambarStrukturRemasUrl) { this.gambarStrukturRemasUrl = gambarStrukturRemasUrl; }
+
     // Parcelable
     protected StrukturOrganisasiModel(Parcel in) {
         idProfilMasjid = in.readInt();
         gambarStrukturOrganisasi = in.readString();
         gambarStrukturRemas = in.readString();
+        gambarStrukturOrganisasiUrl = in.readString(); // ✅
+        gambarStrukturRemasUrl = in.readString();       // ✅
     }
 
     @Override
@@ -41,6 +55,8 @@ public class StrukturOrganisasiModel implements Parcelable {
         dest.writeInt(idProfilMasjid);
         dest.writeString(gambarStrukturOrganisasi);
         dest.writeString(gambarStrukturRemas);
+        dest.writeString(gambarStrukturOrganisasiUrl); // ✅
+        dest.writeString(gambarStrukturRemasUrl);       // ✅
     }
 
     @Override

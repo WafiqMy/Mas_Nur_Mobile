@@ -18,32 +18,6 @@
             android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
-        <EditText
-            android:id="@+id/edtJudul"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Judul Berita"
-            android:padding="12dp"
-            android:background="@drawable/bg_input_field"
-            android:layout_marginBottom="16dp" />
-
-        <Spinner
-            android:id="@+id/spinnerTanggal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_input_field"
-            android:layout_marginBottom="16dp" />
-
-        <EditText
-            android:id="@+id/edtIsi"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:hint="Isi Berita"
-            android:inputType="textMultiLine"
-            android:padding="12dp"
-            android:background="@drawable/bg_input_field"
-            android:layout_marginBottom="16dp" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,6 +41,43 @@
             android:text="Ganti Gambar (Opsional)"
             android:background="@drawable/bg_button_login"
             android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/edtJudul"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Judul Berita"
+            android:padding="12dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTanggal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/edtIsi"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="Isi Berita (Maks. 12.000 karakter)"
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="4dp" /> <!-- dikurangi margin -->
+
+        <!-- ✅ Tambahkan counter di sini -->
+        <TextView
+            android:id="@+id/tvCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/12000"
+            android:textSize="12sp"
+            android:textColor="#777777"
+            android:layout_gravity="end"
             android:layout_marginBottom="16dp" />
 
         <Button

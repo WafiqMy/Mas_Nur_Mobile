@@ -7,28 +7,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class BeritaModel implements Parcelable {
 
-    @SerializedName("id_berita")
-    private String idBerita;
+    @SerializedName("id_berita") private String idBerita;
+    @SerializedName("judul_berita") private String judulBerita;
+    @SerializedName("isi_berita") private String isiBerita;
+    @SerializedName("tanggal_berita") private String tanggalBerita;
+    @SerializedName("foto_berita") private String fotoBerita;
+    @SerializedName("username") private String username;
 
-    @SerializedName("judul_berita")
-    private String judulBerita;
-
-    @SerializedName("isi_berita")
-    private String isiBerita;
-
-    @SerializedName("tanggal_berita")
-    private String tanggalBerita;
-
-    @SerializedName("foto_berita")
-    private String fotoBerita;
-
-    @SerializedName("username")
-    private String username;
-
-    // Constructor kosong (wajib untuk Gson dan Parcelable)
     public BeritaModel() {}
 
-    // Constructor lengkap
     public BeritaModel(String idBerita, String judulBerita, String isiBerita,
                        String tanggalBerita, String fotoBerita, String username) {
         this.idBerita = idBerita;
@@ -39,7 +26,6 @@ public class BeritaModel implements Parcelable {
         this.username = username;
     }
 
-    // Getter & Setter
     public String getIdBerita() { return idBerita; }
     public void setIdBerita(String idBerita) { this.idBerita = idBerita; }
 
@@ -58,7 +44,16 @@ public class BeritaModel implements Parcelable {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
-    // Parcelable: Constructor dari Parcel
+    // ✅ TAMBAHKAN METHOD INI
+    public String getFotoBeritaAbsolut() {
+        String url = getFotoBerita();
+        if (url == null || url.trim().isEmpty() || "default.jpg".equals(url)) {
+            return "https://via.placeholder.com/600x300/e0e0e0/999999?text=No+Image";
+        }
+        return url;
+    }
+
+    // Parcelable
     protected BeritaModel(Parcel in) {
         idBerita = in.readString();
         judulBerita = in.readString();
@@ -68,24 +63,15 @@ public class BeritaModel implements Parcelable {
         username = in.readString();
     }
 
-    // Parcelable: CREATOR
     public static final Creator<BeritaModel> CREATOR = new Creator<BeritaModel>() {
         @Override
-        public BeritaModel createFromParcel(Parcel in) {
-            return new BeritaModel(in);
-        }
-
+        public BeritaModel createFromParcel(Parcel in) { return new BeritaModel(in); }
         @Override
-        public BeritaModel[] newArray(int size) {
-            return new BeritaModel[size];
-        }
+        public BeritaModel[] newArray(int size) { return new BeritaModel[size]; }
     };
 
-    // Parcelable: Override methods
     @Override
-    public int describeContents() {
-        return 0;
-    }
+    public int describeContents() { return 0; }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

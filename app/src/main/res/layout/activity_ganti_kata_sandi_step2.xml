@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#FFFFFF">
 
-    <!-- 🔷 HEADER -->
-    <include layout="@layout/header" />
-
-    <!-- 🔽 KONTEN -->
+    <!-- KONTEN -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -37,9 +34,10 @@
             android:textSize="16sp"
             android:layout_marginBottom="8dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_field"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -47,8 +45,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Minimal 6 karakter"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_toStartOf="@id/btnTogglePasswordBaru" />
+
+            <ImageButton
+                android:id="@+id/btnTogglePasswordBaru"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Lihat kata sandi baru"
+                android:src="@drawable/ic_eye_off"
+                app:tint="@android:color/darker_gray" />
+
+        </RelativeLayout>
 
         <!-- Input Verifikasi -->
         <TextView
@@ -58,9 +72,10 @@
             android:textSize="16sp"
             android:layout_marginBottom="8dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_field"
             android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -68,11 +83,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ulangi kata sandi"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_toStartOf="@id/btnToggleVerifikasi" />
+
+            <ImageButton
+                android:id="@+id/btnToggleVerifikasi"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Lihat verifikasi kata sandi"
+                android:src="@drawable/ic_eye_off"
+                app:tint="@android:color/darker_gray" />
+
+        </RelativeLayout>
     </LinearLayout>
 
-    <!-- 🔽 TOMBOL SIMPAN DI BAWAH -->
+    <!-- TOMBOL SIMPAN DI BAWAH -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,7 +121,7 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <!-- 🔻 FOOTER -->
+    <!-- FOOTER -->
     <include layout="@layout/footer" />
 
 </LinearLayout>

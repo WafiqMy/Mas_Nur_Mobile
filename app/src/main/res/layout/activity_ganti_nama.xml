@@ -7,7 +7,6 @@
     android:background="#FFFFFF">
 
     <!-- 🔷 HEADER -->
-    <include layout="@layout/header" />
 
     <!-- 🔽 KONTEN -->
     <LinearLayout
@@ -59,14 +58,15 @@
         android:gravity="center"
         android:padding="16dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_kembali"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"
             android:text="Kembali"
             android:textColor="@color/colortextButton"
-            android:background="@drawable/bg_button_login"
+            android:background="@drawable/bg_button_kembali"
+            android:backgroundTint="@null"
             android:textAllCaps="false"
             android:textSize="16sp" />
 
@@ -81,7 +81,7 @@
             android:layout_weight="1"
             android:text="Simpan"
             android:textColor="@color/colortextButton"
-            android:background="@drawable/bg_button_kembali"
+            android:background="@drawable/bg_button_login"
             android:textAllCaps="false"
             android:textSize="16sp" />
     </LinearLayout>

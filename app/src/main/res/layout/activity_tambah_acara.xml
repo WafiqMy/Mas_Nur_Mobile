@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -23,7 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp" />
 
-        <!-- Card Upload Poster -->
+        <!-- Card Upload Gambar Utama -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="180dp"
@@ -31,15 +30,17 @@
             app:cardElevation="2dp"
             android:layout_marginBottom="20dp">
 
+            <!-- ✅ ID INI SUDAH DITAMBAHKAN -->
             <LinearLayout
                 android:id="@+id/layout_upload_poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="#F0F0F0">
+                android:background="#F0F0F0"
+                android:clickable="true"
+                android:focusable="true">
 
-                <!-- Preview gambar -->
                 <ImageView
                     android:id="@+id/imgPreview"
                     android:layout_width="match_parent"
@@ -48,7 +49,6 @@
                     android:visibility="gone"
                     android:contentDescription="Preview Gambar" />
 
-                <!-- Placeholder saat belum ada gambar -->
                 <LinearLayout
                     android:id="@+id/layoutPlaceholder"
                     android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tambahkan Gambar"
+                        android:text="Klik untuk upload gambar utama"
                         android:textColor="#A0A0A0"
                         android:layout_marginTop="8dp" />
                 </LinearLayout>
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Judul"
+            android:text="Judul *"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:layout_marginBottom="4dp" />
@@ -91,13 +91,51 @@
             android:padding="12dp"
             android:background="@drawable/bg_card_top_rounded"
             android:singleLine="true"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="16dp" />
+
+        <!-- Input Lokasi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lokasi *"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/et_lokasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masjid Al-Hikmah"
+            android:padding="12dp"
+            android:background="@drawable/bg_card_top_rounded"
+            android:singleLine="true"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Input Tanggal -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal *"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/et_tanggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="2025-12-15 (YYYY-MM-DD)"
+            android:padding="12dp"
+            android:background="@drawable/bg_card_top_rounded"
+            android:singleLine="true"
+            android:layout_marginBottom="16dp" />
 
         <!-- Input Deskripsi -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Deskripsi"
+            android:text="Deskripsi *"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:layout_marginBottom="4dp" />
@@ -105,12 +143,58 @@
         <EditText
             android:id="@+id/et_deskripsi"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:hint="Pengajian ini...."
+            android:layout_height="120dp"
+            android:hint="Pengajian ini diadakan untuk..."
             android:padding="12dp"
             android:gravity="top|start"
             android:background="@drawable/bg_card_top_rounded"
-            android:layout_marginBottom="32dp" />
+            android:layout_marginBottom="16dp" />
+
+        <!-- Dokumentasi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dokumentasi (Upload Foto)"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnTambahDokumentasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tambah Foto Dokumentasi"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Container untuk preview dokumentasi -->
+        <LinearLayout
+            android:id="@+id/layoutDokumentasiContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Input Video URLs -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="URL Video (opsional)"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/et_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="https://youtu.be/abc"
+            android:padding="12dp"
+            android:background="@drawable/bg_card_top_rounded"
+            android:singleLine="false"
+            android:layout_marginBottom="24dp" />
 
         <!-- Tombol Unggah -->
         <Button

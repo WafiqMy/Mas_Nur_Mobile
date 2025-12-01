@@ -42,7 +42,7 @@
             android:id="@+id/btnPilihPengurus"
             android:text="Pilih Gambar Pengurus"
             android:textColor="#000000"
-            android:backgroundTint="#E0EFEE"
+            android:background="@drawable/bg_button_login"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="12dp" />
@@ -68,7 +68,7 @@
             android:id="@+id/btnPilihRemas"
             android:text="Pilih Gambar Remas"
             android:textColor="#000000"
-            android:backgroundTint="#E0EFEE"
+            android:background="@drawable/bg_button_login"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="12dp" />
@@ -84,8 +84,9 @@
             <Button
                 android:id="@+id/btnBatal"
                 android:text="Batal"
-                android:backgroundTint="#F3C4C4"
-                android:textColor="#000000"
+                android:background="@drawable/bg_hapus"
+                android:textColor="@color/colortextButton"
+                android:backgroundTint="#F4C6C6"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -94,7 +95,7 @@
             <Button
                 android:id="@+id/btnSimpan"
                 android:text="Simpan Perubahan"
-                android:backgroundTint="#BFE0DA"
+                android:background="@drawable/bg_button_login"
                 android:textColor="@color/colortextButton"
                 android:layout_width="0dp"
                 android:layout_height="55dp"

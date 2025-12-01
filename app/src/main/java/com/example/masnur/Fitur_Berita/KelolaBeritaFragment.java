@@ -1,7 +1,6 @@
 package com.example.masnur.Fitur_Berita;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,16 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.masnur.Api.ApiClient;
 import com.example.masnur.Api.ApiService;
 import com.example.masnur.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +30,32 @@ public class KelolaBeritaFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<BeritaModel> beritaList = new ArrayList<>();
-    private final String URL = "http://masnurhuda.atwebpages.com/API/get_berita.php";
+    private KelolaBeritaAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_kelola_berita, container, false);
+
         recyclerView = view.findViewById(R.id.recyclerViewkelolaBerita);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        adapter = new KelolaBeritaAdapter(requireContext(), beritaList, new KelolaBeritaAdapter.OnBeritaActionListener() {
+            @Override
+            public void onEditClick(BeritaModel berita) {
+                Intent intent = new Intent(getActivity(), EditBeritaActivity.class);
+                intent.putExtra("berita", berita);
+                requireActivity().startActivityForResult(intent, 101);
+            }
+
+            @Override
+            public void onDeleteClick(String idBerita) {
+                hapusBerita(idBerita);
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
 
         Button btnTambah = view.findViewById(R.id.btnTambahBerita);
         btnTambah.setOnClickListener(v -> {
@@ -55,70 +64,57 @@ public class KelolaBeritaFragment extends Fragment {
         });
 
         loadBerita();
+
         return view;
     }
 
     private void loadBerita() {
-        RequestQueue queue = Volley.newRequestQueue(requireContext());
-
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URL, null, response -> {
-            beritaList.clear();
-            for (int i = 0; i < response.length(); i++) {
-                try {
-                    JSONObject obj = response.getJSONObject(i);
-                    beritaList.add(new BeritaModel(
-                            obj.getString("id_berita"),
-                            obj.getString("judul_berita"),
-                            obj.getString("isi_berita"),
-                            obj.getString("tanggal_berita"),
-                            obj.getString("foto_berita"),
-                            obj.getString("username")
-                    ));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        ApiService api = ApiClient.getService();
+        api.getBerita().enqueue(new Callback<BeritaListResponse>() {
+            @Override
+            public void onResponse(Call<BeritaListResponse> call, Response<BeritaListResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    BeritaListResponse res = response.body();
+                    if (res.isSuccess() && res.getData() != null) {
+                        beritaList.clear();
+                        beritaList.addAll(res.getData());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(requireContext(), "Tidak ada berita", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Gagal: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
-            KelolaBeritaAdapter adapter = new KelolaBeritaAdapter(requireContext(), beritaList, new KelolaBeritaAdapter.OnBeritaActionListener() {
-                @Override
-                public void onEditClick(BeritaModel berita) {
-                    Intent intent = new Intent(getActivity(), EditBeritaActivity.class);
-                    intent.putExtra("berita", berita);
-                    requireActivity().startActivityForResult(intent, 101);
-                }
-
-                @Override
-                public void onDeleteClick(String idBerita) {
-                    hapusBerita(idBerita);
-                }
-            });
-
-            recyclerView.setAdapter(adapter);
-        }, error -> Toast.makeText(requireContext(), "Gagal ambil data", Toast.LENGTH_SHORT).show());
-
-        queue.add(request);
+            @Override
+            public void onFailure(Call<BeritaListResponse> call, Throwable t) {
+                Toast.makeText(requireContext(), "Jaringan error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    public void hapusBerita(String id) {
-        ProgressDialog dialog = ProgressDialog.show(requireContext(), "Menghapus...", "Mohon tunggu", true);
-
-        ApiService apiService = ApiClient.getService();
-        apiService.hapusBerita(id).enqueue(new Callback<BeritaResponse>() {
+    private void hapusBerita(String id) {
+        ApiService api = ApiClient.getService();
+        api.hapusBerita(id).enqueue(new Callback<BeritaResponse>() {
             @Override
             public void onResponse(Call<BeritaResponse> call, Response<BeritaResponse> response) {
-                dialog.dismiss();
-                if (response.isSuccessful() && response.body() != null && "success".equalsIgnoreCase(response.body().getStatus())) {
-                    Toast.makeText(requireContext(), "Berita dihapus", Toast.LENGTH_SHORT).show();
-                    loadBerita();
+                if (response.isSuccessful() && response.body() != null) {
+                    BeritaResponse res = response.body();
+                    if ("success".equals(res.getStatus()) || "1".equals(res.getStatus())) {
+                        Toast.makeText(requireContext(), "✓ Berita dihapus", Toast.LENGTH_SHORT).show();
+                        loadBerita();
+                    } else {
+                        Toast.makeText(requireContext(), "✗ Gagal: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(requireContext(), "Gagal hapus", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<BeritaResponse> call, Throwable t) {
-                dialog.dismiss();
-                Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Jaringan error", Toast.LENGTH_SHORT).show();
             }
         });
     }

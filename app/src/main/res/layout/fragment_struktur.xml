@@ -94,15 +94,16 @@
                 android:text="Ubah Gambar Struktur Organisasi"
                 android:backgroundTint="#BFE0DA"
                 android:textColor="@color/colortextButton"
+                android:background="@drawable/bg_button_login"
                 android:layout_width="290dp"
                 android:layout_height="60dp" />
 
             <Button
                 android:id="@+id/btnHapusStruktur"
                 android:text="Hapus Gambar Struktur Organisasi"
-                android:backgroundTint="#F3C4C4"
                 android:textColor="@color/colortextButton"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/bg_hapus"
                 android:layout_width="290dp"
                 android:layout_height="60dp" />
         </LinearLayout>

@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.masnur.Api.ApiClient;
 import com.example.masnur.Api.ApiService;
 import com.example.masnur.R;
@@ -108,22 +109,40 @@ public class EditStrukturOrganisasiActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        // Load gambar pengurus
-        String urlPengurus = "http://masnurhuda.atwebpages.com/API/api_gambar_profil_masjid.php?file_name=" +
-                (struktur.getGambarStrukturOrganisasi() != null ? struktur.getGambarStrukturOrganisasi() : "default_placeholder.png");
+        // ——— PENGURUS ———
+        String urlPengurus = struktur.getGambarStrukturOrganisasiUrl();
+        if (urlPengurus == null || urlPengurus.trim().isEmpty()) {
+            String fn = struktur.getGambarStrukturOrganisasi();
+            if (fn != null && !fn.trim().isEmpty()) {
+                urlPengurus = "https://masnurhudanganjuk.pbltifnganjuk.com/API/uploads/profil_masjid/" + fn;
+            }
+        }
+        if (urlPengurus == null || urlPengurus.trim().isEmpty()) {
+            urlPengurus = "https://masnurhudanganjuk.pbltifnganjuk.com/API/uploads/profil_masjid/default_placeholder.png";
+        }
         Glide.with(this)
                 .load(urlPengurus)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.default_image)
-                .error(R.drawable.ic_launcher_background)
+                .error(R.drawable.default_image)
                 .into(imgPengurus);
 
-        // Load gambar remas
-        String urlRemas = "http://masnurhuda.atwebpages.com/API/api_gambar_profil_masjid.php?file_name=" +
-                (struktur.getGambarStrukturRemas() != null ? struktur.getGambarStrukturRemas() : "default_placeholder.png");
+        // ——— REMAS ———
+        String urlRemas = struktur.getGambarStrukturRemasUrl();
+        if (urlRemas == null || urlRemas.trim().isEmpty()) {
+            String fn = struktur.getGambarStrukturRemas();
+            if (fn != null && !fn.trim().isEmpty()) {
+                urlRemas = "https://masnurhudanganjuk.pbltifnganjuk.com/API/uploads/profil_masjid/" + fn;
+            }
+        }
+        if (urlRemas == null || urlRemas.trim().isEmpty()) {
+            urlRemas = "https://masnurhudanganjuk.pbltifnganjuk.com/API/uploads/profil_masjid/default_placeholder.png";
+        }
         Glide.with(this)
                 .load(urlRemas)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.default_image)
-                .error(R.drawable.ic_launcher_background)
+                .error(R.drawable.default_image)
                 .into(imgRemas);
     }
 
@@ -132,12 +151,11 @@ public class EditStrukturOrganisasiActivity extends AppCompatActivity {
 
         ProgressDialog dialog = ProgressDialog.show(this, "Menyimpan...", "Mohon tunggu", true);
 
-        RequestBody reqUsername = RequestBody.create(username, MediaType.get("text/plain"));
+        RequestBody reqUsername = RequestBody.create(MediaType.parse("text/plain"), username);
 
         MultipartBody.Part filePengurus = null;
         MultipartBody.Part fileRemas = null;
 
-        // Hanya kirim file jika diubah
         if (pengurusDiubah && bitmapPengurus != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmapPengurus.compress(Bitmap.CompressFormat.JPEG, 80, stream);
@@ -152,7 +170,7 @@ public class EditStrukturOrganisasiActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/jpeg"));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
             filePengurus = MultipartBody.Part.createFormData("gambar_struktur_organisasi", file.getName(), requestFile);
         }
 
@@ -170,7 +188,7 @@ public class EditStrukturOrganisasiActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/jpeg"));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
             fileRemas = MultipartBody.Part.createFormData("gambar_struktur_remas", file.getName(), requestFile);
         }
 
@@ -183,9 +201,22 @@ public class EditStrukturOrganisasiActivity extends AppCompatActivity {
             public void onResponse(Call<StrukturOrganisasiResponse> call, Response<StrukturOrganisasiResponse> response) {
                 dialog.dismiss();
                 if (response.isSuccessful() && response.body() != null) {
-                    String msg = response.body().getMessage();
+                    StrukturOrganisasiResponse res = response.body();
+                    String msg = res.getMessage();
                     Toast.makeText(EditStrukturOrganisasiActivity.this, msg != null ? msg : "Berhasil disimpan", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
+
+                    // ✅ Kirim data baru ke fragment
+                    StrukturOrganisasiModel updated = res.getData();
+                    if (updated == null) {
+                        updated = new StrukturOrganisasiModel();
+                        // Isi dengan data terbaru (jika API tidak return full data)
+                        updated.setGambarStrukturOrganisasi(struktur.getGambarStrukturOrganisasi()); // tetap
+                        updated.setGambarStrukturRemas(struktur.getGambarStrukturRemas()); // tetap
+                    }
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("updated_struktur", updated);
+                    setResult(RESULT_OK, resultIntent);
                     finish();
                 } else {
                     Toast.makeText(EditStrukturOrganisasiActivity.this, "Gagal: " + response.code(), Toast.LENGTH_SHORT).show();

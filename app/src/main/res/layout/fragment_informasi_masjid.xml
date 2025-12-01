@@ -49,7 +49,7 @@
             <Button
                 android:id="@+id/btnKelolaSejarah"
                 android:text="Kelola Informasi Masjid"
-                android:backgroundTint="#BFE0DA"
+                android:background="@drawable/bg_button_login"
                 android:textColor="@color/colortextButton"
                 android:layout_width="290dp"
                 android:layout_height="60dp" />

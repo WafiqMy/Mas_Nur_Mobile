@@ -40,26 +40,47 @@
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
-            <!-- Label + Input Kata Sandi Baru -->
+            <!-- Input Kata Sandi Baru -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Masukan Kata Sandi Baru"
+                android:text="Masukkan Kata Sandi Baru"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 android:layout_marginBottom="6dp"/>
 
-            <EditText
-                android:id="@+id/edtPasswordBaru"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:inputType="textPassword"
                 android:background="@drawable/bg_input_field"
-                android:paddingHorizontal="16dp"
-                android:textColorHint="#888888"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp">
 
-            <!-- Label + Input Verifikasi Kata Sandi -->
+                <EditText
+                    android:id="@+id/edtPasswordBaru"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toStartOf="@id/btnTogglePassword"
+                    android:inputType="textPassword"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColorHint="#888888" />
+
+                <ImageButton
+                    android:id="@+id/btnTogglePassword"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Lihat kata sandi"
+                    android:src="@drawable/ic_eye_off"
+                    app:tint="@android:color/darker_gray" />
+
+            </RelativeLayout>
+
+            <!-- Input Verifikasi Kata Sandi -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,27 +89,48 @@
                 android:textSize="14sp"
                 android:layout_marginBottom="6dp"/>
 
-            <EditText
-                android:id="@+id/edtVerifikasiPassword"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:inputType="textPassword"
                 android:background="@drawable/bg_input_field"
-                android:paddingHorizontal="16dp"
-                android:textColorHint="#888888"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp">
+
+                <EditText
+                    android:id="@+id/edtVerifikasiPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toStartOf="@id/btnToggleConfirm"
+                    android:inputType="textPassword"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColorHint="#888888" />
+
+                <ImageButton
+                    android:id="@+id/btnToggleConfirm"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Lihat verifikasi kata sandi"
+                    android:src="@drawable/ic_eye_off"
+                    app:tint="@android:color/darker_gray" />
+
+            </RelativeLayout>
 
             <!-- Tombol Lanjut -->
             <Button
                 android:id="@+id/btnLanjut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#66BBAA"
+                android:background="@drawable/bg_button_login"
                 android:paddingVertical="12dp"
                 android:text="Lanjut"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:cornerRadius="8dp"/>
+                app:cornerRadius="8dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.masnur.R;
 
 import java.util.List;
@@ -47,29 +48,17 @@ public class KelolaBeritaAdapter extends RecyclerView.Adapter<KelolaBeritaAdapte
         holder.textJudul.setText(berita.getJudulBerita());
         holder.textTanggal.setText(berita.getTanggalBerita());
 
-        // ✅ PERBAIKAN: Handle URL dobel (http://...http://...) & null
-        String imageUrl = berita.getFotoBerita();
-        if (imageUrl != null && imageUrl.startsWith("http")) {
-            // Fix double http://
-            int secondHttpIndex = imageUrl.indexOf("http://", 7);
-            if (secondHttpIndex != -1) {
-                imageUrl = imageUrl.substring(secondHttpIndex);
-            }
-            // Fix double https://
-            int secondHttpsIndex = imageUrl.indexOf("https://", 8);
-            if (secondHttpsIndex != -1) {
-                imageUrl = imageUrl.substring(secondHttpsIndex);
-            }
+        String imageUrl = berita.getFotoBeritaAbsolut(); // ✅
 
-            Glide.with(context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.default_image)
-                    .error(R.drawable.default_image)
-                    .centerCrop()
-                    .into(holder.imageBerita);
-        } else {
-            holder.imageBerita.setImageResource(R.drawable.default_image);
-        }
+        Glide.with(context)
+                .load(imageUrl)
+                .override(300, 200)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.default_image)
+                .error(R.drawable.default_image)
+                .fallback(R.drawable.default_image)
+                .into(holder.imageBerita);
 
         holder.btnEdit.setOnClickListener(v -> {
             if (listener != null) {
@@ -82,9 +71,7 @@ public class KelolaBeritaAdapter extends RecyclerView.Adapter<KelolaBeritaAdapte
                 new AlertDialog.Builder(context)
                         .setTitle("Konfirmasi Hapus")
                         .setMessage("Yakin ingin menghapus berita ini?")
-                        .setPositiveButton("Ya", (dialog, which) ->
-                                listener.onDeleteClick(berita.getIdBerita())
-                        )
+                        .setPositiveButton("Ya", (dialog, which) -> listener.onDeleteClick(berita.getIdBerita()))
                         .setNegativeButton("Batal", null)
                         .show();
             }
