@@ -21,11 +21,10 @@ import com.bumptech.glide.Glide;
 import com.example.masnur.Api.ApiClient;
 import com.example.masnur.Api.ApiService;
 import com.example.masnur.R;
-import com.example.masnur.Fitur_Persewaan.BarangModel;
-import com.example.masnur.Fitur_Persewaan.ReservasiResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -37,7 +36,7 @@ import retrofit2.Response;
 
 public class EditBarangActivity extends AppCompatActivity {
 
-    private EditText edtNama, edtHarga, edtJumlah;
+    private EditText edtNama, edtHarga, edtJumlah, edtDeskripsi, edtSpesifikasi, edtFasilitas;
     private Spinner spinnerJenis;
     private ImageView imgPreview;
     private Button btnPilihGambar, btnSimpan;
@@ -70,7 +69,6 @@ public class EditBarangActivity extends AppCompatActivity {
         initViews();
         apiService = ApiClient.getService();
 
-        // Ambil data dari intent
         barang = getIntent().getParcelableExtra("barang");
         if (barang == null) {
             Toast.makeText(this, "Data barang tidak ditemukan", Toast.LENGTH_SHORT).show();
@@ -82,9 +80,14 @@ public class EditBarangActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        // 🔹 TAMBAHKAN 3 FIELD BARU
         edtNama = findViewById(R.id.edtNama);
         edtHarga = findViewById(R.id.edtHarga);
         edtJumlah = findViewById(R.id.edtJumlah);
+        edtDeskripsi = findViewById(R.id.edtDeskripsi);
+        edtSpesifikasi = findViewById(R.id.edtSpesifikasi);
+        edtFasilitas = findViewById(R.id.edtFasilitas);
+
         spinnerJenis = findViewById(R.id.spinnerJenis);
         imgPreview = findViewById(R.id.imgPreview);
         btnPilihGambar = findViewById(R.id.btnPilihGambar);
@@ -119,8 +122,11 @@ public class EditBarangActivity extends AppCompatActivity {
         edtNama.setText(barang.getNamaBarang());
         edtHarga.setText(String.valueOf(barang.getHarga()));
         edtJumlah.setText(String.valueOf(barang.getJumlah()));
+        // 🔹 SET 3 FIELD BARU
+        edtDeskripsi.setText(barang.getDeskripsi() != null ? barang.getDeskripsi() : "");
+        edtSpesifikasi.setText(barang.getSpesifikasi() != null ? barang.getSpesifikasi() : "");
+        edtFasilitas.setText(barang.getFasilitas() != null ? barang.getFasilitas() : "");
 
-        // Set spinner
         String[] jenis = {"Gedung", "Alat Multimedia", "Alat Musik"};
         for (int i = 0; i < jenis.length; i++) {
             if (barang.getJenis().toLowerCase().contains(jenis[i].toLowerCase())) {
@@ -129,8 +135,8 @@ public class EditBarangActivity extends AppCompatActivity {
             }
         }
 
-        // Load gambar
-        String url = "http://masnurhuda.atwebpages.com/API/get_gambar.php?file=" + barang.getGambar();
+        // ✅ Perbaiki URL: hapus spasi ekstra
+        String url = "https://masnurhudanganjuk.pbltifnganjuk.com/API/get_gambar.php?file=" + barang.getGambar();
         Glide.with(this)
                 .load(url)
                 .placeholder(R.drawable.default_image)
@@ -148,11 +154,11 @@ public class EditBarangActivity extends AppCompatActivity {
             return false;
         }
         if (harga.isEmpty() || Integer.parseInt(harga) < 0) {
-            edtHarga.setError("Harga harus angka >= 0");
+            edtHarga.setError("Harga harus angka ≥ 0");
             return false;
         }
         if (jumlah.isEmpty() || Integer.parseInt(jumlah) < 1) {
-            edtJumlah.setError("Jumlah harus >= 1");
+            edtJumlah.setError("Jumlah harus ≥ 1");
             return false;
         }
         return true;
@@ -166,30 +172,32 @@ public class EditBarangActivity extends AppCompatActivity {
         RequestBody jenis = RequestBody.create(spinnerJenis.getSelectedItem().toString(), MediaType.get("text/plain"));
         RequestBody harga = RequestBody.create(edtHarga.getText().toString(), MediaType.get("text/plain"));
         RequestBody jumlah = RequestBody.create(edtJumlah.getText().toString(), MediaType.get("text/plain"));
+        // 🔹 TAMBAHKAN 3 FIELD
+        RequestBody deskripsi = RequestBody.create(edtDeskripsi.getText().toString(), MediaType.get("text/plain"));
+        RequestBody spesifikasi = RequestBody.create(edtSpesifikasi.getText().toString(), MediaType.get("text/plain"));
+        RequestBody fasilitas = RequestBody.create(edtFasilitas.getText().toString(), MediaType.get("text/plain"));
 
         MultipartBody.Part filePart = null;
 
         if (gambarDiubah && bitmap != null) {
-            // Kompres ke JPEG
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-            byte[] byteArray = stream.toByteArray();
-
-            File file = new File(getCacheDir(), "gambar_edit.jpg");
-            try {
-                java.io.FileOutputStream fos = new java.io.FileOutputStream(file);
-                fos.write(byteArray);
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            File compressedFile = compressBitmapToFile(bitmap, 90);
+            if (compressedFile != null && compressedFile.length() > 2 * 1024 * 1024) {
+                compressedFile = compressBitmapToFile(bitmap, 70);
             }
-
-            RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/jpeg"));
-            filePart = MultipartBody.Part.createFormData("gambar", file.getName(), requestFile);
+            if (compressedFile == null || !compressedFile.exists()) {
+                dialog.dismiss();
+                Toast.makeText(this, "Gagal kompres gambar", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            RequestBody requestFile = RequestBody.create(compressedFile, MediaType.parse("image/jpeg"));
+            filePart = MultipartBody.Part.createFormData("gambar", compressedFile.getName(), requestFile);
         }
 
+        // ✅ Panggil method editBarang versi lengkap (8 param teks + 1 file)
         Call<ReservasiResponse> call = apiService.editBarang(
-                idPersewaan, namaBarang, jenis, harga, jumlah, filePart
+                idPersewaan, namaBarang, jenis, harga, jumlah,
+                deskripsi, spesifikasi, fasilitas,
+                filePart
         );
 
         call.enqueue(new Callback<ReservasiResponse>() {
@@ -216,5 +224,23 @@ public class EditBarangActivity extends AppCompatActivity {
                 Toast.makeText(EditBarangActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    // ✅ Helper kompresi gambar
+    private File compressBitmapToFile(Bitmap bitmap, int quality) {
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            File file = new File(getCacheDir(), "compressed_" + System.currentTimeMillis() + ".jpg");
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(byteArray);
+            fos.close();
+            return file;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

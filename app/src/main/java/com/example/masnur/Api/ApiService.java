@@ -72,6 +72,9 @@ public interface ApiService {
     );
     // Tambahkan ini di bawah interface yang ada
 
+    // Tambahkan di interface ApiService.java — gantikan yang lama
+
+    // ✅ TAMBAH BARANG — 7 field teks + gambar
     @Multipart
     @POST("API/api_tambah_barang.php")
     Call<ReservasiResponse> tambahBarang(
@@ -79,8 +82,14 @@ public interface ApiService {
             @Part("Jenis") RequestBody jenis,
             @Part("harga") RequestBody harga,
             @Part("jumlah") RequestBody jumlah,
-            @Part MultipartBody.Part gambar  // ← bisa null
+            // 🔹 TAMBAHAN
+            @Part("deskripsi") RequestBody deskripsi,
+            @Part("spesifikasi") RequestBody spesifikasi,
+            @Part("fasilitas") RequestBody fasilitas,
+            @Part MultipartBody.Part gambar  // opsional
     );
+
+    // ✅ EDIT BARANG — 8 field teks (termasuk id) + gambar
     @Multipart
     @POST("API/api_edit_barang.php")
     Call<ReservasiResponse> editBarang(
@@ -89,9 +98,12 @@ public interface ApiService {
             @Part("Jenis") RequestBody jenis,
             @Part("harga") RequestBody harga,
             @Part("jumlah") RequestBody jumlah,
+            // 🔹 TAMBAHAN
+            @Part("deskripsi") RequestBody deskripsi,
+            @Part("spesifikasi") RequestBody spesifikasi,
+            @Part("fasilitas") RequestBody fasilitas,
             @Part MultipartBody.Part gambar  // opsional
     );
-
     // ✅ Hapus Barang
     @FormUrlEncoded
     @POST("API/api_hapus_barang.php")

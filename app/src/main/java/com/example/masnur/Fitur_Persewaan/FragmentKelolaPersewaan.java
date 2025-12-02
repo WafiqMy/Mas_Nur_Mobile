@@ -38,30 +38,24 @@ public class FragmentKelolaPersewaan extends Fragment {
     private List<BarangModel> barangList = new ArrayList<>();
 
     public FragmentKelolaPersewaan() {
-        // Konstruktor kosong diperlukan oleh Fragment
+        // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_kelola_pemesanan, container, false);
 
-        // Inisialisasi view
         layoutGedung = view.findViewById(R.id.layoutGedung);
         layoutMultimedia = view.findViewById(R.id.layoutMultimedia);
         layoutMusik = view.findViewById(R.id.layoutMusik);
 
-        // Tombol tambah barang
         Button btnTambah = view.findViewById(R.id.btnTambahBarang);
         btnTambah.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), TambahBarangActivity.class);
             startActivityForResult(intent, 100);
         });
 
-        // Setup API
         apiService = ApiClient.getService();
-
-        // Ambil data barang
         loadBarangData();
 
         return view;
@@ -107,15 +101,9 @@ public class FragmentKelolaPersewaan extends Fragment {
             }
         }
 
-        for (BarangModel b : gedung) {
-            layoutGedung.addView(buatItemView(b));
-        }
-        for (BarangModel b : multimedia) {
-            layoutMultimedia.addView(buatItemView(b));
-        }
-        for (BarangModel b : musik) {
-            layoutMusik.addView(buatItemView(b));
-        }
+        for (BarangModel b : gedung) layoutGedung.addView(buatItemView(b));
+        for (BarangModel b : multimedia) layoutMultimedia.addView(buatItemView(b));
+        for (BarangModel b : musik) layoutMusik.addView(buatItemView(b));
     }
 
     private View buatItemView(BarangModel barang) {
@@ -125,26 +113,34 @@ public class FragmentKelolaPersewaan extends Fragment {
         TextView textHarga = view.findViewById(R.id.textHarga);
         TextView textJumlah = view.findViewById(R.id.textJumlah);
         ImageView imageBarang = view.findViewById(R.id.imageBarang);
+        Button btnEdit = view.findViewById(R.id.btnEdit);
+        Button btnHapus = view.findViewById(R.id.btnHapus);
 
         textNama.setText(barang.getNamaBarang());
         textHarga.setText("Rp " + String.format("%,d", barang.getHarga()).replace(',', '.'));
         textJumlah.setText("Stok: " + barang.getJumlah());
 
-        String imageUrl = "https://masnurhudanganjuk.pbltifnganjuk.com/API/get_gambar.php?file=" + barang.getGambar();
+        // ✅ Perbaiki URL: hapus spasi ekstra
+        String url = "https://masnurhudanganjuk.pbltifnganjuk.com/API/get_gambar.php?file=" + barang.getGambar();
         Glide.with(this)
-                .load(imageUrl)
+                .load(url)
                 .placeholder(R.drawable.default_image)
                 .error(R.drawable.default_image)
                 .centerCrop()
                 .into(imageBarang);
 
-        view.findViewById(R.id.btnEdit).setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), EditBarangActivity.class);
-            intent.putExtra("barang", barang); // pastikan BarangModel implements Parcelable
-            startActivityForResult(intent, 101);
+        // ✅ Ubah "Edit" → "Detail", lalu buka DetailBarangFragment
+        btnEdit.setText("Detail");
+        btnEdit.setOnClickListener(v -> {
+            Fragment fragment = DetailBarangFragment.newInstance(barang);
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frameLayout, fragment)
+                    .addToBackStack(null)
+                    .commit();
         });
 
-        view.findViewById(R.id.btnHapus).setOnClickListener(v -> {
+        btnHapus.setOnClickListener(v -> {
             new AlertDialog.Builder(requireContext())
                     .setTitle("Konfirmasi Hapus")
                     .setMessage("Yakin ingin menghapus " + barang.getNamaBarang() + "?")

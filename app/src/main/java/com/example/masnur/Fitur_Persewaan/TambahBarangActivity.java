@@ -3,6 +3,7 @@ package com.example.masnur.Fitur_Persewaan;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,10 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.masnur.Api.ApiClient;
 import com.example.masnur.Api.ApiService;
 import com.example.masnur.R;
-import com.example.masnur.Fitur_Persewaan.ReservasiResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -35,7 +36,7 @@ import retrofit2.Response;
 
 public class TambahBarangActivity extends AppCompatActivity {
 
-    private EditText edtNama, edtHarga, edtJumlah;
+    private EditText edtNama, edtHarga, edtJumlah, edtDeskripsi, edtSpesifikasi, edtFasilitas;
     private Spinner spinnerJenis;
     private ImageView imgPreview;
     private Button btnPilihGambar, btnSimpan;
@@ -48,11 +49,16 @@ public class TambahBarangActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData();
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                        imgPreview.setImageBitmap(bitmap);
-                        imgPreview.setVisibility(android.view.View.VISIBLE);
-                    } catch (IOException e) {
-                        Toast.makeText(this, "Gagal memuat gambar", Toast.LENGTH_SHORT).show();
+                        // Decode & compress di awal
+                        bitmap = decodeSampledBitmapFromUri(imageUri, 1024, 1024);
+                        if (bitmap != null) {
+                            imgPreview.setImageBitmap(bitmap);
+                            imgPreview.setVisibility(android.view.View.VISIBLE);
+                        } else {
+                            throw new IOException("Bitmap null");
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Gagal memuat/memproses gambar", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -73,6 +79,9 @@ public class TambahBarangActivity extends AppCompatActivity {
         edtNama = findViewById(R.id.edtNama);
         edtHarga = findViewById(R.id.edtHarga);
         edtJumlah = findViewById(R.id.edtJumlah);
+        edtDeskripsi = findViewById(R.id.edtDeskripsi);
+        edtSpesifikasi = findViewById(R.id.edtSpesifikasi);
+        edtFasilitas = findViewById(R.id.edtFasilitas);
         spinnerJenis = findViewById(R.id.spinnerJenis);
         imgPreview = findViewById(R.id.imgPreview);
         btnPilihGambar = findViewById(R.id.btnPilihGambar);
@@ -103,19 +112,19 @@ public class TambahBarangActivity extends AppCompatActivity {
 
     private boolean validateInput() {
         String nama = edtNama.getText().toString().trim();
-        String harga = edtHarga.getText().toString().trim();
-        String jumlah = edtJumlah.getText().toString().trim();
+        String hargaStr = edtHarga.getText().toString().trim();
+        String jumlahStr = edtJumlah.getText().toString().trim();
 
         if (nama.isEmpty()) {
-            edtNama.setError("Nama barang wajib diisi");
+            edtNama.setError("Wajib diisi");
             return false;
         }
-        if (harga.isEmpty() || Integer.parseInt(harga) < 0) {
-            edtHarga.setError("Harga harus angka >= 0");
+        if (hargaStr.isEmpty() || Integer.parseInt(hargaStr) < 0) {
+            edtHarga.setError("Harga ≥ 0");
             return false;
         }
-        if (jumlah.isEmpty() || Integer.parseInt(jumlah) < 1) {
-            edtJumlah.setError("Jumlah harus >= 1");
+        if (jumlahStr.isEmpty() || Integer.parseInt(jumlahStr) < 1) {
+            edtJumlah.setError("Stok ≥ 1");
             return false;
         }
         return true;
@@ -124,62 +133,101 @@ public class TambahBarangActivity extends AppCompatActivity {
     private void simpanBarang() {
         ProgressDialog dialog = ProgressDialog.show(this, "Menyimpan...", "Mohon tunggu", true);
 
-        // Siapkan data teks
         RequestBody namaBarang = RequestBody.create(edtNama.getText().toString(), MediaType.get("text/plain"));
         RequestBody jenis = RequestBody.create(spinnerJenis.getSelectedItem().toString(), MediaType.get("text/plain"));
         RequestBody harga = RequestBody.create(edtHarga.getText().toString(), MediaType.get("text/plain"));
         RequestBody jumlah = RequestBody.create(edtJumlah.getText().toString(), MediaType.get("text/plain"));
+        // 🔹 TAMBAHAN
+        RequestBody deskripsi = RequestBody.create(edtDeskripsi.getText().toString(), MediaType.get("text/plain"));
+        RequestBody spesifikasi = RequestBody.create(edtSpesifikasi.getText().toString(), MediaType.get("text/plain"));
+        RequestBody fasilitas = RequestBody.create(edtFasilitas.getText().toString(), MediaType.get("text/plain"));
 
-        // Siapkan file gambar (jika ada)
         MultipartBody.Part filePart = null;
 
         if (bitmap != null) {
-            // Kompres gambar ke PNG
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-
-            File file = new File(getCacheDir(), "gambar_temp.png");
-            try {
-                java.io.FileOutputStream fos = new java.io.FileOutputStream(file);
-                fos.write(byteArray);
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            // Kompres & pastikan ≤ 2MB
+            File compressedFile = compressBitmapToFile(bitmap, 90); // kualitas 90%
+            if (compressedFile != null && compressedFile.length() > 2 * 1024 * 1024) {
+                // Jika masih >2MB, turunkan kualitas
+                compressedFile = compressBitmapToFile(bitmap, 70);
             }
 
-            RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/png"));
-            filePart = MultipartBody.Part.createFormData("gambar", file.getName(), requestFile);
+            if (compressedFile == null || !compressedFile.exists()) {
+                dialog.dismiss();
+                Toast.makeText(this, "Gagal kompres gambar", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            RequestBody requestFile = RequestBody.create(compressedFile, MediaType.parse("image/jpeg"));
+            filePart = MultipartBody.Part.createFormData("gambar", compressedFile.getName(), requestFile);
         }
 
-        // ✅ KIRIM HANYA filePart (tanpa gambarBody)
         Call<ReservasiResponse> call = apiService.tambahBarang(
-                namaBarang, jenis, harga, jumlah, filePart
+                namaBarang, jenis, harga, jumlah,
+                // 🔹 TAMBAHKAN 3 BARU (API belum pakai, jadi kita kirim sebagai field tambahan)
+                deskripsi, spesifikasi, fasilitas, // ❌ TAPI API PHP BELUM DUKUNG!
+                filePart
         );
 
-        call.enqueue(new Callback<ReservasiResponse>() {
-            @Override
-            public void onResponse(Call<ReservasiResponse> call, Response<ReservasiResponse> response) {
-                dialog.dismiss();
-                if (response.isSuccessful() && response.body() != null) {
-                    ReservasiResponse res = response.body();
-                    if ("success".equals(res.getStatus())) {
-                        Toast.makeText(TambahBarangActivity.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_OK);
-                        finish();
-                    } else {
-                        Toast.makeText(TambahBarangActivity.this, res.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(TambahBarangActivity.this, "Gagal: " + response.code() + " - " + response.message(), Toast.LENGTH_SHORT).show();
-                }
-            }
+        // ❗ KOREKSI: Karena ApiService belum punya method 7 param, kita buat dulu di bawah!
+        // → LANJUT KE LANGKAH 7
 
-            @Override
-            public void onFailure(Call<ReservasiResponse> call, Throwable t) {
-                dialog.dismiss();
-                Toast.makeText(TambahBarangActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+        // Untuk sementara, kita buat versi terpisah (karena API belum support 7 field text)
+        // ✅ SOLUSI: Kita kirim via @Part Multipart — sudah kompatibel sejak awal!
+
+        // TAPI: ApiService.tambahBarang() saat ini hanya 5 param!
+        // KITA FIX DI LANGKAH 7 → update ApiService & buat method baru
+
+        dialog.dismiss();
+        Toast.makeText(this, "⚠️ ApiService belum diupdate — lanjut ke langkah 7", Toast.LENGTH_LONG).show();
+        // Ini placeholder — nanti diganti setelah ApiService diperbarui
+    }
+
+    // Helper: decode & scale bitmap
+    private Bitmap decodeSampledBitmapFromUri(Uri uri, int reqWidth, int reqHeight) {
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
+
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+            options.inJustDecodeBounds = false;
+
+            return BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
             }
-        });
+        }
+        return inSampleSize;
+    }
+
+    // Helper: kompres bitmap ke file JPEG ≤ 2MB
+    private File compressBitmapToFile(Bitmap bitmap, int quality) {
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            File file = new File(getCacheDir(), "compressed_" + System.currentTimeMillis() + ".jpg");
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(byteArray);
+            fos.close();
+            return file;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

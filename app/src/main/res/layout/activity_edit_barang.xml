@@ -19,15 +19,31 @@
             android:gravity="center"
             android:layout_marginBottom="24dp" />
 
+        <!-- Nama Barang -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Barang"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
         <EditText
             android:id="@+id/edtNama"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Nama Barang"
             android:padding="12dp"
             android:background="@drawable/bg_input_field"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:inputType="textCapSentences" />
 
+        <!-- Jenis -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jenis"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
         <Spinner
             android:id="@+id/spinnerJenis"
             android:layout_width="match_parent"
@@ -35,31 +51,102 @@
             android:background="@drawable/bg_input_field"
             android:layout_marginBottom="16dp" />
 
+        <!-- Harga -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harga (Rp, tanpa titik)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
         <EditText
             android:id="@+id/edtHarga"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Harga (tanpa titik)"
-            android:inputType="number"
             android:padding="12dp"
             android:background="@drawable/bg_input_field"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:inputType="number" />
 
+        <!-- Jumlah -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Tersedia"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
         <EditText
             android:id="@+id/edtJumlah"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Jumlah Tersedia"
-            android:inputType="number"
             android:padding="12dp"
             android:background="@drawable/bg_input_field"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:inputType="number" />
 
+        <!-- Deskripsi -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Barang"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+        <EditText
+            android:id="@+id/edtDeskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="12dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp"
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
+
+        <!-- Spesifikasi -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spesifikasi"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+        <EditText
+            android:id="@+id/edtSpesifikasi"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="12dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp"
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
+
+        <!-- Fasilitas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fasilitas"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+        <EditText
+            android:id="@+id/edtFasilitas"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="12dp"
+            android:background="@drawable/bg_input_field"
+            android:layout_marginBottom="16dp"
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
+
+        <!-- Gambar -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Gambar Saat Ini"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp" />
 
         <ImageView

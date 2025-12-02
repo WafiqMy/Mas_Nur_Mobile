@@ -24,17 +24,31 @@ public class BarangModel implements Parcelable {
     @SerializedName("gambar")
     private String gambar;
 
+    // 🔹 TAMBAHAN BARU
+    @SerializedName("deskripsi")
+    private String deskripsi;
+
+    @SerializedName("spesifikasi")
+    private String spesifikasi;
+
+    @SerializedName("fasilitas")
+    private String fasilitas;
+
     // Constructor kosong (wajib untuk Gson + Parcelable)
     public BarangModel() {}
 
     // Constructor lengkap (opsional, untuk testing)
-    public BarangModel(int idPersewaan, String namaBarang, String jenis, int harga, int jumlah, String gambar) {
+    public BarangModel(int idPersewaan, String namaBarang, String jenis, int harga, int jumlah, String gambar,
+                       String deskripsi, String spesifikasi, String fasilitas) {
         this.idPersewaan = idPersewaan;
         this.namaBarang = namaBarang;
         this.jenis = jenis;
         this.harga = harga;
         this.jumlah = jumlah;
         this.gambar = gambar;
+        this.deskripsi = deskripsi;
+        this.spesifikasi = spesifikasi;
+        this.fasilitas = fasilitas;
     }
 
     // Getter & Setter
@@ -56,7 +70,17 @@ public class BarangModel implements Parcelable {
     public String getGambar() { return gambar; }
     public void setGambar(String gambar) { this.gambar = gambar; }
 
-    // ✅ BAGIAN PENTING: Parcelable
+    // 🔹 TAMBAHAN
+    public String getDeskripsi() { return deskripsi; }
+    public void setDeskripsi(String deskripsi) { this.deskripsi = deskripsi; }
+
+    public String getSpesifikasi() { return spesifikasi; }
+    public void setSpesifikasi(String spesifikasi) { this.spesifikasi = spesifikasi; }
+
+    public String getFasilitas() { return fasilitas; }
+    public void setFasilitas(String fasilitas) { this.fasilitas = fasilitas; }
+
+    // ✅ Parcelable
     protected BarangModel(Parcel in) {
         idPersewaan = in.readInt();
         namaBarang = in.readString();
@@ -64,6 +88,9 @@ public class BarangModel implements Parcelable {
         harga = in.readInt();
         jumlah = in.readInt();
         gambar = in.readString();
+        deskripsi = in.readString();
+        spesifikasi = in.readString();
+        fasilitas = in.readString();
     }
 
     public static final Creator<BarangModel> CREATOR = new Creator<BarangModel>() {
@@ -91,5 +118,8 @@ public class BarangModel implements Parcelable {
         dest.writeInt(harga);
         dest.writeInt(jumlah);
         dest.writeString(gambar);
+        dest.writeString(deskripsi);
+        dest.writeString(spesifikasi);
+        dest.writeString(fasilitas);
     }
 }
