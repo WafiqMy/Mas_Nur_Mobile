@@ -39,7 +39,7 @@ class MasNurApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       ),
-      initialRoute: LoginPage.routeName,
+      initialRoute: DashboardPage.routeName, // TODO: kembalikan ke LoginPage.routeName setelah selesai cek
       routes: {
         LoginPage.routeName: (_) => const LoginPage(),
         KonfirmasiEmailPage.routeName: (_) => const KonfirmasiEmailPage(),
