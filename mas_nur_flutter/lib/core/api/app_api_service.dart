@@ -22,8 +22,25 @@ class AppApiService {
     final response = await _dio.post(
       'login_admin1.php',
       data: {'username': username, 'password': password},
+      options: Options(
+        // Terima semua status code agar bisa parse error body sendiri
+        validateStatus: (status) => status != null && status < 600,
+        contentType: Headers.formUrlEncodedContentType,
+      ),
     );
-    return ApiStatusResponse.fromJson(response.data);
+    // Response bisa berupa Map atau String JSON
+    final data = response.data;
+    if (data is Map<String, dynamic>) {
+      return ApiStatusResponse.fromJson(data);
+    }
+    // Jika server mengembalikan string mentah
+    if (data is String) {
+      if (data.contains('success')) {
+        return ApiStatusResponse(status: 'success', message: 'Login berhasil');
+      }
+      return ApiStatusResponse(status: 'error', message: data);
+    }
+    return ApiStatusResponse(status: 'error', message: 'Response tidak dikenali');
   }
 
   static Future<UserProfileModel?> getUserProfile(String username) async {
