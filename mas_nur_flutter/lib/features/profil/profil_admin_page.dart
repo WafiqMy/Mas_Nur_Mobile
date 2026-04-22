@@ -5,6 +5,8 @@ import 'package:mas_nur_flutter/core/session/app_session.dart';
 import 'package:mas_nur_flutter/features/auth/login_page.dart';
 import 'package:mas_nur_flutter/features/profil/ganti_nama_page.dart';
 import 'package:mas_nur_flutter/features/profil/ganti_sandi_page.dart';
+import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
 
 class ProfilAdminPage extends StatefulWidget {
   const ProfilAdminPage({super.key});
@@ -20,55 +22,136 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
   @override
   void initState() {
     super.initState();
-    _future = _load();
+    _loadProfil();
   }
 
-  Future<UserProfileModel?> _load() async {
-    final username = await AppSession.getUsername();
-    if (username.isEmpty) return null;
-    return AppApiService.getUserProfile(username);
+  void _loadProfil() {
+    _future = AppSession.getUsername().then((u) => AppApiService.getUserProfile(u));
+  }
+
+  Future<void> _logout() async {
+    await AppSession.clear();
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(context, LoginPage.routeName, (_) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profil Admin')),
+      backgroundColor: kColorWhite,
       body: FutureBuilder<UserProfileModel?>(
         future: _future,
-        builder: (context, snapshot) {
-          final profile = snapshot.data;
-          return ListView(
-            padding: const EdgeInsets.all(16),
+        builder: (_, snapshot) {
+          final profil = snapshot.data;
+          return Column(
             children: [
-              Text(profile?.nama ?? '-', style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(height: 4),
-              Text(profile?.email ?? '-'),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: () async {
-                  final updated = await Navigator.pushNamed(context, GantiNamaPage.routeName);
-                  if (updated == true && mounted) {
-                    setState(() => _future = _load());
-                  }
-                },
-                child: const Text('Ganti Nama'),
+              // ── Gambar header (group1) ──────────────────────────────────────
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: Container(
+                  color: kColorBackground,
+                  child: const Center(
+                    child: Icon(Icons.mosque, size: 80, color: Colors.white),
+                  ),
+                ),
               ),
-              const SizedBox(height: 8),
-              FilledButton(
-                onPressed: () async {
-                  await Navigator.pushNamed(context, GantiSandiPage.routeName);
-                },
-                child: const Text('Ganti Password'),
+
+              // ── Kartu profil (overlap -60dp) ────────────────────────────────
+              Transform.translate(
+                offset: const Offset(0, -60),
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Logo masjid
+                        SizedBox(
+                          width: 200,
+                          height: 80,
+                          child: Center(
+                            child: Icon(Icons.mosque,
+                                size: 60, color: kColorBackground),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        // Nama
+                        Text(
+                          snapshot.connectionState == ConnectionState.done
+                              ? (profil?.nama ?? '-')
+                              : '...',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        // Role
+                        Text(
+                          snapshot.connectionState == ConnectionState.done
+                              ? (profil?.email ?? '-')
+                              : '',
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              const SizedBox(height: 8),
-              OutlinedButton(
-                onPressed: () async {
-                  await AppSession.clear();
-                  if (!context.mounted) return;
-                  Navigator.pushNamedAndRemoveUntil(context, LoginPage.routeName, (route) => false);
-                },
-                child: const Text('Keluar'),
+
+              // ── Tombol-tombol ───────────────────────────────────────────────
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+                  child: Column(
+                    children: [
+                      // Ganti Nama
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await Navigator.pushNamed(
+                                context, GantiNamaPage.routeName);
+                            setState(_loadProfil);
+                          },
+                          style: kPrimaryButtonStyle,
+                          child: const Text('Ganti Nama'),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // Ganti Kata Sandi
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () =>
+                              Navigator.pushNamed(context, GantiSandiPage.routeName),
+                          style: kSecondaryButtonStyle,
+                          child: const Text('Ganti Kata Sandi'),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // Keluar
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: _logout,
+                          style: kDangerButtonStyle,
+                          child: const Text('Keluar'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
+
+              // ── Footer ──────────────────────────────────────────────────────
+              const AppFooter(),
             ],
           );
         },
@@ -76,4 +159,3 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
     );
   }
 }
-
