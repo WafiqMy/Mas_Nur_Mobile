@@ -4,6 +4,7 @@ import 'package:mas_nur_flutter/features/berita/berita_page.dart';
 import 'package:mas_nur_flutter/features/informasi/informasi_masjid_page.dart';
 import 'package:mas_nur_flutter/features/persewaan/pemesanan_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
@@ -15,6 +16,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kColorWhite,
+      drawer: const AppDrawer(),
       body: Column(
         children: [
           // ── Header ──────────────────────────────────────────────────────────

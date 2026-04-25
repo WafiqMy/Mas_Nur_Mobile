@@ -4,6 +4,7 @@ import 'package:mas_nur_flutter/core/models/app_models.dart';
 import 'package:mas_nur_flutter/features/berita/berita_form_page.dart';
 import 'package:mas_nur_flutter/features/berita/detail_berita_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
@@ -28,6 +29,7 @@ class _BeritaPageState extends State<BeritaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kColorWhite,
+      drawer: const AppDrawer(),
       body: Column(
         children: [
           const AppHeader(),

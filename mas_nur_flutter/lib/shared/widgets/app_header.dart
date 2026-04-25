@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mas_nur_flutter/features/notifikasi/notifikasi_page.dart';
-import 'package:mas_nur_flutter/features/profil/profil_admin_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 
-/// Header persis seperti header.xml:
-/// [Profil] ---- [Logo Masjid] ---- [Notifikasi]
-/// Background: #99D5F9, padding 12dp
+/// Header dengan hamburger menu di kiri, logo di tengah, notifikasi di kanan.
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   const AppHeader({super.key});
 
@@ -20,20 +17,20 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Profil
+          // Hamburger menu (buka drawer)
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, ProfilAdminPage.routeName),
-            child: Column(
+            onTap: () => Scaffold.of(context).openDrawer(),
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.person, size: 25, color: Colors.black),
+              children: [
+                Icon(Icons.menu, size: 25, color: Colors.black),
                 SizedBox(height: 2),
-                Text('Profil', style: TextStyle(fontSize: 10, color: Colors.black)),
+                Text('Menu', style: TextStyle(fontSize: 10, color: Colors.black)),
               ],
             ),
           ),
           const Spacer(),
-          // Logo Masjid (teks sebagai pengganti gambar)
+          // Logo
           const Text(
             'Mas Nur',
             style: TextStyle(
@@ -46,9 +43,9 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
           // Notifikasi
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, NotifikasiPage.routeName),
-            child: Column(
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 Icon(Icons.notifications, size: 25, color: Colors.black),
                 SizedBox(height: 2),
                 Text('Notifikasi', style: TextStyle(fontSize: 10, color: Colors.black)),

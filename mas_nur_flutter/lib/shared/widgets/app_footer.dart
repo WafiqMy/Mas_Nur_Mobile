@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mas_nur_flutter/features/acara/acara_page.dart';
-import 'package:mas_nur_flutter/features/berita/berita_page.dart';
 import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
-import 'package:mas_nur_flutter/features/informasi/informasi_masjid_page.dart';
 import 'package:mas_nur_flutter/features/persewaan/pemesanan_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/widgets/feature_placeholder_page.dart';
 
-/// Footer persis seperti footer.xml:
-/// [Beranda] [Acara] [Informasi Masjid] [Pemesanan] [Berita]
-/// Background: #99D5F9, paddingVertical 15dp
+/// Footer navigasi bawah: [Beranda] [Infaq] [Pemesanan]
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key, this.currentIndex = 0});
 
@@ -29,28 +25,24 @@ class AppFooter extends StatelessWidget {
               context, DashboardPage.routeName, (r) => false),
           ),
           _FooterItem(
-            icon: Icons.calendar_today,
-            label: 'Acara',
+            icon: Icons.volunteer_activism,
+            label: 'Infaq',
             isActive: currentIndex == 1,
-            onTap: () => Navigator.pushNamed(context, AcaraPage.routeName),
-          ),
-          _FooterItem(
-            icon: Icons.info_outline,
-            label: 'Informasi Masjid',
-            isActive: currentIndex == 2,
-            onTap: () => Navigator.pushNamed(context, InformasiMasjidPage.routeName),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const FeaturePlaceholderPage(
+                  title: 'Infaq',
+                  subtitle: 'Fitur Infaq akan segera hadir.',
+                ),
+              ),
+            ),
           ),
           _FooterItem(
             icon: Icons.inventory_2_outlined,
             label: 'Pemesanan',
-            isActive: currentIndex == 3,
+            isActive: currentIndex == 2,
             onTap: () => Navigator.pushNamed(context, PemesananPage.routeName),
-          ),
-          _FooterItem(
-            icon: Icons.article_outlined,
-            label: 'Berita',
-            isActive: currentIndex == 4,
-            onTap: () => Navigator.pushNamed(context, BeritaPage.routeName),
           ),
         ],
       ),
