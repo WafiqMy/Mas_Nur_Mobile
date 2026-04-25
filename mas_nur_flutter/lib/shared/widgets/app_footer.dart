@@ -58,7 +58,7 @@ class AppFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: kColorHeader,
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           _FooterItem(
@@ -109,8 +109,8 @@ class _FooterItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-          padding: const EdgeInsets.symmetric(vertical: 6),
+          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          padding: const EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
             color: isActive
                 ? Colors.white.withValues(alpha: 0.55)
@@ -121,19 +121,19 @@ class _FooterItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedScale(
-                scale: isActive ? 1.15 : 1.0,
+                scale: isActive ? 1.1 : 1.0,
                 duration: const Duration(milliseconds: 200),
                 child: Icon(
                   icon,
-                  size: 26,
+                  size: 22,
                   color: isActive ? activeColor : inactiveColor,
                 ),
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: 2),
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 11,
+                  fontSize: 10,
                   fontWeight:
                       isActive ? FontWeight.bold : FontWeight.normal,
                   color: isActive ? activeColor : inactiveColor,
@@ -146,8 +146,8 @@ class _FooterItem extends StatelessWidget {
               // Indikator titik bawah
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                height: 3,
-                width: isActive ? 24 : 0,
+                height: 2,
+                width: isActive ? 18 : 0,
                 decoration: BoxDecoration(
                   color: activeColor,
                   borderRadius: BorderRadius.circular(2),
