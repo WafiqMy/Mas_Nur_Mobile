@@ -87,7 +87,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
               },
             ),
           ),
-          const AppFooter(currentIndex: 3),
+          const AppFooter(currentIndex: 0),
         ],
       ),
     );

@@ -93,7 +93,7 @@ class _PemesananPageState extends State<PemesananPage> {
               },
             ),
           ),
-          const AppFooter(currentIndex: 3),
+          const AppFooter(currentIndex: 2),
         ],
       ),
     );
