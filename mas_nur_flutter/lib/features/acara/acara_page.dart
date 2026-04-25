@@ -3,6 +3,7 @@ import 'package:mas_nur_flutter/core/api/app_api_service.dart';
 import 'package:mas_nur_flutter/core/models/app_models.dart';
 import 'package:mas_nur_flutter/features/acara/acara_form_page.dart';
 import 'package:mas_nur_flutter/features/acara/detail_acara_page.dart';
+import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
@@ -27,14 +28,22 @@ class _AcaraPageState extends State<AcaraPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kColorWhite,
-      drawer: const AppDrawer(),
-      body: Column(
-        children: [
-          const AppHeader(),
-          Expanded(
-            child: FutureBuilder<List<AcaraModel>>(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, DashboardPage.routeName, (_) => false);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: kColorWhite,
+        drawer: const AppDrawer(),
+        body: Column(
+          children: [
+            const AppHeader(),
+            Expanded(
+              child: FutureBuilder<List<AcaraModel>>(
               future: _future,
               builder: (_, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done) {
@@ -101,7 +110,8 @@ class _AcaraPageState extends State<AcaraPage> {
           const AppFooter(currentIndex: 1),
         ],
       ),
-    );
+    ),
+  );
   }
 }
 

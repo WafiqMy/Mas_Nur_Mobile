@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mas_nur_flutter/core/api/app_api_service.dart';
 import 'package:mas_nur_flutter/core/models/app_models.dart';
+import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/features/informasi/edit_profil_masjid_page.dart';
 import 'package:mas_nur_flutter/features/informasi/edit_struktur_organisasi_page.dart';
+import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class InformasiMasjidPage extends StatefulWidget {
   const InformasiMasjidPage({super.key});
@@ -39,73 +44,98 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Informasi Masjid'),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(icon: Icon(Icons.mosque), text: 'Profil Masjid'),
-            Tab(icon: Icon(Icons.account_tree), text: 'Struktur Organisasi'),
-          ],
-        ),
-      ),
-      body: FutureBuilder<(ProfilMasjidModel?, StrukturOrganisasiModel?)>(
-        future: _future,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Gagal memuat informasi masjid'),
-                  const SizedBox(height: 12),
-                  OutlinedButton(
-                    onPressed: () => setState(_loadData),
-                    child: const Text('Coba Lagi'),
-                  ),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, DashboardPage.routeName, (_) => false);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: kColorWhite,
+        drawer: const AppDrawer(),
+        body: Column(
+          children: [
+            // ── Header ──────────────────────────────────────────────────────
+            const AppHeader(),
+
+            // ── TabBar ──────────────────────────────────────────────────────
+            Container(
+              color: kColorHeader,
+              child: TabBar(
+                controller: _tabController,
+                labelColor: const Color(0xFF0D47A1),
+                unselectedLabelColor: Colors.black54,
+                indicatorColor: const Color(0xFF0D47A1),
+                tabs: const [
+                  Tab(icon: Icon(Icons.mosque), text: 'Profil Masjid'),
+                  Tab(icon: Icon(Icons.account_tree), text: 'Struktur Organisasi'),
                 ],
               ),
-            );
-          }
-          final profil = snapshot.data?.$1;
-          final struktur = snapshot.data?.$2;
+            ),
 
-          return TabBarView(
-            controller: _tabController,
-            children: [
-              _ProfilTab(
-                profil: profil,
-                onEdit: () async {
-                  final updated = await Navigator.pushNamed(
-                    context,
-                    EditProfilMasjidPage.routeName,
-                    arguments: profil,
-                  );
-                  if (updated == true && mounted) {
-                    setState(_loadData);
+            // ── Konten ──────────────────────────────────────────────────────
+            Expanded(
+              child: FutureBuilder<(ProfilMasjidModel?, StrukturOrganisasiModel?)>(
+                future: _future,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(child: CircularProgressIndicator());
                   }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Gagal memuat informasi masjid'),
+                          const SizedBox(height: 12),
+                          OutlinedButton(
+                            onPressed: () => setState(_loadData),
+                            child: const Text('Coba Lagi'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  final profil = snapshot.data?.$1;
+                  final struktur = snapshot.data?.$2;
+
+                  return TabBarView(
+                    controller: _tabController,
+                    children: [
+                      _ProfilTab(
+                        profil: profil,
+                        onEdit: () async {
+                          final updated = await Navigator.pushNamed(
+                            context,
+                            EditProfilMasjidPage.routeName,
+                            arguments: profil,
+                          );
+                          if (updated == true && mounted) setState(_loadData);
+                        },
+                      ),
+                      _StrukturTab(
+                        struktur: struktur,
+                        onEdit: () async {
+                          final updated = await Navigator.pushNamed(
+                            context,
+                            EditStrukturOrganisasiPage.routeName,
+                            arguments: struktur,
+                          );
+                          if (updated == true && mounted) setState(_loadData);
+                        },
+                      ),
+                    ],
+                  );
                 },
               ),
-              _StrukturTab(
-                struktur: struktur,
-                onEdit: () async {
-                  final updated = await Navigator.pushNamed(
-                    context,
-                    EditStrukturOrganisasiPage.routeName,
-                    arguments: struktur,
-                  );
-                  if (updated == true && mounted) {
-                    setState(_loadData);
-                  }
-                },
-              ),
-            ],
-          );
-        },
+            ),
+
+            // ── Footer ──────────────────────────────────────────────────────
+            const AppFooter(),
+          ],
+        ),
       ),
     );
   }
