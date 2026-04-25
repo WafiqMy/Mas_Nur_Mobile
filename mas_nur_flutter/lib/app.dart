@@ -22,6 +22,7 @@ import 'package:mas_nur_flutter/features/persewaan/reservasi_detail_page.dart';
 import 'package:mas_nur_flutter/features/profil/ganti_nama_page.dart';
 import 'package:mas_nur_flutter/features/profil/ganti_sandi_page.dart';
 import 'package:mas_nur_flutter/features/profil/profil_admin_page.dart';
+import 'package:mas_nur_flutter/features/splash/splash_page.dart';
 
 void runMasNurApp() {
   runApp(const MasNurApp());
@@ -39,8 +40,9 @@ class MasNurApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       ),
-      initialRoute: DashboardPage.routeName, // TODO: kembalikan ke LoginPage.routeName setelah selesai cek
+      initialRoute: SplashPage.routeName,
       routes: {
+        SplashPage.routeName: (_) => const SplashPage(),
         LoginPage.routeName: (_) => const LoginPage(),
         KonfirmasiEmailPage.routeName: (_) => const KonfirmasiEmailPage(),
         KodeOtpPage.routeName: (_) => const KodeOtpPage(),
