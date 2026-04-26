@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mas_nur_flutter/core/api/app_api_service.dart';
 import 'package:mas_nur_flutter/core/models/app_models.dart';
 import 'package:mas_nur_flutter/features/persewaan/reservasi_detail_page.dart';
+import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
@@ -26,69 +27,77 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kColorWhite,
-      drawer: const AppDrawer(),
-      body: Column(
-        children: [
-          const AppHeader(),
-          Expanded(
-            child: FutureBuilder<List<NotificationItem>>(
-              future: _future,
-              builder: (_, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Gagal memuat notifikasi'));
-                }
-                final items = snapshot.data ?? <NotificationItem>[];
-                return Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Notifikasi',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pushReplacementNamed(context, DashboardPage.routeName);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: kColorWhite,
+        drawer: const AppDrawer(),
+        body: Column(
+          children: [
+            const AppHeader(),
+            Expanded(
+              child: FutureBuilder<List<NotificationItem>>(
+                future: _future,
+                builder: (_, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Gagal memuat notifikasi'));
+                  }
+                  final items = snapshot.data ?? <NotificationItem>[];
+                  return Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Notifikasi',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
-                    ),
-                    if (items.isEmpty)
-                      const Expanded(
-                          child: Center(child: Text('Tidak ada notifikasi')))
-                    else
-                      Expanded(
-                        child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          itemCount: items.length,
-                          itemBuilder: (_, index) {
-                            final item = items[index];
-                            return _NotifCard(
-                              item: item,
-                              onLihat: () {
-                                final id = int.tryParse(item.idReservasi);
-                                if (id != null) {
-                                  Navigator.pushNamed(
-                                    context,
-                                    ReservasiDetailPage.routeName,
-                                    arguments: id,
-                                  );
-                                }
-                              },
-                            );
-                          },
+                      if (items.isEmpty)
+                        const Expanded(
+                            child: Center(child: Text('Tidak ada notifikasi')))
+                      else
+                        Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            itemCount: items.length,
+                            itemBuilder: (_, index) {
+                              final item = items[index];
+                              return _NotifCard(
+                                item: item,
+                                onLihat: () {
+                                  final id = int.tryParse(item.idReservasi);
+                                  if (id != null) {
+                                    Navigator.pushNamed(
+                                      context,
+                                      ReservasiDetailPage.routeName,
+                                      arguments: id,
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-          const AppFooter(currentIndex: 0),
-        ],
+            const AppFooter(currentIndex: 0),
+          ],
+        ),
       ),
     );
   }
