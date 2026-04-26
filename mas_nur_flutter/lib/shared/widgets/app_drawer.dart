@@ -6,6 +6,7 @@ import 'package:mas_nur_flutter/features/berita/berita_page.dart';
 import 'package:mas_nur_flutter/features/informasi/informasi_masjid_page.dart';
 import 'package:mas_nur_flutter/features/profil/profil_admin_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/utils/app_navigation.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key, this.currentRoute});
@@ -58,7 +59,8 @@ class AppDrawer extends StatelessWidget {
                   isActive: active == ProfilAdminPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, ProfilAdminPage.routeName);
+                    Navigator.pushReplacement(
+                        context, fadeRoute(const ProfilAdminPage(), name: ProfilAdminPage.routeName));
                   },
                 ),
                 _DrawerItem(
@@ -67,7 +69,8 @@ class AppDrawer extends StatelessWidget {
                   isActive: active == AcaraPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, AcaraPage.routeName);
+                    Navigator.pushReplacement(
+                        context, fadeRoute(const AcaraPage(), name: AcaraPage.routeName));
                   },
                 ),
                 _DrawerItem(
@@ -76,7 +79,8 @@ class AppDrawer extends StatelessWidget {
                   isActive: active == InformasiMasjidPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, InformasiMasjidPage.routeName);
+                    Navigator.pushReplacement(
+                        context, fadeRoute(const InformasiMasjidPage(), name: InformasiMasjidPage.routeName));
                   },
                 ),
                 _DrawerItem(
@@ -85,7 +89,8 @@ class AppDrawer extends StatelessWidget {
                   isActive: active == BeritaPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, BeritaPage.routeName);
+                    Navigator.pushReplacement(
+                        context, fadeRoute(const BeritaPage(), name: BeritaPage.routeName));
                   },
                 ),
                 const Divider(height: 1),

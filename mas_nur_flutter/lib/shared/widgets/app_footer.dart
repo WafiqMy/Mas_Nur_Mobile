@@ -3,6 +3,7 @@ import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/features/infaq/infaq_page.dart';
 import 'package:mas_nur_flutter/features/persewaan/pemesanan_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/utils/app_navigation.dart';
 
 /// Index footer:
 /// 0 = Beranda, 1 = Infaq, 2 = Pemesanan
@@ -13,7 +14,7 @@ class AppFooter extends StatelessWidget {
   final int currentIndex;
 
   void _navigate(BuildContext context, int index) {
-    if (index == currentIndex) return; // sudah di halaman ini
+    if (index == currentIndex) return;
 
     Widget page;
     switch (index) {
@@ -30,24 +31,7 @@ class AppFooter extends StatelessWidget {
         return;
     }
 
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final isForward = index > currentIndex;
-          final begin = Offset(isForward ? 1.0 : -1.0, 0.0);
-          const end = Offset.zero;
-          final tween = Tween(begin: begin, end: end)
-              .chain(CurveTween(curve: Curves.easeInOut));
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: FadeTransition(opacity: animation, child: child),
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 250),
-      ),
-    );
+    Navigator.pushReplacement(context, fadeRoute(page));
   }
 
   @override
