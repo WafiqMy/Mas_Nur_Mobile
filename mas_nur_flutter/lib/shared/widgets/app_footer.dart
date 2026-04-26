@@ -32,12 +32,11 @@ class AppFooter extends StatelessWidget {
         return;
     }
 
-    Navigator.pushAndRemoveUntil(
+    Navigator.pushReplacement(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => page,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          // Slide dari kanan jika maju, dari kiri jika mundur
           final isForward = index > currentIndex;
           final begin = Offset(isForward ? 1.0 : -1.0, 0.0);
           const end = Offset.zero;
@@ -50,7 +49,6 @@ class AppFooter extends StatelessWidget {
         },
         transitionDuration: const Duration(milliseconds: 250),
       ),
-      (route) => false,
     );
   }
 

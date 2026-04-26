@@ -32,8 +32,7 @@ class _AcaraPageState extends State<AcaraPage> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, DashboardPage.routeName, (_) => false);
+          Navigator.pushReplacementNamed(context, DashboardPage.routeName);
         }
       },
       child: Scaffold(
