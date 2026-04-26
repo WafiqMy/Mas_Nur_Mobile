@@ -13,6 +13,7 @@ import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/features/informasi/edit_profil_masjid_page.dart';
 import 'package:mas_nur_flutter/features/informasi/edit_struktur_organisasi_page.dart';
 import 'package:mas_nur_flutter/features/informasi/informasi_masjid_page.dart';
+import 'package:mas_nur_flutter/features/infaq/infaq_page.dart';
 import 'package:mas_nur_flutter/features/notifikasi/notifikasi_page.dart';
 import 'package:mas_nur_flutter/features/persewaan/barang_form_page.dart';
 import 'package:mas_nur_flutter/features/persewaan/detail_barang_page.dart';
@@ -63,6 +64,7 @@ class MasNurApp extends StatelessWidget {
         InformasiMasjidPage.routeName: (_) => const InformasiMasjidPage(),
         EditProfilMasjidPage.routeName: (_) => const EditProfilMasjidPage(),
         EditStrukturOrganisasiPage.routeName: (_) => const EditStrukturOrganisasiPage(),
+        InfaqPage.routeName: (_) => const InfaqPage(),
         ProfilAdminPage.routeName: (_) => const ProfilAdminPage(),
         GantiNamaPage.routeName: (_) => const GantiNamaPage(),
         GantiSandiPage.routeName: (_) => const GantiSandiPage(),
