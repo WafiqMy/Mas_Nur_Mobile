@@ -106,7 +106,7 @@ class _AcaraPageState extends State<AcaraPage> {
               },
             ),
           ),
-          const AppFooter(currentIndex: 1),
+          const AppFooter(currentIndex: -1),
         ],
       ),
     ),

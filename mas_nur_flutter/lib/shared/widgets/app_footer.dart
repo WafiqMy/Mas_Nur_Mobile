@@ -6,6 +6,7 @@ import 'package:mas_nur_flutter/shared/widgets/feature_placeholder_page.dart';
 
 /// Index footer:
 /// 0 = Beranda, 1 = Infaq, 2 = Pemesanan
+/// -1 = tidak ada yang aktif (halaman dari sidebar)
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key, this.currentIndex = 0});
 

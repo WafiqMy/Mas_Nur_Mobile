@@ -95,7 +95,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                 },
               ),
             ),
-            const AppFooter(currentIndex: 0),
+            const AppFooter(currentIndex: -1),
           ],
         ),
       ),

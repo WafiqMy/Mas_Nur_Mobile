@@ -165,7 +165,7 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
                 ),
 
                 // ── Footer ────────────────────────────────────────────────────
-                const AppFooter(),
+                const AppFooter(currentIndex: -1),
               ],
             );
           },

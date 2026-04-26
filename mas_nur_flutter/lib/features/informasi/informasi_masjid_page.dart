@@ -132,7 +132,7 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
             ),
 
             // ── Footer ──────────────────────────────────────────────────────
-            const AppFooter(),
+            const AppFooter(currentIndex: -1),
           ],
         ),
       ),

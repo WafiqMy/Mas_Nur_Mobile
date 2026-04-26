@@ -110,7 +110,7 @@ class _BeritaPageState extends State<BeritaPage> {
               },
             ),
           ),
-          const AppFooter(currentIndex: 0),
+          const AppFooter(currentIndex: -1),
         ],
       ),
     ),
