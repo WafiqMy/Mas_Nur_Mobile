@@ -184,6 +184,7 @@ class _AcaraCard extends StatelessWidget {
               children: [
                 SizedBox(
                   width: 105,
+                  height: 40,
                   child: ElevatedButton(
                     onPressed: () async {
                       final updated = await Navigator.pushNamed(
@@ -205,8 +206,8 @@ class _AcaraCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 SizedBox(
-                  width: 130,
-                  height: 45,
+                  width: 105,
+                  height: 40,
                   child: ElevatedButton(
                     onPressed: () async {
                       final confirm = await _confirmDeleteAcara(context);
@@ -221,7 +222,6 @@ class _AcaraCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(kButtonRadius)),
                       elevation: 0,
-                      textStyle: const TextStyle(fontSize: 16),
                     ),
                     child: const Text('Hapus'),
                   ),
