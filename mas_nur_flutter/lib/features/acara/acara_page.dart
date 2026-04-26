@@ -178,13 +178,10 @@ class _AcaraCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(130, 0, 12, 12),
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 105,
-                  height: 40,
+                Expanded(
                   child: ElevatedButton(
                     onPressed: () async {
                       final updated = await Navigator.pushNamed(
@@ -205,9 +202,7 @@ class _AcaraCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                SizedBox(
-                  width: 105,
-                  height: 40,
+                Expanded(
                   child: ElevatedButton(
                     onPressed: () async {
                       final confirm = await _confirmDeleteAcara(context);
