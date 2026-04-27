@@ -146,7 +146,7 @@ class _DrawerItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: isActive ? activeColor.withValues(alpha: 0.1) : Colors.transparent,
+        color: isActive ? activeColor.withOpacity(0.1) : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(

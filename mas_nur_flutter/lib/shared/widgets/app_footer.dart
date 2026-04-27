@@ -93,7 +93,7 @@ class _FooterItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
             color: isActive
-                ? Colors.white.withValues(alpha: 0.55)
+                ? Colors.white.withOpacity(0.55)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
           ),
