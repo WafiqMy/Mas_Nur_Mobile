@@ -47,7 +47,7 @@ class DashboardPage extends StatelessWidget {
                           'Kelola konten masjid dengan mudah',
                           style: TextStyle(
                               fontSize: 13,
-                              color: kColorWhite.withOpacity(0.8)),
+                              color: kColorWhite.withValues(alpha: 0.8)),
                         ),
                       ],
                     ),
@@ -95,7 +95,7 @@ class DashboardPage extends StatelessWidget {
                             _MenuCard(
                               icon: Icons.calendar_today_outlined,
                               label: 'Acara',
-                              color: const Color(0xFF1565C0),
+                              color: kColorPrimaryLight,
                               onKelola: () => Navigator.pushNamed(
                                   context, AcaraPage.routeName),
                             ),
@@ -109,21 +109,21 @@ class DashboardPage extends StatelessWidget {
                             _MenuCard(
                               icon: Icons.inventory_2_outlined,
                               label: 'Pemesanan',
-                              color: const Color(0xFF6A1B9A),
+                              color: kColorPrimaryDark,
                               onKelola: () => Navigator.pushNamed(
                                   context, PemesananPage.routeName),
                             ),
                             _MenuCard(
                               icon: Icons.article_outlined,
                               label: 'Berita',
-                              color: const Color(0xFFE65100),
+                              color: kColorPrimaryMid,
                               onKelola: () => Navigator.pushNamed(
                                   context, BeritaPage.routeName),
                             ),
                             _MenuCard(
                               icon: Icons.restaurant_menu_outlined,
                               label: 'Food Court',
-                              color: const Color(0xFF00838F),
+                              color: const Color(0xFF0288D1),
                               onKelola: () => Navigator.pushNamed(
                                   context, FoodCourtPage.routeName),
                             ),
@@ -198,7 +198,7 @@ class _StatusCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(kCardRadius),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -211,7 +211,7 @@ class _StatusCard extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: accentColor.withOpacity(0.12),
+              color: accentColor.withValues(alpha: 0.12),
             ),
             child: Center(
               child: Text(
@@ -286,7 +286,7 @@ class _MenuCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(kCardRadius),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -300,7 +300,7 @@ class _MenuCard extends StatelessWidget {
               height: 56,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: color.withOpacity(0.12),
+                color: color.withValues(alpha: 0.12),
               ),
               child: Icon(icon, size: 28, color: color),
             ),
@@ -321,7 +321,7 @@ class _MenuCard extends StatelessWidget {
               width: double.infinity,
               height: 34,
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(

@@ -40,7 +40,7 @@ class AppFooter extends StatelessWidget {
         color: kColorWhite,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, -3),
           ),
@@ -98,7 +98,7 @@ class _FooterItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: isActive
-                ? kColorPrimary.withOpacity(0.08)
+                ? kColorPrimary.withValues(alpha: 0.08)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
           ),

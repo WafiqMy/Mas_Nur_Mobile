@@ -65,8 +65,8 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
               child: TabBar(
                 controller: _tabController,
                 labelColor: kColorWhite,
-                unselectedLabelColor: kColorWhite.withOpacity(0.6),
-                indicatorColor: kColorGold,
+                unselectedLabelColor: kColorWhite.withValues(alpha: 0.6),
+                indicatorColor: kColorPrimaryLight,
                 tabs: const [
                   Tab(icon: Icon(Icons.mosque), text: 'Profil Masjid'),
                   Tab(icon: Icon(Icons.account_tree), text: 'Struktur Organisasi'),

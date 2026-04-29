@@ -36,9 +36,9 @@ class AppDrawer extends StatelessWidget {
                   height: 52,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: kColorWhite.withOpacity(0.2),
+                    color: kColorWhite.withValues(alpha: 0.2),
                     border: Border.all(
-                        color: kColorWhite.withOpacity(0.4), width: 1.5),
+                        color: kColorWhite.withValues(alpha: 0.4), width: 1.5),
                   ),
                   child: const Icon(Icons.mosque,
                       size: 28, color: kColorWhite),
@@ -60,7 +60,7 @@ class AppDrawer extends StatelessWidget {
                       'Admin Panel',
                       style: TextStyle(
                           fontSize: 12,
-                          color: kColorWhite.withOpacity(0.75)),
+                          color: kColorWhite.withValues(alpha: 0.75)),
                     ),
                   ],
                 ),
@@ -186,7 +186,7 @@ class _DrawerItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       decoration: BoxDecoration(
         color: isActive
-            ? kColorPrimary.withOpacity(0.08)
+            ? kColorPrimary.withValues(alpha: 0.08)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
       ),
@@ -200,7 +200,7 @@ class _DrawerItem extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isActive
-                ? kColorPrimary.withOpacity(0.12)
+                ? kColorPrimary.withValues(alpha: 0.12)
                 : kColorBackground,
           ),
           child: Icon(icon, color: resolvedIcon, size: 20),

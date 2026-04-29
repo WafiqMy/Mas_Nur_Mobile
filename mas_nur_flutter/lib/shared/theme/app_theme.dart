@@ -1,38 +1,39 @@
 import 'package:flutter/material.dart';
 
-// ─── Palet Islamic Green Modern ───────────────────────────────────────────────
-// Hijau teal    : #1B5E20  → background header, drawer
-// Hijau medium  : #2E7D32  → tombol primary, aksen utama
-// Hijau muda    : #4CAF50  → highlight, icon aktif
-// Hijau pastel  : #A5D6A7  → aksen sekunder, border aktif
+// ─── Palet Blue Royal Modern ──────────────────────────────────────────────────
+// Biru gelap    : #0D47A1  → header, drawer (atas gradasi)
+// Biru royal    : #1565C0  → tengah gradasi
+// Biru cerah    : #1976D2  → tombol primary, aksen utama
+// Biru muda     : #42A5F5  → highlight, icon aktif, aksen
 // Putih         : #FFFFFF  → background utama, card surface
-// Abu terang    : #F5F5F5  → background scaffold
-// Abu medium    : #EEEEEE  → card background
-// Teks gelap    : #212121  → teks utama
-// Teks abu      : #757575  → teks sekunder / hint
+// Abu terang    : #F4F6FA  → background scaffold
+// Teks gelap    : #1A1A2E  → teks utama
+// Teks abu      : #6B7280  → teks sekunder / hint
 // Merah hapus   : #E53935  → aksi hapus
+// Divider       : #E5E7EB  → garis pemisah
 
-const Color kColorPrimary      = Color(0xFF2E7D32); // hijau utama
-const Color kColorPrimaryDark  = Color(0xFF1B5E20); // hijau gelap (header/drawer)
-const Color kColorPrimaryLight = Color(0xFF4CAF50); // hijau terang
-const Color kColorAccent       = Color(0xFFA5D6A7); // hijau pastel
-const Color kColorGold         = Color(0xFFFFB300); // emas/kuning aksen
+const Color kColorPrimary      = Color(0xFF1976D2); // biru cerah (tombol, aksen)
+const Color kColorPrimaryDark  = Color(0xFF0D47A1); // biru gelap (header atas)
+const Color kColorPrimaryMid   = Color(0xFF1565C0); // biru royal (tengah gradasi)
+const Color kColorPrimaryLight = Color(0xFF42A5F5); // biru muda (highlight)
+const Color kColorAccent       = Color(0xFFBBDEFB); // biru pastel (background aksen)
+const Color kColorGold         = Color(0xFFFFB300); // emas aksen sekunder
 const Color kColorWhite        = Color(0xFFFFFFFF); // putih
-const Color kColorBackground   = Color(0xFFF5F5F5); // background scaffold
+const Color kColorBackground   = Color(0xFFF4F6FA); // background scaffold
 const Color kColorCardBg       = Color(0xFFFFFFFF); // card putih
-const Color kColorTextPrimary  = Color(0xFF212121); // teks utama
-const Color kColorTextSecondary= Color(0xFF757575); // teks sekunder
+const Color kColorTextPrimary  = Color(0xFF1A1A2E); // teks utama
+const Color kColorTextSecondary= Color(0xFF6B7280); // teks sekunder
 const Color kColorHapus        = Color(0xFFE53935); // merah hapus
-const Color kColorDivider      = Color(0xFFE0E0E0); // divider
+const Color kColorDivider      = Color(0xFFE5E7EB); // divider
 
 // Alias agar kode lama tidak error
 const Color kColorNavy         = kColorPrimaryDark;
-const Color kColorNavyLight    = Color(0xFFE8F5E9); // hijau sangat muda
+const Color kColorNavyLight    = Color(0xFFE3F2FD); // biru sangat muda
 const Color kColorRoyal        = kColorPrimary;
 const Color kColorSkyBlue      = kColorPrimaryLight;
 const Color kColorYellow       = kColorGold;
 const Color kColorWhiteSoft    = kColorTextSecondary;
-const Color kColorGrey         = Color(0xFF9E9E9E);
+const Color kColorGrey         = Color(0xFF9CA3AF);
 const Color kColorHeader       = kColorPrimaryDark;
 const Color kColorButton       = kColorPrimary;
 const Color kColorKembali      = kColorNavyLight;
@@ -41,10 +42,12 @@ const Color kColorInputBg      = kColorWhite;
 const Color kColorBlack        = kColorTextPrimary;
 
 // ─── Gradasi standar (dipakai di semua header, drawer, splash, banner) ───────
+// Biru gelap (#0D47A1) → biru royal (#1565C0) → biru cerah (#1976D2)
 const LinearGradient kAppGradient = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,
-  colors: [kColorPrimaryDark, kColorPrimary],
+  colors: [kColorPrimaryDark, kColorPrimaryMid, kColorPrimary],
+  stops: [0.0, 0.5, 1.0],
 );
 
 // ─── Radius ──────────────────────────────────────────────────────────────────
@@ -76,7 +79,7 @@ ThemeData buildAppTheme() {
     cardTheme: CardThemeData(
       color: kColorCardBg,
       elevation: 2,
-      shadowColor: Colors.black.withOpacity(0.08),
+      shadowColor: Colors.black.withValues(alpha: 0.08),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kCardRadius),
       ),
@@ -251,7 +254,7 @@ BoxDecoration kCardDecoration = BoxDecoration(
   borderRadius: BorderRadius.circular(kCardRadius),
   boxShadow: [
     BoxShadow(
-      color: Colors.black.withOpacity(0.06),
+      color: Colors.black.withValues(alpha: 0.06),
       blurRadius: 8,
       offset: const Offset(0, 2),
     ),

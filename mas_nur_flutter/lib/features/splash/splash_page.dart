@@ -47,9 +47,9 @@ class _SplashPageState extends State<SplashPage> {
                 height: 110,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: kColorWhite.withOpacity(0.15),
+                  color: kColorWhite.withValues(alpha: 0.15),
                   border: Border.all(
-                      color: kColorWhite.withOpacity(0.4), width: 2),
+                      color: kColorWhite.withValues(alpha: 0.4), width: 2),
                 ),
                 child: const Icon(Icons.mosque, size: 58, color: kColorWhite),
               ),
@@ -68,7 +68,7 @@ class _SplashPageState extends State<SplashPage> {
                 'Admin Panel',
                 style: TextStyle(
                   fontSize: 14,
-                  color: kColorWhite.withOpacity(0.75),
+                  color: kColorWhite.withValues(alpha: 0.75),
                   letterSpacing: 2,
                 ),
               ),
@@ -78,7 +78,7 @@ class _SplashPageState extends State<SplashPage> {
                 height: 28,
                 child: CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  color: kColorWhite.withOpacity(0.8),
+                  color: kColorWhite.withValues(alpha: 0.8),
                 ),
               ),
             ],

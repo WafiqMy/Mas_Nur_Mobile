@@ -15,7 +15,7 @@ class AppHeader extends StatelessWidget {
         gradient: kAppGradient,
         boxShadow: [
           BoxShadow(
-            color: Color(0x331B5E20),
+            color: Color(0x330D47A1),
             blurRadius: 8,
             offset: Offset(0, 3),
           ),
@@ -55,7 +55,7 @@ class AppHeader extends StatelessWidget {
                     height: 32,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: kColorWhite.withOpacity(0.15),
+                      color: kColorWhite.withValues(alpha: 0.15),
                     ),
                     child: const Icon(Icons.mosque,
                         size: 18, color: kColorWhite),
@@ -103,7 +103,7 @@ class _HeaderIconButton extends StatelessWidget {
         height: 38,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: kColorWhite.withOpacity(0.15),
+          color: kColorWhite.withValues(alpha: 0.15),
         ),
         child: Icon(icon, size: 20, color: kColorWhite),
       ),

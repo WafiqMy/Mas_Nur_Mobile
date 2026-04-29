@@ -89,9 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                         height: 80,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: kColorWhite.withOpacity(0.2),
+                          color: kColorWhite.withValues(alpha: 0.2),
                           border: Border.all(
-                              color: kColorWhite.withOpacity(0.5), width: 2),
+                              color: kColorWhite.withValues(alpha: 0.5), width: 2),
                         ),
                         child: const Icon(Icons.mosque,
                             size: 42, color: kColorWhite),
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                         'Admin Panel',
                         style: TextStyle(
                           fontSize: 13,
-                          color: kColorWhite.withOpacity(0.8),
+                          color: kColorWhite.withValues(alpha: 0.8),
                           letterSpacing: 1.5,
                         ),
                       ),
