@@ -9,7 +9,6 @@ import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
-import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class ProfilAdminPage extends StatefulWidget {
@@ -49,10 +48,9 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: kColorBackground,
         drawer: const AppDrawer(),
-        body: AppGradientBackground(
-          child: FutureBuilder<UserProfileModel?>(
+        body: FutureBuilder<UserProfileModel?>(
           future: _future,
           builder: (_, snapshot) {
             final profil = snapshot.data;
@@ -70,9 +68,11 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
                           height: 160,
                           width: double.infinity,
                           child: Container(
-                            color: kColorBackground,
+                            decoration: const BoxDecoration(
+                              gradient: kAppGradient,
+                            ),
                             child: const Center(
-                              child: Icon(Icons.mosque, size: 80, color: Colors.white),
+                              child: Icon(Icons.mosque, size: 80, color: kColorWhite),
                             ),
                           ),
                         ),
@@ -94,7 +94,7 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
                                     height: 80,
                                     child: Center(
                                       child: Icon(Icons.mosque,
-                                          size: 60, color: kColorBackground),
+                                          size: 60, color: kColorPrimary),
                                     ),
                                   ),
                                   const SizedBox(height: 16),
@@ -171,7 +171,6 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
               ],
             );
           },
-        ),
         ),
       ),
     );

@@ -36,7 +36,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: kColorWhite,
+        backgroundColor: kColorBackground,
         body: Column(
           children: [
             const AppHeader(showBackButton: true),

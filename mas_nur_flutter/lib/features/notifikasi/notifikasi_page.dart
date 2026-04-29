@@ -6,7 +6,6 @@ import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
-import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class NotifikasiPage extends StatefulWidget {
@@ -36,10 +35,9 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: kColorBackground,
         drawer: const AppDrawer(),
-        body: AppGradientBackground(
-          child: Column(
+        body: Column(
           children: [
             const AppHeader(showBackButton: true),
             Expanded(
@@ -100,7 +98,6 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
             const AppFooter(currentIndex: -1),
           ],
         ),
-        ),
       ),
     );
   }
@@ -132,7 +129,7 @@ class _NotifCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF0D47A1),
+                      color: kColorPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -148,8 +145,8 @@ class _NotifCard extends StatelessWidget {
             ElevatedButton(
               onPressed: onLihat,
               style: ElevatedButton.styleFrom(
-                backgroundColor: kColorButton,
-                foregroundColor: const Color(0xFF00695C),
+                backgroundColor: kColorPrimary,
+                foregroundColor: kColorWhite,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
                 elevation: 0,

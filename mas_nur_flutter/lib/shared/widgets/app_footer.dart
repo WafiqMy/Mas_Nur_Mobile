@@ -37,12 +37,16 @@ class AppFooter extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: kColorNavy,
-        border: Border(
-          top: BorderSide(color: kColorSkyBlue.withOpacity(0.2), width: 1),
-        ),
+        color: kColorWhite,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 12,
+            offset: const Offset(0, -3),
+          ),
+        ],
       ),
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
       child: Row(
         children: [
           _FooterItem(
@@ -90,17 +94,13 @@ class _FooterItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-          padding: const EdgeInsets.symmetric(vertical: 6),
+          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: isActive
-                ? kColorRoyal.withOpacity(0.18)
+                ? kColorPrimary.withValues(alpha: 0.08)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-            border: isActive
-                ? Border.all(
-                    color: kColorSkyBlue.withOpacity(0.35), width: 1)
-                : null,
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -110,19 +110,19 @@ class _FooterItem extends StatelessWidget {
                 duration: const Duration(milliseconds: 200),
                 child: Icon(
                   icon,
-                  size: 22,
-                  color: isActive ? kColorSkyBlue : kColorGrey,
+                  size: 24,
+                  color: isActive ? kColorPrimary : kColorGrey,
                 ),
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: 4),
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 11,
                   fontWeight:
                       isActive ? FontWeight.w600 : FontWeight.normal,
-                  color: isActive ? kColorSkyBlue : kColorGrey,
-                  letterSpacing: 0.3,
+                  color: isActive ? kColorPrimary : kColorGrey,
+                  letterSpacing: 0.2,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 1,
@@ -131,10 +131,10 @@ class _FooterItem extends StatelessWidget {
               const SizedBox(height: 2),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                height: 2,
-                width: isActive ? 20 : 0,
+                height: 3,
+                width: isActive ? 24 : 0,
                 decoration: BoxDecoration(
-                  color: kColorSkyBlue,
+                  color: kColorPrimary,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),

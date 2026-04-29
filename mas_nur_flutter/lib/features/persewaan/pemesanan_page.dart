@@ -35,7 +35,7 @@ class _PemesananPageState extends State<PemesananPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: kColorWhite,
+        backgroundColor: kColorBackground,
         drawer: const AppDrawer(),
         body: Column(
           children: [

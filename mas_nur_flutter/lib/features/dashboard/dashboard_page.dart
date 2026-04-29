@@ -7,7 +7,6 @@ import 'package:mas_nur_flutter/features/persewaan/pemesanan_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
-import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -17,111 +16,129 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: kColorBackground,
       drawer: const AppDrawer(),
-      body: AppGradientBackground(
-        child: Column(
+      body: Column(
         children: [
           const AppHeader(),
           Expanded(
             child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Greeting
-                  Text(
-                    'Halaman Utama',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: kColorWhite,
-                      letterSpacing: 0.5,
+                  // ── Banner selamat datang ──────────────────────────────
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
+                    decoration: const BoxDecoration(gradient: kAppGradient),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Halaman Utama',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: kColorWhite,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Kelola konten masjid dengan mudah',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: kColorWhite.withValues(alpha: 0.8)),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Kelola konten masjid dengan mudah',
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: kColorSkyBlue.withOpacity(0.7)),
-                  ),
-                  const SizedBox(height: 20),
 
-                  // Status Pemesanan
-                  _SectionLabel(label: 'Status Pemesanan Terbaru'),
-                  const SizedBox(height: 10),
-                  _StatusCard(
-                    nomor: '1',
-                    judul: 'Pemesanan Gedung',
-                    accentColor: kColorSkyBlue,
-                    atasNama: 'Atas Nama: -',
-                    onLihat: () => Navigator.pushNamed(
-                        context, PemesananPage.routeName),
-                  ),
-                  const SizedBox(height: 8),
-                  _StatusCard(
-                    nomor: '2',
-                    judul: 'Permintaan Alat',
-                    accentColor: kColorYellow,
-                    atasNama: 'Atas Nama: -',
-                    onLihat: () => Navigator.pushNamed(
-                        context, PemesananPage.routeName),
-                  ),
-                  const SizedBox(height: 24),
+                  // ── Konten utama ───────────────────────────────────────
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Status Pemesanan
+                        _SectionLabel(label: 'Status Pemesanan Terbaru'),
+                        const SizedBox(height: 10),
+                        _StatusCard(
+                          nomor: '1',
+                          judul: 'Pemesanan Gedung',
+                          accentColor: kColorPrimary,
+                          atasNama: 'Atas Nama: -',
+                          onLihat: () => Navigator.pushNamed(
+                              context, PemesananPage.routeName),
+                        ),
+                        const SizedBox(height: 8),
+                        _StatusCard(
+                          nomor: '2',
+                          judul: 'Permintaan Alat',
+                          accentColor: kColorGold,
+                          atasNama: 'Atas Nama: -',
+                          onLihat: () => Navigator.pushNamed(
+                              context, PemesananPage.routeName),
+                        ),
+                        const SizedBox(height: 24),
 
-                  // Grid Menu
-                  _SectionLabel(label: 'Kelola Fitur'),
-                  const SizedBox(height: 10),
-                  GridView.count(
-                    crossAxisCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 0.95,
-                    children: [
-                      _MenuCard(
-                        icon: Icons.calendar_today_outlined,
-                        label: 'Acara',
-                        onKelola: () => Navigator.pushNamed(
-                            context, AcaraPage.routeName),
-                      ),
-                      _MenuCard(
-                        icon: Icons.mosque_outlined,
-                        label: 'Informasi Masjid',
-                        onKelola: () => Navigator.pushNamed(
-                            context, InformasiMasjidPage.routeName),
-                      ),
-                      _MenuCard(
-                        icon: Icons.inventory_2_outlined,
-                        label: 'Pemesanan',
-                        onKelola: () => Navigator.pushNamed(
-                            context, PemesananPage.routeName),
-                      ),
-                      _MenuCard(
-                        icon: Icons.article_outlined,
-                        label: 'Berita',
-                        onKelola: () => Navigator.pushNamed(
-                            context, BeritaPage.routeName),
-                      ),
-                      _MenuCard(
-                        icon: Icons.restaurant_menu_outlined,
-                        label: 'Food Court',
-                        onKelola: () => Navigator.pushNamed(
-                            context, FoodCourtPage.routeName),
-                      ),
-                    ],
+                        // Grid Menu
+                        _SectionLabel(label: 'Kelola Fitur'),
+                        const SizedBox(height: 10),
+                        GridView.count(
+                          crossAxisCount: 2,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          childAspectRatio: 0.95,
+                          children: [
+                            _MenuCard(
+                              icon: Icons.calendar_today_outlined,
+                              label: 'Acara',
+                              color: kColorPrimaryLight,
+                              onKelola: () => Navigator.pushNamed(
+                                  context, AcaraPage.routeName),
+                            ),
+                            _MenuCard(
+                              icon: Icons.mosque_outlined,
+                              label: 'Informasi Masjid',
+                              color: kColorPrimary,
+                              onKelola: () => Navigator.pushNamed(
+                                  context, InformasiMasjidPage.routeName),
+                            ),
+                            _MenuCard(
+                              icon: Icons.inventory_2_outlined,
+                              label: 'Pemesanan',
+                              color: kColorPrimaryDark,
+                              onKelola: () => Navigator.pushNamed(
+                                  context, PemesananPage.routeName),
+                            ),
+                            _MenuCard(
+                              icon: Icons.article_outlined,
+                              label: 'Berita',
+                              color: kColorPrimaryMid,
+                              onKelola: () => Navigator.pushNamed(
+                                  context, BeritaPage.routeName),
+                            ),
+                            _MenuCard(
+                              icon: Icons.restaurant_menu_outlined,
+                              label: 'Food Court',
+                              color: const Color(0xFF0288D1),
+                              onKelola: () => Navigator.pushNamed(
+                                  context, FoodCourtPage.routeName),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 16),
                 ],
               ),
             ),
           ),
           const AppFooter(currentIndex: 0),
         ],
-      ),
       ),
     );
   }
@@ -136,10 +153,10 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 3,
-          height: 16,
+          width: 4,
+          height: 18,
           decoration: BoxDecoration(
-            color: kColorSkyBlue,
+            color: kColorPrimary,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
@@ -147,10 +164,9 @@ class _SectionLabel extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: kColorWhiteSoft,
-            letterSpacing: 0.3,
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: kColorTextPrimary,
           ),
         ),
       ],
@@ -178,20 +194,24 @@ class _StatusCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: kColorNavyLight,
+        color: kColorWhite,
         borderRadius: BorderRadius.circular(kCardRadius),
-        border: Border.all(color: accentColor.withOpacity(0.25), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: accentColor.withOpacity(0.12),
-              border:
-                  Border.all(color: accentColor.withOpacity(0.3), width: 1),
+              color: accentColor.withValues(alpha: 0.12),
             ),
             child: Center(
               child: Text(
@@ -199,7 +219,7 @@ class _StatusCard extends StatelessWidget {
                 style: TextStyle(
                     color: accentColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14),
+                    fontSize: 16),
               ),
             ),
           ),
@@ -212,26 +232,24 @@ class _StatusCard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: accentColor)),
+                        color: kColorTextPrimary)),
                 const SizedBox(height: 2),
                 Text(atasNama,
                     style: const TextStyle(
-                        fontSize: 12, color: kColorWhiteSoft)),
+                        fontSize: 12, color: kColorTextSecondary)),
               ],
             ),
           ),
           ElevatedButton(
             onPressed: onLihat,
             style: ElevatedButton.styleFrom(
-              backgroundColor: accentColor.withOpacity(0.15),
-              foregroundColor: accentColor,
+              backgroundColor: accentColor,
+              foregroundColor: kColorWhite,
               elevation: 0,
               padding:
-                  const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                    color: accentColor.withOpacity(0.3), width: 1),
               ),
               textStyle: const TextStyle(
                   fontSize: 13, fontWeight: FontWeight.w600),
@@ -248,11 +266,13 @@ class _MenuCard extends StatelessWidget {
   const _MenuCard({
     required this.icon,
     required this.label,
+    required this.color,
     required this.onKelola,
   });
 
   final IconData icon;
   final String label;
+  final Color color;
   final VoidCallback onKelola;
 
   @override
@@ -262,32 +282,35 @@ class _MenuCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: kColorNavyLight,
+          color: kColorWhite,
           borderRadius: BorderRadius.circular(kCardRadius),
-          border: Border.all(
-              color: kColorSkyBlue.withOpacity(0.18), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 52,
-              height: 52,
+              width: 56,
+              height: 56,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: kColorRoyal.withOpacity(0.15),
-                border: Border.all(
-                    color: kColorSkyBlue.withOpacity(0.3), width: 1),
+                color: color.withValues(alpha: 0.12),
               ),
-              child: Icon(icon, size: 26, color: kColorSkyBlue),
+              child: Icon(icon, size: 28, color: color),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Text(
               label,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
-                color: kColorWhite,
+                color: kColorTextPrimary,
               ),
               textAlign: TextAlign.center,
               maxLines: 2,
@@ -298,18 +321,16 @@ class _MenuCard extends StatelessWidget {
               width: double.infinity,
               height: 34,
               decoration: BoxDecoration(
-                color: kColorRoyal.withOpacity(0.2),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                    color: kColorRoyal.withOpacity(0.4), width: 1),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   'Kelola',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: kColorSkyBlue,
+                    color: color,
                   ),
                 ),
               ),

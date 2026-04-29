@@ -1,37 +1,59 @@
 import 'package:flutter/material.dart';
 
-// ─── Palet Futuristik Minimalis ───────────────────────────────────────────────
-// Navy gelap  : #080840  → background utama, header, footer, drawer
-// Biru royal  : #1565C0  → aksen, tombol primary
-// Biru muda   : #90CAF9  → highlight, border aktif, icon aktif
-// Kuning pastel: #FFE082 → aksen sekunder, badge, tombol aksi
-// Putih       : #FFFFFF  → teks utama, card surface
-// Abu gelap   : #1A1A3A  → card background di atas navy
+// ─── Palet Blue Royal Modern ──────────────────────────────────────────────────
+// Biru gelap    : #0D47A1  → header, drawer (atas gradasi)
+// Biru royal    : #1565C0  → tengah gradasi
+// Biru cerah    : #1976D2  → tombol primary, aksen utama
+// Biru muda     : #42A5F5  → highlight, icon aktif, aksen
+// Putih         : #FFFFFF  → background utama, card surface
+// Abu terang    : #F4F6FA  → background scaffold
+// Teks gelap    : #1A1A2E  → teks utama
+// Teks abu      : #6B7280  → teks sekunder / hint
+// Merah hapus   : #E53935  → aksi hapus
+// Divider       : #E5E7EB  → garis pemisah
 
-const Color kColorNavy       = Color(0xFF080840); // background utama
-const Color kColorNavyLight  = Color(0xFF0D1257); // card / surface
-const Color kColorRoyal      = Color(0xFF1565C0); // tombol primary
-const Color kColorSkyBlue    = Color(0xFF90CAF9); // aksen / highlight
-const Color kColorYellow     = Color(0xFFFFE082); // aksen kuning
-const Color kColorWhite      = Color(0xFFFFFFFF); // teks & icon
-const Color kColorWhiteSoft  = Color(0xFFE8EAF6); // teks sekunder
-const Color kColorHapus      = Color(0xFFEF5350); // merah hapus
-const Color kColorGrey       = Color(0xFF7986CB); // placeholder / hint
+const Color kColorPrimary      = Color(0xFF1976D2); // biru cerah (tombol, aksen)
+const Color kColorPrimaryDark  = Color(0xFF0D47A1); // biru gelap (header atas)
+const Color kColorPrimaryMid   = Color(0xFF1565C0); // biru royal (tengah gradasi)
+const Color kColorPrimaryLight = Color(0xFF42A5F5); // biru muda (highlight)
+const Color kColorAccent       = Color(0xFFBBDEFB); // biru pastel (background aksen)
+const Color kColorGold         = Color(0xFFFFB300); // emas aksen sekunder
+const Color kColorWhite        = Color(0xFFFFFFFF); // putih
+const Color kColorBackground   = Color(0xFFF4F6FA); // background scaffold
+const Color kColorCardBg       = Color(0xFFFFFFFF); // card putih
+const Color kColorTextPrimary  = Color(0xFF1A1A2E); // teks utama
+const Color kColorTextSecondary= Color(0xFF6B7280); // teks sekunder
+const Color kColorHapus        = Color(0xFFE53935); // merah hapus
+const Color kColorDivider      = Color(0xFFE5E7EB); // divider
 
 // Alias agar kode lama tidak error
-const Color kColorBackground = kColorNavy;
-const Color kColorHeader     = kColorNavy;
-const Color kColorButton     = kColorRoyal;
-const Color kColorKembali    = kColorNavyLight;
-const Color kColorTextButton = kColorWhite;
-const Color kColorInputBg    = kColorNavyLight;
-const Color kColorCardBg     = kColorNavyLight;
-const Color kColorBlack      = kColorNavy;
+const Color kColorNavy         = kColorPrimaryDark;
+const Color kColorNavyLight    = Color(0xFFE3F2FD); // biru sangat muda
+const Color kColorRoyal        = kColorPrimary;
+const Color kColorSkyBlue      = kColorPrimaryLight;
+const Color kColorYellow       = kColorGold;
+const Color kColorWhiteSoft    = kColorTextSecondary;
+const Color kColorGrey         = Color(0xFF9CA3AF);
+const Color kColorHeader       = kColorPrimaryDark;
+const Color kColorButton       = kColorPrimary;
+const Color kColorKembali      = kColorNavyLight;
+const Color kColorTextButton   = kColorWhite;
+const Color kColorInputBg      = kColorWhite;
+const Color kColorBlack        = kColorTextPrimary;
+
+// ─── Gradasi standar (dipakai di semua header, drawer, splash, banner) ───────
+// Biru gelap (#0D47A1) → biru royal (#1565C0) → biru cerah (#1976D2)
+const LinearGradient kAppGradient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [kColorPrimaryDark, kColorPrimaryMid, kColorPrimary],
+  stops: [0.0, 0.5, 1.0],
+);
 
 // ─── Radius ──────────────────────────────────────────────────────────────────
-const double kCardRadius   = 12.0;
-const double kButtonRadius = 10.0;
-const double kInputRadius  = 10.0;
+const double kCardRadius   = 14.0;
+const double kButtonRadius = 12.0;
+const double kInputRadius  = 12.0;
 
 // ─── Ukuran ──────────────────────────────────────────────────────────────────
 const double kInputHeight  = 52.0;
@@ -43,27 +65,27 @@ const double kFooterHeight = 60.0;
 ThemeData buildAppTheme() {
   return ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.dark(
-      primary: kColorSkyBlue,
-      secondary: kColorYellow,
-      surface: kColorNavyLight,
-      onPrimary: kColorNavy,
-      onSecondary: kColorNavy,
-      onSurface: kColorWhite,
+    colorScheme: ColorScheme.light(
+      primary: kColorPrimary,
+      secondary: kColorGold,
+      surface: kColorWhite,
+      onPrimary: kColorWhite,
+      onSecondary: kColorTextPrimary,
+      onSurface: kColorTextPrimary,
       error: kColorHapus,
     ),
-    scaffoldBackgroundColor: kColorNavy,
-    cardColor: kColorNavyLight,
+    scaffoldBackgroundColor: kColorBackground,
+    cardColor: kColorCardBg,
     cardTheme: CardThemeData(
-      color: kColorNavyLight,
-      elevation: 0,
+      color: kColorCardBg,
+      elevation: 2,
+      shadowColor: Colors.black.withValues(alpha: 0.08),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kCardRadius),
-        side: BorderSide(color: kColorSkyBlue.withOpacity(0.18), width: 1),
       ),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: kColorNavy,
+      backgroundColor: kColorPrimaryDark,
       foregroundColor: kColorWhite,
       elevation: 0,
       centerTitle: true,
@@ -73,11 +95,11 @@ ThemeData buildAppTheme() {
         fontWeight: FontWeight.w600,
         letterSpacing: 0.5,
       ),
-      iconTheme: IconThemeData(color: kColorSkyBlue),
+      iconTheme: IconThemeData(color: kColorWhite),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: kColorRoyal,
+        backgroundColor: kColorPrimary,
         foregroundColor: kColorWhite,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -88,7 +110,7 @@ ThemeData buildAppTheme() {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: kColorRoyal,
+        backgroundColor: kColorPrimary,
         foregroundColor: kColorWhite,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kButtonRadius)),
@@ -97,70 +119,70 @@ ThemeData buildAppTheme() {
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: kColorSkyBlue),
+      style: TextButton.styleFrom(foregroundColor: kColorPrimary),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: kColorNavyLight,
-      hintStyle: TextStyle(color: kColorGrey.withOpacity(0.7)),
-      labelStyle: const TextStyle(color: kColorSkyBlue),
+      fillColor: kColorWhite,
+      hintStyle: const TextStyle(color: kColorGrey),
+      labelStyle: const TextStyle(color: kColorPrimary),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(kInputRadius),
-        borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.3)),
+        borderSide: const BorderSide(color: kColorDivider),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(kInputRadius),
-        borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+        borderSide: const BorderSide(color: kColorDivider),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(kInputRadius),
-        borderSide: const BorderSide(color: kColorSkyBlue, width: 1.5),
+        borderSide: const BorderSide(color: kColorPrimary, width: 1.5),
       ),
       contentPadding:
           const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     ),
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: kColorWhite),
-      bodyMedium: TextStyle(color: kColorWhiteSoft),
+      bodyLarge: TextStyle(color: kColorTextPrimary),
+      bodyMedium: TextStyle(color: kColorTextSecondary),
       bodySmall: TextStyle(color: kColorGrey),
       titleLarge: TextStyle(
-          color: kColorWhite, fontWeight: FontWeight.bold),
+          color: kColorTextPrimary, fontWeight: FontWeight.bold),
       titleMedium: TextStyle(
-          color: kColorWhite, fontWeight: FontWeight.w600),
-      titleSmall: TextStyle(color: kColorWhiteSoft),
+          color: kColorTextPrimary, fontWeight: FontWeight.w600),
+      titleSmall: TextStyle(color: kColorTextSecondary),
     ),
-    dividerTheme: DividerThemeData(
-      color: kColorSkyBlue.withOpacity(0.15),
+    dividerTheme: const DividerThemeData(
+      color: kColorDivider,
       thickness: 1,
     ),
     tabBarTheme: const TabBarThemeData(
-      labelColor: kColorSkyBlue,
+      labelColor: kColorPrimary,
       unselectedLabelColor: kColorGrey,
-      indicatorColor: kColorSkyBlue,
+      indicatorColor: kColorPrimary,
     ),
     dialogTheme: DialogThemeData(
-      backgroundColor: kColorNavyLight,
+      backgroundColor: kColorWhite,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16)),
       titleTextStyle: const TextStyle(
-          color: kColorWhite, fontSize: 18, fontWeight: FontWeight.bold),
+          color: kColorTextPrimary, fontSize: 18, fontWeight: FontWeight.bold),
       contentTextStyle:
-          const TextStyle(color: kColorWhiteSoft, fontSize: 14),
+          const TextStyle(color: kColorTextSecondary, fontSize: 14),
     ),
     snackBarTheme: SnackBarThemeData(
-      backgroundColor: kColorNavyLight,
+      backgroundColor: kColorPrimaryDark,
       contentTextStyle: const TextStyle(color: kColorWhite),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       behavior: SnackBarBehavior.floating,
     ),
     progressIndicatorTheme:
-        const ProgressIndicatorThemeData(color: kColorSkyBlue),
+        const ProgressIndicatorThemeData(color: kColorPrimary),
     checkboxTheme: CheckboxThemeData(
-      fillColor: WidgetStateProperty.all(kColorRoyal),
+      fillColor: WidgetStateProperty.all(kColorPrimary),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: WidgetStateProperty.all(kColorSkyBlue),
-      trackColor: WidgetStateProperty.all(kColorRoyal.withOpacity(0.4)),
+      thumbColor: WidgetStateProperty.all(kColorPrimary),
+      trackColor: WidgetStateProperty.all(kColorAccent),
     ),
   );
 }
@@ -169,31 +191,31 @@ ThemeData buildAppTheme() {
 InputDecoration kInputDecoration(String hint, {IconData? icon}) {
   return InputDecoration(
     hintText: hint,
-    hintStyle: TextStyle(color: kColorGrey.withOpacity(0.7)),
+    hintStyle: const TextStyle(color: kColorGrey),
     prefixIcon:
-        icon != null ? Icon(icon, color: kColorGrey, size: 22) : null,
+        icon != null ? Icon(icon, color: kColorPrimary, size: 22) : null,
     filled: true,
-    fillColor: kColorNavyLight,
+    fillColor: kColorWhite,
     contentPadding:
         const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(kInputRadius),
-      borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+      borderSide: const BorderSide(color: kColorDivider),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(kInputRadius),
-      borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+      borderSide: const BorderSide(color: kColorDivider),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(kInputRadius),
-      borderSide: const BorderSide(color: kColorSkyBlue, width: 1.5),
+      borderSide: const BorderSide(color: kColorPrimary, width: 1.5),
     ),
   );
 }
 
 // ─── Button styles ────────────────────────────────────────────────────────────
 ButtonStyle kPrimaryButtonStyle = ElevatedButton.styleFrom(
-  backgroundColor: kColorRoyal,
+  backgroundColor: kColorPrimary,
   foregroundColor: kColorWhite,
   minimumSize: const Size(double.infinity, kButtonHeight),
   shape: RoundedRectangleBorder(
@@ -204,12 +226,12 @@ ButtonStyle kPrimaryButtonStyle = ElevatedButton.styleFrom(
 );
 
 ButtonStyle kSecondaryButtonStyle = ElevatedButton.styleFrom(
-  backgroundColor: kColorNavyLight,
-  foregroundColor: kColorSkyBlue,
+  backgroundColor: kColorWhite,
+  foregroundColor: kColorPrimary,
   minimumSize: const Size(double.infinity, kButtonHeight),
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(kButtonRadius),
-    side: const BorderSide(color: kColorSkyBlue, width: 1),
+    side: const BorderSide(color: kColorPrimary, width: 1.5),
   ),
   elevation: 0,
   textStyle:
@@ -228,7 +250,13 @@ ButtonStyle kDangerButtonStyle = ElevatedButton.styleFrom(
 );
 
 BoxDecoration kCardDecoration = BoxDecoration(
-  color: kColorNavyLight,
+  color: kColorCardBg,
   borderRadius: BorderRadius.circular(kCardRadius),
-  border: Border.all(color: kColorSkyBlue.withOpacity(0.18)),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.06),
+      blurRadius: 8,
+      offset: const Offset(0, 2),
+    ),
+  ],
 );
