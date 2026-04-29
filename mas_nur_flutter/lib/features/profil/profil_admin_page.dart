@@ -57,7 +57,7 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
             return Column(
               children: [
                 // ── Header ────────────────────────────────────────────────────
-                const AppHeader(),
+                const AppHeader(showBackButton: true),
 
                 // ── Gambar header (group1) ────────────────────────────────────
                 Expanded(

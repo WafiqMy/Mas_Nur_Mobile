@@ -40,7 +40,7 @@ class _AcaraPageState extends State<AcaraPage> {
         drawer: const AppDrawer(),
         body: Column(
           children: [
-            const AppHeader(),
+            const AppHeader(showBackButton: true),
             Expanded(
               child: FutureBuilder<List<AcaraModel>>(
               future: _future,

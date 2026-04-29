@@ -36,6 +36,9 @@ class AppFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Halaman sidebar: sembunyikan footer sepenuhnya
+    if (currentIndex == -1) return const SizedBox.shrink();
+
     return Container(
       color: kColorHeader,
       padding: const EdgeInsets.symmetric(vertical: 4),

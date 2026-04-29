@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/features/notifikasi/notifikasi_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/utils/app_navigation.dart';
 
-/// Header dengan hamburger menu di kiri, logo di tengah, notifikasi di kanan.
-/// Menggunakan SafeArea agar tidak tertutup status bar.
+/// Header utama aplikasi.
+/// - [showBackButton] = false (default): tampilkan hamburger menu (buka drawer)
+/// - [showBackButton] = true: tampilkan tombol kembali ke Beranda (untuk halaman sidebar)
 class AppHeader extends StatelessWidget {
-  const AppHeader({super.key});
+  const AppHeader({super.key, this.showBackButton = false});
+
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +23,41 @@ class AppHeader extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Hamburger menu (buka drawer)
-              GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: const Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.menu, size: 24, color: Colors.black),
-                    SizedBox(height: 2),
-                    Text('Menu',
-                        style: TextStyle(fontSize: 10, color: Colors.black)),
-                  ],
+              // Kiri: hamburger atau tombol kembali
+              if (showBackButton)
+                GestureDetector(
+                  onTap: () => Navigator.pushReplacement(
+                    context,
+                    fadeRoute(const DashboardPage(),
+                        name: DashboardPage.routeName),
+                  ),
+                  child: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.arrow_back, size: 24, color: Colors.black),
+                      SizedBox(height: 2),
+                      Text('Kembali',
+                          style: TextStyle(fontSize: 10, color: Colors.black)),
+                    ],
+                  ),
+                )
+              else
+                GestureDetector(
+                  onTap: () => Scaffold.of(context).openDrawer(),
+                  child: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.menu, size: 24, color: Colors.black),
+                      SizedBox(height: 2),
+                      Text('Menu',
+                          style: TextStyle(fontSize: 10, color: Colors.black)),
+                    ],
+                  ),
                 ),
-              ),
+
               const Spacer(),
-              // Logo
+
+              // Tengah: logo
               const Text(
                 'Mas Nur',
                 style: TextStyle(
@@ -41,8 +66,10 @@ class AppHeader extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
+
               const Spacer(),
-              // Notifikasi
+
+              // Kanan: notifikasi
               GestureDetector(
                 onTap: () =>
                     Navigator.pushNamed(context, NotifikasiPage.routeName),

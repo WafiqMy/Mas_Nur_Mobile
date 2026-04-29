@@ -40,7 +40,7 @@ class _BeritaPageState extends State<BeritaPage> {
         drawer: const AppDrawer(),
         body: Column(
           children: [
-            const AppHeader(),
+            const AppHeader(showBackButton: true),
           Expanded(
             child: FutureBuilder<List<BeritaModel>>(
               future: _future,

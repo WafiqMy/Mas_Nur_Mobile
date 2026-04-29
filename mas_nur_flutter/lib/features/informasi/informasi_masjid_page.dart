@@ -57,7 +57,7 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
         body: Column(
           children: [
             // ── Header ──────────────────────────────────────────────────────
-            const AppHeader(),
+            const AppHeader(showBackButton: true),
 
             // ── TabBar ──────────────────────────────────────────────────────
             Container(

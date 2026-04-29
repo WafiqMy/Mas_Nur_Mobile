@@ -39,7 +39,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
         drawer: const AppDrawer(),
         body: Column(
           children: [
-            const AppHeader(),
+            const AppHeader(showBackButton: true),
             Expanded(
               child: FutureBuilder<List<NotificationItem>>(
                 future: _future,
