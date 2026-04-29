@@ -3,6 +3,7 @@ import 'package:mas_nur_flutter/core/session/app_session.dart';
 import 'package:mas_nur_flutter/features/acara/acara_page.dart';
 import 'package:mas_nur_flutter/features/auth/login_page.dart';
 import 'package:mas_nur_flutter/features/berita/berita_page.dart';
+import 'package:mas_nur_flutter/features/food_court/food_court_page.dart';
 import 'package:mas_nur_flutter/features/informasi/informasi_masjid_page.dart';
 import 'package:mas_nur_flutter/features/profil/profil_admin_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
@@ -91,6 +92,16 @@ class AppDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     Navigator.pushReplacement(
                         context, fadeRoute(const BeritaPage(), name: BeritaPage.routeName));
+                  },
+                ),
+                _DrawerItem(
+                  icon: Icons.restaurant_menu,
+                  label: 'Food Court',
+                  isActive: active == FoodCourtPage.routeName,
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                        context, fadeRoute(const FoodCourtPage(), name: FoodCourtPage.routeName));
                   },
                 ),
                 const Divider(height: 1),

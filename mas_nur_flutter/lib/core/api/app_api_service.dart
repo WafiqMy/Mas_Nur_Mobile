@@ -342,5 +342,51 @@ class AppApiService {
     final response = await _dio.post('API/api_edit_struktur.php', data: formData);
     return ApiStatusResponse.fromJson(response.data);
   }
+
+  // ─── Food Court ────────────────────────────────────────────────────────────
+
+  static Future<List<FoodCourtModel>> getFoodCourt() async {
+    final response = await _dio.get('API/api_get_food_court.php');
+    final list = (response.data['data'] as List<dynamic>? ?? <dynamic>[]);
+    return list.map((e) => FoodCourtModel.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  static Future<ApiStatusResponse> tambahFoodCourt({
+    required String namaMenu,
+    required String deskripsi,
+    File? fotoFile,
+  }) async {
+    final formData = FormData.fromMap({
+      'nama_menu': namaMenu,
+      'deskripsi': deskripsi,
+      if (fotoFile != null) 'foto': await MultipartFile.fromFile(fotoFile.path),
+    });
+    final response = await _dio.post('API/api_tambah_food_court.php', data: formData);
+    return ApiStatusResponse.fromJson(response.data);
+  }
+
+  static Future<ApiStatusResponse> editFoodCourt({
+    required String idFoodCourt,
+    required String namaMenu,
+    required String deskripsi,
+    File? fotoFile,
+  }) async {
+    final formData = FormData.fromMap({
+      'id_food_court': idFoodCourt,
+      'nama_menu': namaMenu,
+      'deskripsi': deskripsi,
+      if (fotoFile != null) 'foto': await MultipartFile.fromFile(fotoFile.path),
+    });
+    final response = await _dio.post('API/api_edit_food_court.php', data: formData);
+    return ApiStatusResponse.fromJson(response.data);
+  }
+
+  static Future<ApiStatusResponse> hapusFoodCourt(String idFoodCourt) async {
+    final response = await _dio.post(
+      'API/api_hapus_food_court.php',
+      data: {'id_food_court': idFoodCourt},
+    );
+    return ApiStatusResponse.fromJson(response.data);
+  }
 }
 

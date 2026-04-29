@@ -288,3 +288,26 @@ class ReservasiDetailModel {
   final String tanggalSelesaiReservasi;
 }
 
+// ─── Food Court ──────────────────────────────────────────────────────────────
+
+class FoodCourtModel {
+  FoodCourtModel({
+    required this.idFoodCourt,
+    required this.namaMenu,
+    required this.deskripsi,
+    required this.foto,
+  });
+
+  factory FoodCourtModel.fromJson(Map<String, dynamic> json) => FoodCourtModel(
+    idFoodCourt: json['id_food_court']?.toString() ?? '',
+    namaMenu: json['nama_menu']?.toString() ?? '',
+    deskripsi: json['deskripsi']?.toString() ?? '',
+    foto: json['foto']?.toString() ?? '',
+  );
+
+  final String idFoodCourt;
+  final String namaMenu;
+  final String deskripsi;
+  final String foto;
+}
+
