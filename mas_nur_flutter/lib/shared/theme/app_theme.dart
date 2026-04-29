@@ -54,7 +54,7 @@ ThemeData buildAppTheme() {
     ),
     scaffoldBackgroundColor: kColorNavy,
     cardColor: kColorNavyLight,
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: kColorNavyLight,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -133,12 +133,12 @@ ThemeData buildAppTheme() {
       color: kColorSkyBlue.withOpacity(0.15),
       thickness: 1,
     ),
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: kColorSkyBlue,
       unselectedLabelColor: kColorGrey,
       indicatorColor: kColorSkyBlue,
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: kColorNavyLight,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16)),
