@@ -20,13 +20,10 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _checkSession() async {
-    // Beri sedikit delay agar splash terlihat
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 800));
     if (!mounted) return;
-
     final username = await AppSession.getUsername();
     if (!mounted) return;
-
     if (username.isNotEmpty) {
       Navigator.pushReplacementNamed(context, DashboardPage.routeName);
     } else {
@@ -37,28 +34,57 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kColorHeader,
-      body: const Center(
+      backgroundColor: kColorNavy,
+      body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.mosque, size: 72, color: Colors.black87),
-            SizedBox(height: 16),
-            Text(
+            // Icon dengan glow effect
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kColorNavyLight,
+                border: Border.all(color: kColorSkyBlue.withOpacity(0.5), width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: kColorSkyBlue.withOpacity(0.25),
+                    blurRadius: 24,
+                    spreadRadius: 4,
+                  ),
+                ],
+              ),
+              child: const Icon(Icons.mosque, size: 52, color: kColorSkyBlue),
+            ),
+            const SizedBox(height: 24),
+            const Text(
               'Mas Nur',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: kColorWhite,
+                letterSpacing: 2,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 6),
             Text(
               'Admin Panel',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 13,
+                color: kColorSkyBlue.withOpacity(0.8),
+                letterSpacing: 1.5,
+              ),
             ),
-            SizedBox(height: 32),
-            CircularProgressIndicator(color: Colors.black54),
+            const SizedBox(height: 40),
+            SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: kColorSkyBlue.withOpacity(0.7),
+              ),
+            ),
           ],
         ),
       ),

@@ -10,12 +10,10 @@ import 'package:mas_nur_flutter/shared/utils/app_navigation.dart';
 /// -1 = tidak ada yang aktif (halaman dari sidebar)
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key, this.currentIndex = 0});
-
   final int currentIndex;
 
   void _navigate(BuildContext context, int index) {
     if (index == currentIndex) return;
-
     Widget page;
     switch (index) {
       case 0:
@@ -30,17 +28,20 @@ class AppFooter extends StatelessWidget {
       default:
         return;
     }
-
     Navigator.pushReplacement(context, fadeRoute(page));
   }
 
   @override
   Widget build(BuildContext context) {
-    // Halaman sidebar: sembunyikan footer sepenuhnya
     if (currentIndex == -1) return const SizedBox.shrink();
 
     return Container(
-      color: kColorHeader,
+      decoration: BoxDecoration(
+        color: kColorNavy,
+        border: Border(
+          top: BorderSide(color: kColorSkyBlue.withOpacity(0.2), width: 1),
+        ),
+      ),
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
@@ -83,22 +84,23 @@ class _FooterItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const activeColor = Color(0xFF0D47A1);
-    const inactiveColor = Colors.black54;
-
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          padding: const EdgeInsets.symmetric(vertical: 4),
+          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+          padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             color: isActive
-                ? Colors.white.withOpacity(0.55)
+                ? kColorRoyal.withOpacity(0.18)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
+            border: isActive
+                ? Border.all(
+                    color: kColorSkyBlue.withOpacity(0.35), width: 1)
+                : null,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -109,30 +111,30 @@ class _FooterItem extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: 22,
-                  color: isActive ? activeColor : inactiveColor,
+                  color: isActive ? kColorSkyBlue : kColorGrey,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 3),
               Text(
                 label,
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight:
-                      isActive ? FontWeight.bold : FontWeight.normal,
-                  color: isActive ? activeColor : inactiveColor,
+                      isActive ? FontWeight.w600 : FontWeight.normal,
+                  color: isActive ? kColorSkyBlue : kColorGrey,
+                  letterSpacing: 0.3,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 2),
-              // Indikator titik bawah
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 height: 2,
-                width: isActive ? 18 : 0,
+                width: isActive ? 20 : 0,
                 decoration: BoxDecoration(
-                  color: activeColor,
+                  color: kColorSkyBlue,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),

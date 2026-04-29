@@ -26,6 +26,7 @@ import 'package:mas_nur_flutter/features/profil/ganti_nama_page.dart';
 import 'package:mas_nur_flutter/features/profil/ganti_sandi_page.dart';
 import 'package:mas_nur_flutter/features/profil/profil_admin_page.dart';
 import 'package:mas_nur_flutter/features/splash/splash_page.dart';
+import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 
 void runMasNurApp() {
   runApp(const MasNurApp());
@@ -39,10 +40,7 @@ class MasNurApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mas Nur Mobile',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-      ),
+      theme: buildAppTheme(),
       initialRoute: SplashPage.routeName,
       routes: {
         SplashPage.routeName: (_) => const SplashPage(),

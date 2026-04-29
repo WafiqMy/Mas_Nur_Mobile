@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mas_nur_flutter/features/acara/acara_page.dart';
 import 'package:mas_nur_flutter/features/berita/berita_page.dart';
+import 'package:mas_nur_flutter/features/food_court/food_court_page.dart';
 import 'package:mas_nur_flutter/features/informasi/informasi_masjid_page.dart';
 import 'package:mas_nur_flutter/features/persewaan/pemesanan_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
@@ -15,80 +16,78 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kColorWhite,
+      backgroundColor: kColorNavy,
       drawer: const AppDrawer(),
       body: Column(
         children: [
-          // ── Header ──────────────────────────────────────────────────────────
           const AppHeader(),
-
-          // ── Konten ──────────────────────────────────────────────────────────
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Judul
-                  const Center(
-                    child: Text(
-                      'Halaman Utama',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Status Pemesanan Terbaru
-                  const Text(
-                    'Status Pemesanan Terbaru',
+                  // Greeting
+                  Text(
+                    'Halaman Utama',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: kColorWhite,
+                      letterSpacing: 0.5,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Kelola konten masjid dengan mudah',
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: kColorSkyBlue.withOpacity(0.7)),
+                  ),
+                  const SizedBox(height: 20),
 
-                  // Card Pemesanan Gedung
+                  // Status Pemesanan
+                  _SectionLabel(label: 'Status Pemesanan Terbaru'),
+                  const SizedBox(height: 10),
                   _StatusCard(
-                    nomor: '1.',
+                    nomor: '1',
                     judul: 'Pemesanan Gedung',
-                    judulColor: const Color(0xFF0066CC),
+                    accentColor: kColorSkyBlue,
                     atasNama: 'Atas Nama: -',
-                    onLihat: () => Navigator.pushNamed(context, PemesananPage.routeName),
+                    onLihat: () => Navigator.pushNamed(
+                        context, PemesananPage.routeName),
                   ),
                   const SizedBox(height: 8),
-
-                  // Card Permintaan Alat
                   _StatusCard(
-                    nomor: '2.',
+                    nomor: '2',
                     judul: 'Permintaan Alat',
-                    judulColor: const Color(0xFF996600),
+                    accentColor: kColorYellow,
                     atasNama: 'Atas Nama: -',
-                    onLihat: () => Navigator.pushNamed(context, PemesananPage.routeName),
+                    onLihat: () => Navigator.pushNamed(
+                        context, PemesananPage.routeName),
                   ),
                   const SizedBox(height: 24),
 
-                  // Grid Menu 2 kolom
+                  // Grid Menu
+                  _SectionLabel(label: 'Kelola Fitur'),
+                  const SizedBox(height: 10),
                   GridView.count(
                     crossAxisCount: 2,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 0.9,
+                    childAspectRatio: 0.95,
                     children: [
                       _MenuCard(
-                        icon: Icons.calendar_today,
+                        icon: Icons.calendar_today_outlined,
                         label: 'Acara',
-                        onKelola: () => Navigator.pushNamed(context, AcaraPage.routeName),
+                        onKelola: () => Navigator.pushNamed(
+                            context, AcaraPage.routeName),
                       ),
                       _MenuCard(
-                        icon: Icons.mosque,
+                        icon: Icons.mosque_outlined,
                         label: 'Informasi Masjid',
                         onKelola: () => Navigator.pushNamed(
                             context, InformasiMasjidPage.routeName),
@@ -102,7 +101,14 @@ class DashboardPage extends StatelessWidget {
                       _MenuCard(
                         icon: Icons.article_outlined,
                         label: 'Berita',
-                        onKelola: () => Navigator.pushNamed(context, BeritaPage.routeName),
+                        onKelola: () => Navigator.pushNamed(
+                            context, BeritaPage.routeName),
+                      ),
+                      _MenuCard(
+                        icon: Icons.restaurant_menu_outlined,
+                        label: 'Food Court',
+                        onKelola: () => Navigator.pushNamed(
+                            context, FoodCourtPage.routeName),
                       ),
                     ],
                   ),
@@ -111,8 +117,6 @@ class DashboardPage extends StatelessWidget {
               ),
             ),
           ),
-
-          // ── Footer ──────────────────────────────────────────────────────────
           const AppFooter(currentIndex: 0),
         ],
       ),
@@ -120,70 +124,123 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-// ── Status Card ──────────────────────────────────────────────────────────────
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 3,
+          height: 16,
+          decoration: BoxDecoration(
+            color: kColorSkyBlue,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: kColorWhiteSoft,
+            letterSpacing: 0.3,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _StatusCard extends StatelessWidget {
   const _StatusCard({
     required this.nomor,
     required this.judul,
-    required this.judulColor,
+    required this.accentColor,
     required this.atasNama,
     required this.onLihat,
   });
 
   final String nomor;
   final String judul;
-  final Color judulColor;
+  final Color accentColor;
   final String atasNama;
   final VoidCallback onLihat;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '$nomor $judul',
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: kColorNavyLight,
+        borderRadius: BorderRadius.circular(kCardRadius),
+        border: Border.all(color: accentColor.withOpacity(0.25), width: 1),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: accentColor.withOpacity(0.12),
+              border:
+                  Border.all(color: accentColor.withOpacity(0.3), width: 1),
+            ),
+            child: Center(
+              child: Text(
+                nomor,
+                style: TextStyle(
+                    color: accentColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(judul,
                     style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: judulColor,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(atasNama,
-                      style: const TextStyle(fontSize: 14, color: Color(0xFF444444))),
-                ],
-              ),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: accentColor)),
+                const SizedBox(height: 2),
+                Text(atasNama,
+                    style: const TextStyle(
+                        fontSize: 12, color: kColorWhiteSoft)),
+              ],
             ),
-            ElevatedButton(
-              onPressed: onLihat,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kColorKembali,
-                foregroundColor: kColorTextButton,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(kButtonRadius)),
-                elevation: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                textStyle: const TextStyle(fontSize: 16),
+          ),
+          ElevatedButton(
+            onPressed: onLihat,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: accentColor.withOpacity(0.15),
+              foregroundColor: accentColor,
+              elevation: 0,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                    color: accentColor.withOpacity(0.3), width: 1),
               ),
-              child: const Text('Lihat'),
+              textStyle: const TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.w600),
             ),
-          ],
-        ),
+            child: const Text('Lihat'),
+          ),
+        ],
       ),
     );
   }
 }
 
-// ── Menu Card ────────────────────────────────────────────────────────────────
 class _MenuCard extends StatelessWidget {
   const _MenuCard({
     required this.icon,
@@ -197,36 +254,61 @@ class _MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
+    return GestureDetector(
+      onTap: onKelola,
+      child: Container(
         padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: kColorNavyLight,
+          borderRadius: BorderRadius.circular(kCardRadius),
+          border: Border.all(
+              color: kColorSkyBlue.withOpacity(0.18), width: 1),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: Colors.black87),
-            const SizedBox(height: 8),
+            Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kColorRoyal.withOpacity(0.15),
+                border: Border.all(
+                    color: kColorSkyBlue.withOpacity(0.3), width: 1),
+              ),
+              child: Icon(icon, size: 26, color: kColorSkyBlue),
+            ),
+            const SizedBox(height: 10),
             Text(
               label,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                color: kColorWhite,
+              ),
               textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 8),
-            SizedBox(
+            const SizedBox(height: 10),
+            Container(
               width: double.infinity,
-              height: 40,
-              child: ElevatedButton(
-                onPressed: onKelola,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kColorButton,
-                  foregroundColor: kColorTextButton,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(kButtonRadius)),
-                  elevation: 0,
-                  textStyle: const TextStyle(fontSize: 14),
+              height: 34,
+              decoration: BoxDecoration(
+                color: kColorRoyal.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                    color: kColorRoyal.withOpacity(0.4), width: 1),
+              ),
+              child: const Center(
+                child: Text(
+                  'Kelola',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: kColorSkyBlue,
+                  ),
                 ),
-                child: const Text('Kelola'),
               ),
             ),
           ],

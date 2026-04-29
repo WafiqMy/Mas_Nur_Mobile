@@ -3,11 +3,7 @@ import 'package:mas_nur_flutter/core/api/app_api_service.dart';
 import 'package:mas_nur_flutter/core/session/app_session.dart';
 import 'package:mas_nur_flutter/features/auth/konfirmasi_email_page.dart';
 import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
-
-// ─── Warna persis dari colors.xml ────────────────────────────────────────────
-const _bgColor     = Color(0xFF98D3F7); // colorBackground
-const _btnColor    = Color(0xFF99D5F9); // bg_button_login
-const _inputBg     = Color(0xFFF0F5F5); // bg_input_field (abu sangat terang)
+import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -30,10 +26,9 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // ─── Login logic persis MasukActivity.java ──────────────────────────────────
   Future<void> _login() async {
     final username = _usernameCtrl.text.trim();
-    final password = _passwordCtrl.text; // no trim — sama seperti Java
+    final password = _passwordCtrl.text;
 
     if (username.isEmpty || password.isEmpty) {
       _toast('Username dan password harus diisi');
@@ -41,28 +36,22 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     setState(() => _loading = true);
-
     try {
       final result = await AppApiService.loginAdmin(username, password);
-
       if (!mounted) return;
-
       if (result.status == 'success') {
-        // Simpan username ke session (SharedPreferences)
         await AppSession.saveUsername(username);
         if (!mounted) return;
-        _toast('Login berhasil sebagai admin');
         Navigator.pushReplacementNamed(context, DashboardPage.routeName);
       } else {
-        final msg = result.message.isNotEmpty ? result.message : 'Login gagal';
-        _toast(msg);
+        _toast(result.message.isNotEmpty ? result.message : 'Login gagal');
       }
     } on Exception catch (e) {
       if (!mounted) return;
       final msg = e.toString();
       if (msg.contains('SocketException') || msg.contains('UnknownHost')) {
         _toast('Domain tidak ditemukan. Periksa URL server.');
-      } else if (msg.contains('timeout') || msg.contains('TimeoutException')) {
+      } else if (msg.contains('timeout')) {
         _toast('Waktu koneksi habis. Periksa server atau jaringan.');
       } else {
         _toast('Gagal terhubung ke server');
@@ -75,274 +64,237 @@ class _LoginPageState extends State<LoginPage> {
   void _toast(String msg) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-        content: Text(msg),
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 3),
-      ));
+      ..showSnackBar(SnackBar(content: Text(msg)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Tidak ada AppBar — full screen seperti Java
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: _bgColor, // background biru muda
-        child: Column(
-          children: [
-            // ── Logo Masjid ─────────────────────────────────────────────────
-            // marginTop 60dp, height 150dp, marginStart/End 32dp
-            const SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: SizedBox(
-                height: 150,
-                child: Center(
-                  child: Icon(
-                    Icons.mosque,
-                    size: 110,
-                    color: Colors.white,
+      backgroundColor: kColorNavy,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top,
+            child: Column(
+              children: [
+                // ── Logo area ──────────────────────────────────────────────
+                const Spacer(flex: 2),
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: kColorNavyLight,
+                    border: Border.all(
+                        color: kColorSkyBlue.withOpacity(0.5), width: 1.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: kColorSkyBlue.withOpacity(0.2),
+                        blurRadius: 20,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.mosque,
+                      size: 46, color: kColorSkyBlue),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Mas Nur',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: kColorWhite,
+                    letterSpacing: 2,
                   ),
                 ),
-              ),
-            ),
-            // marginTop 40dp sebelum card
-            const SizedBox(height: 40),
+                const SizedBox(height: 4),
+                Text(
+                  'Admin Panel',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: kColorSkyBlue.withOpacity(0.8),
+                    letterSpacing: 1.5,
+                  ),
+                ),
+                const Spacer(flex: 2),
 
-            // ── Card putih rounded atas (bg_card_top_rounded) ───────────────
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
+                // ── Form card ──────────────────────────────────────────────
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: kColorNavyLight,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                        color: kColorSkyBlue.withOpacity(0.2), width: 1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(32),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ── Judul "Masuk" ──────────────────────────────────────
-                      // textSize 32sp, bold, center, marginBottom 24dp
-                      const Center(
-                        child: Text(
-                          'Masuk',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                      const Text(
+                        'Masuk',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: kColorWhite,
                         ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Selamat datang kembali',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: kColorSkyBlue.withOpacity(0.7)),
                       ),
                       const SizedBox(height: 24),
 
-                      // ── Input Username ─────────────────────────────────────
-                      // bg_input_field: rounded, abu terang
-                      // icon person (24dp, grey) + EditText height 50dp
-                      _InputField(
+                      // Username
+                      _buildInput(
                         controller: _usernameCtrl,
                         hint: 'Nama Pengguna',
-                        icon: Icons.person,
-                        keyboardType: TextInputType.text,
+                        icon: Icons.person_outline,
                         textInputAction: TextInputAction.next,
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 14),
 
-                      // ── Input Kata Sandi ───────────────────────────────────
-                      // icon lock + toggle eye kanan (40dp)
-                      _PasswordField(
-                        controller: _passwordCtrl,
-                        obscure: _obscure,
-                        onToggle: () => setState(() => _obscure = !_obscure),
-                        onSubmitted: (_) => _login(),
-                      ),
-                      const SizedBox(height: 16),
+                      // Password
+                      _buildPasswordInput(),
+                      const SizedBox(height: 12),
 
-                      // ── Lupa Kata Sandi ────────────────────────────────────
-                      // textColor darker_gray, align start, marginBottom 24dp
+                      // Lupa sandi
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(
                             context, KonfirmasiEmailPage.routeName),
-                        child: const Text(
+                        child: Text(
                           'Lupa Kata Sandi?',
                           style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                            color: kColorYellow.withOpacity(0.85),
+                            fontSize: 13,
                           ),
                         ),
                       ),
                       const SizedBox(height: 24),
 
-                      // ── Tombol Masuk ───────────────────────────────────────
-                      // width match_parent, height 55dp, bg_button_login
-                      // textColor white, textSize 18sp, textAllCaps false
+                      // Tombol masuk
                       SizedBox(
                         width: double.infinity,
-                        height: 55,
+                        height: 50,
                         child: ElevatedButton(
                           onPressed: _loading ? null : _login,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: _btnColor,
-                            foregroundColor: Colors.white,
-                            disabledBackgroundColor: _btnColor.withAlpha(153),
+                            backgroundColor: kColorRoyal,
+                            foregroundColor: kColorWhite,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                                borderRadius:
+                                    BorderRadius.circular(kButtonRadius)),
                             elevation: 0,
                           ),
                           child: _loading
                               ? const SizedBox(
-                                  width: 24,
-                                  height: 24,
+                                  width: 22,
+                                  height: 22,
                                   child: CircularProgressIndicator(
-                                    strokeWidth: 2.5,
-                                    color: Colors.white,
-                                  ),
+                                      strokeWidth: 2, color: kColorWhite),
                                 )
                               : const Text(
                                   'Masuk',
                                   style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
                                 ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
+                const Spacer(flex: 3),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
-}
 
-// ─── Widget input field bergaya bg_input_field ────────────────────────────────
-class _InputField extends StatelessWidget {
-  const _InputField({
-    required this.controller,
-    required this.hint,
-    required this.icon,
-    this.keyboardType = TextInputType.text,
-    this.textInputAction = TextInputAction.done,
-  });
-
-  final TextEditingController controller;
-  final String hint;
-  final IconData icon;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-        color: _inputBg,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          // Icon 24dp, grey, marginStart 16dp
-          const SizedBox(width: 16),
-          Icon(icon, size: 24, color: Colors.grey),
-          // EditText: transparent bg, paddingStart/End 16dp
-          Expanded(
-            child: TextField(
-              controller: controller,
-              keyboardType: keyboardType,
-              textInputAction: textInputAction,
-              style: const TextStyle(fontSize: 15, color: Colors.black),
-              decoration: InputDecoration(
-                hintText: hint,
-                hintStyle: const TextStyle(color: Colors.grey),
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 0,
-                ),
-                isDense: true,
-              ),
-            ),
-          ),
-        ],
+  Widget _buildInput({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    TextInputAction textInputAction = TextInputAction.done,
+  }) {
+    return TextField(
+      controller: controller,
+      textInputAction: textInputAction,
+      style: const TextStyle(color: kColorWhite, fontSize: 15),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: TextStyle(color: kColorGrey.withOpacity(0.6)),
+        prefixIcon: Icon(icon, color: kColorSkyBlue, size: 20),
+        filled: true,
+        fillColor: kColorNavy.withOpacity(0.5),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(kInputRadius),
+          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(kInputRadius),
+          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(kInputRadius),
+          borderSide: const BorderSide(color: kColorSkyBlue, width: 1.5),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }
-}
 
-// ─── Widget password field dengan toggle eye ──────────────────────────────────
-class _PasswordField extends StatelessWidget {
-  const _PasswordField({
-    required this.controller,
-    required this.obscure,
-    required this.onToggle,
-    this.onSubmitted,
-  });
-
-  final TextEditingController controller;
-  final bool obscure;
-  final VoidCallback onToggle;
-  final ValueChanged<String>? onSubmitted;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-        color: _inputBg,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          // Icon lock 24dp, grey, marginStart 16dp
-          const SizedBox(width: 16),
-          const Icon(Icons.lock, size: 24, color: Colors.grey),
-          // EditText password
-          Expanded(
-            child: TextField(
-              controller: controller,
-              obscureText: obscure,
-              textInputAction: TextInputAction.done,
-              onSubmitted: onSubmitted,
-              style: const TextStyle(fontSize: 15, color: Colors.black),
-              decoration: const InputDecoration(
-                hintText: 'Kata Sandi',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 0,
-                ),
-                isDense: true,
-              ),
-            ),
+  Widget _buildPasswordInput() {
+    return TextField(
+      controller: _passwordCtrl,
+      obscureText: _obscure,
+      textInputAction: TextInputAction.done,
+      onSubmitted: (_) => _login(),
+      style: const TextStyle(color: kColorWhite, fontSize: 15),
+      decoration: InputDecoration(
+        hintText: 'Kata Sandi',
+        hintStyle: TextStyle(color: kColorGrey.withOpacity(0.6)),
+        prefixIcon:
+            const Icon(Icons.lock_outline, color: kColorSkyBlue, size: 20),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+            color: kColorGrey,
+            size: 20,
           ),
-          // Toggle eye button — 40dp, marginEnd 12dp
-          SizedBox(
-            width: 40,
-            height: 40,
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              icon: Icon(
-                obscure ? Icons.visibility_off : Icons.visibility,
-                color: Colors.grey,
-                size: 22,
-              ),
-              onPressed: onToggle,
-            ),
-          ),
-          const SizedBox(width: 4),
-        ],
+          onPressed: () => setState(() => _obscure = !_obscure),
+        ),
+        filled: true,
+        fillColor: kColorNavy.withOpacity(0.5),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(kInputRadius),
+          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(kInputRadius),
+          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(kInputRadius),
+          borderSide: const BorderSide(color: kColorSkyBlue, width: 1.5),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }

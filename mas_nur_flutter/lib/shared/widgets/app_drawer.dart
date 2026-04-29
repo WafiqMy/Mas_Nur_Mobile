@@ -11,77 +11,109 @@ import 'package:mas_nur_flutter/shared/utils/app_navigation.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key, this.currentRoute});
-
-  /// Isi dengan routeName halaman aktif, misal: AcaraPage.routeName
   final String? currentRoute;
 
   @override
   Widget build(BuildContext context) {
-    final active = currentRoute ?? ModalRoute.of(context)?.settings.name;
+    final active =
+        currentRoute ?? ModalRoute.of(context)?.settings.name;
 
     return Drawer(
-      backgroundColor: kColorWhite,
+      backgroundColor: kColorNavy,
       child: Column(
         children: [
-          // Header drawer
+          // ── Header drawer ──────────────────────────────────────────────
           Container(
             width: double.infinity,
-            color: kColorHeader,
-            padding: const EdgeInsets.fromLTRB(16, 48, 16, 20),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            decoration: BoxDecoration(
+              color: kColorNavyLight,
+              border: Border(
+                bottom: BorderSide(
+                    color: kColorSkyBlue.withOpacity(0.2), width: 1),
+              ),
+            ),
+            padding: const EdgeInsets.fromLTRB(20, 52, 20, 20),
+            child: Row(
               children: [
-                Icon(Icons.mosque, size: 48, color: Colors.black87),
-                SizedBox(height: 8),
-                Text(
-                  'Mas Nur',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: kColorNavy,
+                    border: Border.all(
+                        color: kColorSkyBlue.withOpacity(0.4), width: 1.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: kColorSkyBlue.withOpacity(0.15),
+                        blurRadius: 10,
+                      ),
+                    ],
                   ),
+                  child: const Icon(Icons.mosque,
+                      size: 26, color: kColorSkyBlue),
                 ),
-                Text(
-                  'Admin Panel',
-                  style: TextStyle(fontSize: 13, color: Colors.black54),
+                const SizedBox(width: 14),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Mas Nur',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: kColorWhite,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    Text(
+                      'Admin Panel',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: kColorSkyBlue.withOpacity(0.7)),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
 
-          // Menu items
+          // ── Menu items ─────────────────────────────────────────────────
           Expanded(
             child: ListView(
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.symmetric(vertical: 8),
               children: [
                 _DrawerItem(
-                  icon: Icons.person,
+                  icon: Icons.person_outline_rounded,
                   label: 'Profil',
                   isActive: active == ProfilAdminPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context, fadeRoute(const ProfilAdminPage(), name: ProfilAdminPage.routeName));
+                    Navigator.pushReplacement(context,
+                        fadeRoute(const ProfilAdminPage(),
+                            name: ProfilAdminPage.routeName));
                   },
                 ),
                 _DrawerItem(
-                  icon: Icons.calendar_today,
+                  icon: Icons.calendar_today_outlined,
                   label: 'Acara',
                   isActive: active == AcaraPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context, fadeRoute(const AcaraPage(), name: AcaraPage.routeName));
+                    Navigator.pushReplacement(context,
+                        fadeRoute(const AcaraPage(),
+                            name: AcaraPage.routeName));
                   },
                 ),
                 _DrawerItem(
-                  icon: Icons.mosque,
+                  icon: Icons.mosque_outlined,
                   label: 'Informasi Masjid',
                   isActive: active == InformasiMasjidPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context, fadeRoute(const InformasiMasjidPage(), name: InformasiMasjidPage.routeName));
+                    Navigator.pushReplacement(context,
+                        fadeRoute(const InformasiMasjidPage(),
+                            name: InformasiMasjidPage.routeName));
                   },
                 ),
                 _DrawerItem(
@@ -90,26 +122,33 @@ class AppDrawer extends StatelessWidget {
                   isActive: active == BeritaPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context, fadeRoute(const BeritaPage(), name: BeritaPage.routeName));
+                    Navigator.pushReplacement(context,
+                        fadeRoute(const BeritaPage(),
+                            name: BeritaPage.routeName));
                   },
                 ),
                 _DrawerItem(
-                  icon: Icons.restaurant_menu,
+                  icon: Icons.restaurant_menu_outlined,
                   label: 'Food Court',
                   isActive: active == FoodCourtPage.routeName,
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                        context, fadeRoute(const FoodCourtPage(), name: FoodCourtPage.routeName));
+                    Navigator.pushReplacement(context,
+                        fadeRoute(const FoodCourtPage(),
+                            name: FoodCourtPage.routeName));
                   },
                 ),
-                const Divider(height: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 4),
+                  child: Divider(
+                      color: kColorSkyBlue.withOpacity(0.15), height: 1),
+                ),
                 _DrawerItem(
-                  icon: Icons.logout,
-                  label: 'Logout',
-                  iconColor: Colors.red,
-                  labelColor: Colors.red,
+                  icon: Icons.logout_rounded,
+                  label: 'Keluar',
+                  iconColor: kColorHapus,
+                  labelColor: kColorHapus,
                   onTap: () async {
                     Navigator.pop(context);
                     await AppSession.clear();
@@ -150,33 +189,43 @@ class _DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = Theme.of(context).colorScheme.primary;
-    final resolvedIconColor = iconColor ?? (isActive ? activeColor : Colors.black87);
-    final resolvedLabelColor = labelColor ?? (isActive ? activeColor : Colors.black87);
+    final resolvedIcon =
+        iconColor ?? (isActive ? kColorSkyBlue : kColorGrey);
+    final resolvedLabel =
+        labelColor ?? (isActive ? kColorWhite : kColorWhiteSoft);
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       decoration: BoxDecoration(
-        color: isActive ? activeColor.withOpacity(0.1) : Colors.transparent,
+        color: isActive
+            ? kColorRoyal.withOpacity(0.15)
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
+        border: isActive
+            ? Border.all(
+                color: kColorSkyBlue.withOpacity(0.25), width: 1)
+            : null,
       ),
       child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        leading: Icon(icon, color: resolvedIconColor),
+        dense: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)),
+        leading: Icon(icon, color: resolvedIcon, size: 20),
         title: Text(
           label,
           style: TextStyle(
-            fontSize: 15,
-            color: resolvedLabelColor,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+            fontSize: 14,
+            color: resolvedLabel,
+            fontWeight:
+                isActive ? FontWeight.w600 : FontWeight.normal,
           ),
         ),
         trailing: isActive
             ? Container(
-                width: 4,
-                height: 24,
+                width: 3,
+                height: 20,
                 decoration: BoxDecoration(
-                  color: activeColor,
+                  color: kColorSkyBlue,
                   borderRadius: BorderRadius.circular(2),
                 ),
               )
