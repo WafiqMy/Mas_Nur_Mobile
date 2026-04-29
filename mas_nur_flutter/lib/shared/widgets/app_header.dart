@@ -11,27 +11,27 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kColorNavy,
+      decoration: const BoxDecoration(
+        gradient: kAppGradient,
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x331B5E20),
+            blurRadius: 8,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
       child: SafeArea(
         bottom: false,
-        child: Container(
-          decoration: BoxDecoration(
-            color: kColorNavy,
-            border: Border(
-              bottom: BorderSide(
-                  color: kColorSkyBlue.withOpacity(0.2), width: 1),
-            ),
-          ),
-          padding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Kiri
               if (showBackButton)
-                _HeaderButton(
+                _HeaderIconButton(
                   icon: Icons.arrow_back_ios_new_rounded,
-                  label: 'Kembali',
                   onTap: () => Navigator.pushReplacement(
                     context,
                     fadeRoute(const DashboardPage(),
@@ -39,29 +39,35 @@ class AppHeader extends StatelessWidget {
                   ),
                 )
               else
-                _HeaderButton(
+                _HeaderIconButton(
                   icon: Icons.menu_rounded,
-                  label: 'Menu',
                   onTap: () => Scaffold.of(context).openDrawer(),
                 ),
 
               const Spacer(),
 
-              // Logo
+              // Logo tengah
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.mosque,
-                      size: 18,
-                      color: kColorSkyBlue.withOpacity(0.8)),
-                  const SizedBox(width: 6),
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: kColorWhite.withOpacity(0.15),
+                    ),
+                    child: const Icon(Icons.mosque,
+                        size: 18, color: kColorWhite),
+                  ),
+                  const SizedBox(width: 8),
                   const Text(
                     'Mas Nur',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: kColorWhite,
-                      letterSpacing: 1,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ],
@@ -70,9 +76,8 @@ class AppHeader extends StatelessWidget {
               const Spacer(),
 
               // Kanan: notifikasi
-              _HeaderButton(
+              _HeaderIconButton(
                 icon: Icons.notifications_outlined,
-                label: 'Notifikasi',
                 onTap: () =>
                     Navigator.pushNamed(context, NotifikasiPage.routeName),
               ),
@@ -84,28 +89,23 @@ class AppHeader extends StatelessWidget {
   }
 }
 
-class _HeaderButton extends StatelessWidget {
-  const _HeaderButton({
-      required this.icon, required this.label, required this.onTap});
+class _HeaderIconButton extends StatelessWidget {
+  const _HeaderIconButton({required this.icon, required this.onTap});
   final IconData icon;
-  final String label;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 22, color: kColorSkyBlue),
-          const SizedBox(height: 2),
-          Text(label,
-              style: TextStyle(
-                  fontSize: 9,
-                  color: kColorSkyBlue.withOpacity(0.8),
-                  letterSpacing: 0.3)),
-        ],
+      child: Container(
+        width: 38,
+        height: 38,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: kColorWhite.withOpacity(0.15),
+        ),
+        child: Icon(icon, size: 20, color: kColorWhite),
       ),
     );
   }

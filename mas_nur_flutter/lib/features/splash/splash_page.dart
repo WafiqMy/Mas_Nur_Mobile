@@ -3,7 +3,6 @@ import 'package:mas_nur_flutter/core/session/app_session.dart';
 import 'package:mas_nur_flutter/features/auth/login_page.dart';
 import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
-import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -21,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _checkSession() async {
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future.delayed(const Duration(milliseconds: 1000));
     if (!mounted) return;
     final username = await AppSession.getUsername();
     if (!mounted) return;
@@ -35,35 +34,30 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: AppGradientBackground(
+      backgroundColor: kColorPrimaryDark,
+      body: Container(
+        decoration: const BoxDecoration(gradient: kAppGradient),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Icon dengan glow effect
+              // Icon masjid dengan lingkaran putih
               Container(
-                width: 100,
-                height: 100,
+                width: 110,
+                height: 110,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: kColorNavyLight,
-                  border: Border.all(color: kColorSkyBlue.withOpacity(0.5), width: 1.5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kColorSkyBlue.withOpacity(0.25),
-                      blurRadius: 24,
-                      spreadRadius: 4,
-                    ),
-                  ],
+                  color: kColorWhite.withOpacity(0.15),
+                  border: Border.all(
+                      color: kColorWhite.withOpacity(0.4), width: 2),
                 ),
-                child: const Icon(Icons.mosque, size: 52, color: kColorSkyBlue),
+                child: const Icon(Icons.mosque, size: 58, color: kColorWhite),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
               const Text(
                 'Mas Nur',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: kColorWhite,
                   letterSpacing: 2,
@@ -73,18 +67,18 @@ class _SplashPageState extends State<SplashPage> {
               Text(
                 'Admin Panel',
                 style: TextStyle(
-                  fontSize: 13,
-                  color: kColorSkyBlue.withOpacity(0.8),
-                  letterSpacing: 1.5,
+                  fontSize: 14,
+                  color: kColorWhite.withOpacity(0.75),
+                  letterSpacing: 2,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 48),
               SizedBox(
-                width: 24,
-                height: 24,
+                width: 28,
+                height: 28,
                 child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: kColorSkyBlue.withOpacity(0.7),
+                  strokeWidth: 2.5,
+                  color: kColorWhite.withOpacity(0.8),
                 ),
               ),
             ],

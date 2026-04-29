@@ -19,7 +19,7 @@ class InfaqPage extends StatelessWidget {
         }
       },
       child: Scaffold(
-        backgroundColor: kColorWhite,
+        backgroundColor: kColorBackground,
         drawer: const AppDrawer(),
         body: Column(
           children: [

@@ -7,7 +7,6 @@ import 'package:mas_nur_flutter/features/informasi/edit_struktur_organisasi_page
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
-import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class InformasiMasjidPage extends StatefulWidget {
@@ -53,22 +52,21 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: kColorBackground,
         drawer: const AppDrawer(),
-        body: AppGradientBackground(
-          child: Column(
-            children: [
+        body: Column(
+          children: [
             // ── Header ──────────────────────────────────────────────────────
             const AppHeader(showBackButton: true),
 
             // ── TabBar ──────────────────────────────────────────────────────
             Container(
-              color: kColorHeader,
+              color: kColorPrimaryDark,
               child: TabBar(
                 controller: _tabController,
-                labelColor: const Color(0xFF0D47A1),
-                unselectedLabelColor: Colors.black54,
-                indicatorColor: const Color(0xFF0D47A1),
+                labelColor: kColorWhite,
+                unselectedLabelColor: kColorWhite.withOpacity(0.6),
+                indicatorColor: kColorGold,
                 tabs: const [
                   Tab(icon: Icon(Icons.mosque), text: 'Profil Masjid'),
                   Tab(icon: Icon(Icons.account_tree), text: 'Struktur Organisasi'),
@@ -136,7 +134,6 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
             // ── Footer ──────────────────────────────────────────────────────
             const AppFooter(currentIndex: -1),
           ],
-        ),
         ),
       ),
     );

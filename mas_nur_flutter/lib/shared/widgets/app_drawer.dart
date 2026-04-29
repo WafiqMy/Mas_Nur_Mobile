@@ -19,39 +19,29 @@ class AppDrawer extends StatelessWidget {
         currentRoute ?? ModalRoute.of(context)?.settings.name;
 
     return Drawer(
-      backgroundColor: kColorNavy,
+      backgroundColor: kColorWhite,
       child: Column(
         children: [
           // ── Header drawer ──────────────────────────────────────────────
           Container(
             width: double.infinity,
-            decoration: BoxDecoration(
-              color: kColorNavyLight,
-              border: Border(
-                bottom: BorderSide(
-                    color: kColorSkyBlue.withOpacity(0.2), width: 1),
-              ),
+            decoration: const BoxDecoration(
+              gradient: kAppGradient,
             ),
-            padding: const EdgeInsets.fromLTRB(20, 52, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 52, 20, 24),
             child: Row(
               children: [
                 Container(
-                  width: 48,
-                  height: 48,
+                  width: 52,
+                  height: 52,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: kColorNavy,
+                    color: kColorWhite.withOpacity(0.2),
                     border: Border.all(
-                        color: kColorSkyBlue.withOpacity(0.4), width: 1.5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: kColorSkyBlue.withOpacity(0.15),
-                        blurRadius: 10,
-                      ),
-                    ],
+                        color: kColorWhite.withOpacity(0.4), width: 1.5),
                   ),
                   child: const Icon(Icons.mosque,
-                      size: 26, color: kColorSkyBlue),
+                      size: 28, color: kColorWhite),
                 ),
                 const SizedBox(width: 14),
                 Column(
@@ -60,7 +50,7 @@ class AppDrawer extends StatelessWidget {
                     const Text(
                       'Mas Nur',
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: kColorWhite,
                         letterSpacing: 0.5,
@@ -70,7 +60,7 @@ class AppDrawer extends StatelessWidget {
                       'Admin Panel',
                       style: TextStyle(
                           fontSize: 12,
-                          color: kColorSkyBlue.withOpacity(0.7)),
+                          color: kColorWhite.withOpacity(0.75)),
                     ),
                   ],
                 ),
@@ -81,7 +71,7 @@ class AppDrawer extends StatelessWidget {
           // ── Menu items ─────────────────────────────────────────────────
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               children: [
                 _DrawerItem(
                   icon: Icons.person_outline_rounded,
@@ -138,11 +128,9 @@ class AppDrawer extends StatelessWidget {
                             name: FoodCourtPage.routeName));
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 4),
-                  child: Divider(
-                      color: kColorSkyBlue.withOpacity(0.15), height: 1),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Divider(color: kColorDivider, height: 1),
                 ),
                 _DrawerItem(
                   icon: Icons.logout_rounded,
@@ -190,27 +178,33 @@ class _DrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resolvedIcon =
-        iconColor ?? (isActive ? kColorSkyBlue : kColorGrey);
+        iconColor ?? (isActive ? kColorPrimary : kColorGrey);
     final resolvedLabel =
-        labelColor ?? (isActive ? kColorWhite : kColorWhiteSoft);
+        labelColor ?? (isActive ? kColorPrimary : kColorTextPrimary);
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       decoration: BoxDecoration(
         color: isActive
-            ? kColorRoyal.withOpacity(0.15)
+            ? kColorPrimary.withOpacity(0.08)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
-        border: isActive
-            ? Border.all(
-                color: kColorSkyBlue.withOpacity(0.25), width: 1)
-            : null,
       ),
       child: ListTile(
         dense: true,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10)),
-        leading: Icon(icon, color: resolvedIcon, size: 20),
+        leading: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isActive
+                ? kColorPrimary.withOpacity(0.12)
+                : kColorBackground,
+          ),
+          child: Icon(icon, color: resolvedIcon, size: 20),
+        ),
         title: Text(
           label,
           style: TextStyle(
@@ -222,10 +216,10 @@ class _DrawerItem extends StatelessWidget {
         ),
         trailing: isActive
             ? Container(
-                width: 3,
-                height: 20,
+                width: 4,
+                height: 24,
                 decoration: BoxDecoration(
-                  color: kColorSkyBlue,
+                  color: kColorPrimary,
                   borderRadius: BorderRadius.circular(2),
                 ),
               )

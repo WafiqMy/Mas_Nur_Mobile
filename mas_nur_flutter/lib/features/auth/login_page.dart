@@ -4,7 +4,6 @@ import 'package:mas_nur_flutter/core/session/app_session.dart';
 import 'package:mas_nur_flutter/features/auth/konfirmasi_email_page.dart';
 import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
-import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -71,159 +70,146 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: AppGradientBackground(
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: SizedBox(
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top,
-            child: Column(
-              children: [
-                // ── Logo area ──────────────────────────────────────────────
-                const Spacer(flex: 2),
-                Container(
-                  width: 90,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: kColorNavyLight,
-                    border: Border.all(
-                        color: kColorSkyBlue.withOpacity(0.5), width: 1.5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: kColorSkyBlue.withOpacity(0.2),
-                        blurRadius: 20,
-                        spreadRadius: 2,
-                      ),
-                    ],
-                  ),
-                  child: const Icon(Icons.mosque,
-                      size: 46, color: kColorSkyBlue),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Mas Nur',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: kColorWhite,
-                    letterSpacing: 2,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Admin Panel',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: kColorSkyBlue.withOpacity(0.8),
-                    letterSpacing: 1.5,
-                  ),
-                ),
-                const Spacer(flex: 2),
-
-                // ── Form card ──────────────────────────────────────────────
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: kColorNavyLight,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                        color: kColorSkyBlue.withOpacity(0.2), width: 1),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
+      backgroundColor: kColorBackground,
+      body: Column(
+        children: [
+          // ── Header hijau melengkung ────────────────────────────────────
+          ClipPath(
+            clipper: _CurvedBottomClipper(),
+            child: Container(
+              height: 280,
+              decoration: const BoxDecoration(gradient: kAppGradient),
+              child: SafeArea(
+                child: Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: kColorWhite.withOpacity(0.2),
+                          border: Border.all(
+                              color: kColorWhite.withOpacity(0.5), width: 2),
+                        ),
+                        child: const Icon(Icons.mosque,
+                            size: 42, color: kColorWhite),
+                      ),
+                      const SizedBox(height: 14),
                       const Text(
-                        'Masuk',
+                        'Mas Nur',
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 26,
                           fontWeight: FontWeight.bold,
                           color: kColorWhite,
+                          letterSpacing: 1.5,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Selamat datang kembali',
+                        'Admin Panel',
                         style: TextStyle(
-                            fontSize: 13,
-                            color: kColorSkyBlue.withOpacity(0.7)),
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Username
-                      _buildInput(
-                        controller: _usernameCtrl,
-                        hint: 'Nama Pengguna',
-                        icon: Icons.person_outline,
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: 14),
-
-                      // Password
-                      _buildPasswordInput(),
-                      const SizedBox(height: 12),
-
-                      // Lupa sandi
-                      GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                            context, KonfirmasiEmailPage.routeName),
-                        child: Text(
-                          'Lupa Kata Sandi?',
-                          style: TextStyle(
-                            color: kColorYellow.withOpacity(0.85),
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Tombol masuk
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: _loading ? null : _login,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kColorRoyal,
-                            foregroundColor: kColorWhite,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(kButtonRadius)),
-                            elevation: 0,
-                          ),
-                          child: _loading
-                              ? const SizedBox(
-                                  width: 22,
-                                  height: 22,
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 2, color: kColorWhite),
-                                )
-                              : const Text(
-                                  'Masuk',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                          fontSize: 13,
+                          color: kColorWhite.withOpacity(0.8),
+                          letterSpacing: 1.5,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const Spacer(flex: 3),
-              ],
+              ),
             ),
           ),
-        ),
-        ),
+
+          // ── Form ──────────────────────────────────────────────────────
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Selamat Datang',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: kColorTextPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'Masuk ke akun admin Anda',
+                    style: TextStyle(
+                        fontSize: 14, color: kColorTextSecondary),
+                  ),
+                  const SizedBox(height: 28),
+
+                  // Username
+                  _buildInput(
+                    controller: _usernameCtrl,
+                    hint: 'Nama Pengguna',
+                    icon: Icons.person_outline,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Password
+                  _buildPasswordInput(),
+                  const SizedBox(height: 12),
+
+                  // Lupa sandi
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                          context, KonfirmasiEmailPage.routeName),
+                      child: const Text(
+                        'Lupa Kata Sandi?',
+                        style: TextStyle(
+                          color: kColorPrimary,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 28),
+
+                  // Tombol masuk
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: _loading ? null : _login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kColorPrimary,
+                        foregroundColor: kColorWhite,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(kButtonRadius)),
+                        elevation: 0,
+                      ),
+                      child: _loading
+                          ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                  strokeWidth: 2, color: kColorWhite),
+                            )
+                          : const Text(
+                              'Masuk',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -237,24 +223,24 @@ class _LoginPageState extends State<LoginPage> {
     return TextField(
       controller: controller,
       textInputAction: textInputAction,
-      style: const TextStyle(color: kColorWhite, fontSize: 15),
+      style: const TextStyle(color: kColorTextPrimary, fontSize: 15),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: kColorGrey.withOpacity(0.6)),
-        prefixIcon: Icon(icon, color: kColorSkyBlue, size: 20),
+        hintStyle: const TextStyle(color: kColorGrey),
+        prefixIcon: Icon(icon, color: kColorPrimary, size: 22),
         filled: true,
-        fillColor: kColorNavy.withOpacity(0.5),
+        fillColor: kColorWhite,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(kInputRadius),
-          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+          borderSide: const BorderSide(color: kColorDivider),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(kInputRadius),
-          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+          borderSide: const BorderSide(color: kColorDivider),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(kInputRadius),
-          borderSide: const BorderSide(color: kColorSkyBlue, width: 1.5),
+          borderSide: const BorderSide(color: kColorPrimary, width: 1.5),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -268,37 +254,56 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: _obscure,
       textInputAction: TextInputAction.done,
       onSubmitted: (_) => _login(),
-      style: const TextStyle(color: kColorWhite, fontSize: 15),
+      style: const TextStyle(color: kColorTextPrimary, fontSize: 15),
       decoration: InputDecoration(
         hintText: 'Kata Sandi',
-        hintStyle: TextStyle(color: kColorGrey.withOpacity(0.6)),
+        hintStyle: const TextStyle(color: kColorGrey),
         prefixIcon:
-            const Icon(Icons.lock_outline, color: kColorSkyBlue, size: 20),
+            const Icon(Icons.lock_outline, color: kColorPrimary, size: 22),
         suffixIcon: IconButton(
           icon: Icon(
-            _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+            _obscure
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
             color: kColorGrey,
             size: 20,
           ),
           onPressed: () => setState(() => _obscure = !_obscure),
         ),
         filled: true,
-        fillColor: kColorNavy.withOpacity(0.5),
+        fillColor: kColorWhite,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(kInputRadius),
-          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+          borderSide: const BorderSide(color: kColorDivider),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(kInputRadius),
-          borderSide: BorderSide(color: kColorSkyBlue.withOpacity(0.2)),
+          borderSide: const BorderSide(color: kColorDivider),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(kInputRadius),
-          borderSide: const BorderSide(color: kColorSkyBlue, width: 1.5),
+          borderSide: const BorderSide(color: kColorPrimary, width: 1.5),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }
+}
+
+/// Clipper untuk efek lengkung bawah header
+class _CurvedBottomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height - 40);
+    path.quadraticBezierTo(
+        size.width / 2, size.height + 20, size.width, size.height - 40);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(_CurvedBottomClipper oldClipper) => false;
 }
