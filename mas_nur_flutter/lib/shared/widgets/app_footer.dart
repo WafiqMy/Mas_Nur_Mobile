@@ -40,17 +40,17 @@ class AppFooter extends StatelessWidget {
         color: kColorWhite,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 4,
+            color: kColorPrimaryDark.withValues(alpha: 0.06),
+            blurRadius: 6,
             offset: const Offset(0, -1),
           ),
         ],
       ),
       padding: EdgeInsets.only(
-        top: 4,
-        bottom: MediaQuery.of(context).padding.bottom + 2,
-        left: 8,
-        right: 8,
+        top: 8,
+        bottom: MediaQuery.of(context).padding.bottom + 6,
+        left: 16,
+        right: 16,
       ),
       child: Row(
         children: [
@@ -98,53 +98,54 @@ class _FooterItem extends StatelessWidget {
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+          duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 6),
           decoration: BoxDecoration(
+            // Pill highlight hanya untuk item aktif
             color: isActive
-                ? kColorPrimary.withValues(alpha: 0.07)
+                ? kColorPrimary.withValues(alpha: 0.08)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Dot indikator atas (aktif)
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 180),
-                height: 2,
-                width: isActive ? 16 : 0,
-                margin: const EdgeInsets.only(bottom: 3),
-                decoration: BoxDecoration(
-                  color: kColorPrimary,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              // Icon
+              // Icon dengan animasi scale
               AnimatedScale(
-                scale: isActive ? 1.05 : 1.0,
-                duration: const Duration(milliseconds: 180),
+                scale: isActive ? 1.1 : 1.0,
+                duration: const Duration(milliseconds: 200),
                 child: Icon(
                   icon,
-                  size: 18,
+                  size: 22,
                   color: isActive ? kColorPrimary : kColorGrey,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 4),
               // Label
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 9,
+                  fontSize: 10,
                   fontWeight:
-                      isActive ? FontWeight.w600 : FontWeight.normal,
+                      isActive ? FontWeight.w700 : FontWeight.w400,
                   color: isActive ? kColorPrimary : kColorGrey,
-                  letterSpacing: 0.1,
+                  letterSpacing: 0.3,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 3),
+              // Garis indikator bawah — tipis & futuristik
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                height: 2,
+                width: isActive ? 22 : 0,
+                decoration: BoxDecoration(
+                  color: kColorPrimary,
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
             ],
           ),
