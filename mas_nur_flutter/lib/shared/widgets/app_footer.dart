@@ -40,18 +40,17 @@ class AppFooter extends StatelessWidget {
         color: kColorWhite,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.07),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 4,
+            offset: const Offset(0, -1),
           ),
         ],
       ),
-      // SafeArea bawah agar tidak tertutup gesture bar
       padding: EdgeInsets.only(
-        top: 6,
-        bottom: MediaQuery.of(context).padding.bottom + 4,
-        left: 12,
-        right: 12,
+        top: 4,
+        bottom: MediaQuery.of(context).padding.bottom + 2,
+        left: 8,
+        right: 8,
       ),
       child: Row(
         children: [
@@ -101,12 +100,12 @@ class _FooterItem extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           curve: Curves.easeInOut,
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
           decoration: BoxDecoration(
             color: isActive
-                ? kColorPrimary.withValues(alpha: 0.08)
+                ? kColorPrimary.withValues(alpha: 0.07)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -114,9 +113,9 @@ class _FooterItem extends StatelessWidget {
               // Dot indikator atas (aktif)
               AnimatedContainer(
                 duration: const Duration(milliseconds: 180),
-                height: 3,
-                width: isActive ? 20 : 0,
-                margin: const EdgeInsets.only(bottom: 4),
+                height: 2,
+                width: isActive ? 16 : 0,
+                margin: const EdgeInsets.only(bottom: 3),
                 decoration: BoxDecoration(
                   color: kColorPrimary,
                   borderRadius: BorderRadius.circular(2),
@@ -124,20 +123,20 @@ class _FooterItem extends StatelessWidget {
               ),
               // Icon
               AnimatedScale(
-                scale: isActive ? 1.08 : 1.0,
+                scale: isActive ? 1.05 : 1.0,
                 duration: const Duration(milliseconds: 180),
                 child: Icon(
                   icon,
-                  size: 20,
+                  size: 18,
                   color: isActive ? kColorPrimary : kColorGrey,
                 ),
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: 2),
               // Label
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 9,
                   fontWeight:
                       isActive ? FontWeight.w600 : FontWeight.normal,
                   color: isActive ? kColorPrimary : kColorGrey,
