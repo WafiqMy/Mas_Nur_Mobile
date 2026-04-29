@@ -40,13 +40,19 @@ class AppFooter extends StatelessWidget {
         color: kColorWhite,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, -3),
+            color: Colors.black.withValues(alpha: 0.07),
+            blurRadius: 8,
+            offset: const Offset(0, -2),
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      // SafeArea bawah agar tidak tertutup gesture bar
+      padding: EdgeInsets.only(
+        top: 6,
+        bottom: MediaQuery.of(context).padding.bottom + 4,
+        left: 12,
+        right: 12,
+      ),
       child: Row(
         children: [
           _FooterItem(
@@ -91,52 +97,55 @@ class _FooterItem extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
+        behavior: HitTestBehavior.opaque,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 180),
           curve: Curves.easeInOut,
-          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
           decoration: BoxDecoration(
             color: isActive
                 ? kColorPrimary.withValues(alpha: 0.08)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AnimatedScale(
-                scale: isActive ? 1.1 : 1.0,
-                duration: const Duration(milliseconds: 200),
-                child: Icon(
-                  icon,
-                  size: 24,
-                  color: isActive ? kColorPrimary : kColorGrey,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight:
-                      isActive ? FontWeight.w600 : FontWeight.normal,
-                  color: isActive ? kColorPrimary : kColorGrey,
-                  letterSpacing: 0.2,
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 2),
+              // Dot indikator atas (aktif)
               AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 180),
                 height: 3,
-                width: isActive ? 24 : 0,
+                width: isActive ? 20 : 0,
+                margin: const EdgeInsets.only(bottom: 4),
                 decoration: BoxDecoration(
                   color: kColorPrimary,
                   borderRadius: BorderRadius.circular(2),
                 ),
+              ),
+              // Icon
+              AnimatedScale(
+                scale: isActive ? 1.08 : 1.0,
+                duration: const Duration(milliseconds: 180),
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: isActive ? kColorPrimary : kColorGrey,
+                ),
+              ),
+              const SizedBox(height: 3),
+              // Label
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight:
+                      isActive ? FontWeight.w600 : FontWeight.normal,
+                  color: isActive ? kColorPrimary : kColorGrey,
+                  letterSpacing: 0.1,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
