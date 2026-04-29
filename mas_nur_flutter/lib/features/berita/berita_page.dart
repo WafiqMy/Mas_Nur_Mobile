@@ -7,6 +7,7 @@ import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class BeritaPage extends StatefulWidget {
@@ -36,10 +37,11 @@ class _BeritaPageState extends State<BeritaPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: kColorWhite,
+        backgroundColor: Colors.transparent,
         drawer: const AppDrawer(),
-        body: Column(
-          children: [
+        body: AppGradientBackground(
+          child: Column(
+            children: [
             const AppHeader(showBackButton: true),
           Expanded(
             child: FutureBuilder<List<BeritaModel>>(
@@ -112,6 +114,7 @@ class _BeritaPageState extends State<BeritaPage> {
           ),
           const AppFooter(currentIndex: -1),
         ],
+      ),
       ),
     ),
   );

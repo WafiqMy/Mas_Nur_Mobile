@@ -7,6 +7,7 @@ import 'package:mas_nur_flutter/features/persewaan/pemesanan_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -16,9 +17,10 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kColorNavy,
+      backgroundColor: Colors.transparent,
       drawer: const AppDrawer(),
-      body: Column(
+      body: AppGradientBackground(
+        child: Column(
         children: [
           const AppHeader(),
           Expanded(
@@ -119,6 +121,7 @@ class DashboardPage extends StatelessWidget {
           ),
           const AppFooter(currentIndex: 0),
         ],
+      ),
       ),
     );
   }

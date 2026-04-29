@@ -6,6 +6,7 @@ import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class NotifikasiPage extends StatefulWidget {
@@ -35,9 +36,10 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: kColorWhite,
+        backgroundColor: Colors.transparent,
         drawer: const AppDrawer(),
-        body: Column(
+        body: AppGradientBackground(
+          child: Column(
           children: [
             const AppHeader(showBackButton: true),
             Expanded(
@@ -97,6 +99,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
             ),
             const AppFooter(currentIndex: -1),
           ],
+        ),
         ),
       ),
     );

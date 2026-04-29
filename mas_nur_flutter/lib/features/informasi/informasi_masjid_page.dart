@@ -7,6 +7,7 @@ import 'package:mas_nur_flutter/features/informasi/edit_struktur_organisasi_page
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class InformasiMasjidPage extends StatefulWidget {
@@ -52,10 +53,11 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
         }
       },
       child: Scaffold(
-        backgroundColor: kColorWhite,
+        backgroundColor: Colors.transparent,
         drawer: const AppDrawer(),
-        body: Column(
-          children: [
+        body: AppGradientBackground(
+          child: Column(
+            children: [
             // ── Header ──────────────────────────────────────────────────────
             const AppHeader(showBackButton: true),
 
@@ -134,6 +136,7 @@ class _InformasiMasjidPageState extends State<InformasiMasjidPage>
             // ── Footer ──────────────────────────────────────────────────────
             const AppFooter(currentIndex: -1),
           ],
+        ),
         ),
       ),
     );

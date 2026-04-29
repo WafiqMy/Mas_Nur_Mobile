@@ -9,6 +9,7 @@ import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
 
 class ProfilAdminPage extends StatefulWidget {
@@ -48,9 +49,10 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: kColorWhite,
+        backgroundColor: Colors.transparent,
         drawer: const AppDrawer(),
-        body: FutureBuilder<UserProfileModel?>(
+        body: AppGradientBackground(
+          child: FutureBuilder<UserProfileModel?>(
           future: _future,
           builder: (_, snapshot) {
             final profil = snapshot.data;
@@ -169,6 +171,7 @@ class _ProfilAdminPageState extends State<ProfilAdminPage> {
               ],
             );
           },
+        ),
         ),
       ),
     );

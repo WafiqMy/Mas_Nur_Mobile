@@ -4,6 +4,7 @@ import 'package:mas_nur_flutter/core/session/app_session.dart';
 import 'package:mas_nur_flutter/features/auth/konfirmasi_email_page.dart';
 import 'package:mas_nur_flutter/features/dashboard/dashboard_page.dart';
 import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
+import 'package:mas_nur_flutter/shared/widgets/app_gradient_background.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -70,10 +71,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kColorNavy,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
+      backgroundColor: Colors.transparent,
+      body: AppGradientBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: SizedBox(
             height: MediaQuery.of(context).size.height -
                 MediaQuery.of(context).padding.top,
             child: Column(
@@ -220,6 +222,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
+        ),
         ),
       ),
     );
