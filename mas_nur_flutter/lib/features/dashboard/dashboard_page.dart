@@ -8,6 +8,7 @@ import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
+import 'package:mas_nur_flutter/shared/widgets/swipe_page_shell.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -15,130 +16,130 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kColorBackground,
-      drawer: const AppDrawer(),
-      body: Column(
-        children: [
-          const AppHeader(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ── Banner selamat datang ──────────────────────────────
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-                    decoration: const BoxDecoration(gradient: kAppGradient),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Halaman Utama',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: kColorWhite,
+    return SwipePageShell(
+      currentIndex: 0,
+      child: Scaffold(
+        backgroundColor: kColorBackground,
+        drawer: const AppDrawer(),
+        body: Column(
+          children: [
+            const AppHeader(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ── Banner selamat datang ────────────────────────────
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
+                      decoration: const BoxDecoration(gradient: kAppGradient),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Halaman Utama',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: kColorWhite,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Kelola konten masjid dengan mudah',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: kColorWhite.withValues(alpha: 0.8)),
-                        ),
-                      ],
+                          const SizedBox(height: 4),
+                          Text(
+                            'Kelola konten masjid dengan mudah',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: kColorWhite.withValues(alpha: 0.8)),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  // ── Konten utama ───────────────────────────────────────
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Status Pemesanan
-                        _SectionLabel(label: 'Status Pemesanan Terbaru'),
-                        const SizedBox(height: 10),
-                        _StatusCard(
-                          nomor: '1',
-                          judul: 'Pemesanan Gedung',
-                          accentColor: kColorPrimary,
-                          atasNama: 'Atas Nama: -',
-                          onLihat: () => Navigator.pushNamed(
-                              context, PemesananPage.routeName),
-                        ),
-                        const SizedBox(height: 8),
-                        _StatusCard(
-                          nomor: '2',
-                          judul: 'Permintaan Alat',
-                          accentColor: kColorGold,
-                          atasNama: 'Atas Nama: -',
-                          onLihat: () => Navigator.pushNamed(
-                              context, PemesananPage.routeName),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // Grid Menu
-                        _SectionLabel(label: 'Kelola Fitur'),
-                        const SizedBox(height: 10),
-                        GridView.count(
-                          crossAxisCount: 2,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 0.95,
-                          children: [
-                            _MenuCard(
-                              icon: Icons.calendar_today_outlined,
-                              label: 'Acara',
-                              color: kColorPrimaryLight,
-                              onKelola: () => Navigator.pushNamed(
-                                  context, AcaraPage.routeName),
-                            ),
-                            _MenuCard(
-                              icon: Icons.mosque_outlined,
-                              label: 'Informasi Masjid',
-                              color: kColorPrimary,
-                              onKelola: () => Navigator.pushNamed(
-                                  context, InformasiMasjidPage.routeName),
-                            ),
-                            _MenuCard(
-                              icon: Icons.inventory_2_outlined,
-                              label: 'Pemesanan',
-                              color: kColorPrimaryDark,
-                              onKelola: () => Navigator.pushNamed(
-                                  context, PemesananPage.routeName),
-                            ),
-                            _MenuCard(
-                              icon: Icons.article_outlined,
-                              label: 'Berita',
-                              color: kColorPrimaryMid,
-                              onKelola: () => Navigator.pushNamed(
-                                  context, BeritaPage.routeName),
-                            ),
-                            _MenuCard(
-                              icon: Icons.restaurant_menu_outlined,
-                              label: 'Food Court',
-                              color: const Color(0xFF0288D1),
-                              onKelola: () => Navigator.pushNamed(
-                                  context, FoodCourtPage.routeName),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                      ],
+                    // ── Konten utama ─────────────────────────────────────
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _SectionLabel(label: 'Status Pemesanan Terbaru'),
+                          const SizedBox(height: 10),
+                          _StatusCard(
+                            nomor: '1',
+                            judul: 'Pemesanan Gedung',
+                            accentColor: kColorPrimary,
+                            atasNama: 'Atas Nama: -',
+                            onLihat: () => Navigator.pushNamed(
+                                context, PemesananPage.routeName),
+                          ),
+                          const SizedBox(height: 8),
+                          _StatusCard(
+                            nomor: '2',
+                            judul: 'Permintaan Alat',
+                            accentColor: kColorGold,
+                            atasNama: 'Atas Nama: -',
+                            onLihat: () => Navigator.pushNamed(
+                                context, PemesananPage.routeName),
+                          ),
+                          const SizedBox(height: 24),
+                          _SectionLabel(label: 'Kelola Fitur'),
+                          const SizedBox(height: 10),
+                          GridView.count(
+                            crossAxisCount: 2,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.95,
+                            children: [
+                              _MenuCard(
+                                icon: Icons.calendar_today_outlined,
+                                label: 'Acara',
+                                color: kColorPrimaryLight,
+                                onKelola: () => Navigator.pushNamed(
+                                    context, AcaraPage.routeName),
+                              ),
+                              _MenuCard(
+                                icon: Icons.mosque_outlined,
+                                label: 'Informasi Masjid',
+                                color: kColorPrimary,
+                                onKelola: () => Navigator.pushNamed(
+                                    context, InformasiMasjidPage.routeName),
+                              ),
+                              _MenuCard(
+                                icon: Icons.inventory_2_outlined,
+                                label: 'Pemesanan',
+                                color: kColorPrimaryDark,
+                                onKelola: () => Navigator.pushNamed(
+                                    context, PemesananPage.routeName),
+                              ),
+                              _MenuCard(
+                                icon: Icons.article_outlined,
+                                label: 'Berita',
+                                color: kColorPrimaryMid,
+                                onKelola: () => Navigator.pushNamed(
+                                    context, BeritaPage.routeName),
+                              ),
+                              _MenuCard(
+                                icon: Icons.restaurant_menu_outlined,
+                                label: 'Food Court',
+                                color: const Color(0xFF0288D1),
+                                onKelola: () => Navigator.pushNamed(
+                                    context, FoodCourtPage.routeName),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          const AppFooter(currentIndex: 0),
-        ],
+            const AppFooter(currentIndex: 0),
+          ],
+        ),
       ),
     );
   }

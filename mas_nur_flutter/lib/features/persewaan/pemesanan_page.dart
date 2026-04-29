@@ -7,6 +7,7 @@ import 'package:mas_nur_flutter/shared/theme/app_theme.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_drawer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_footer.dart';
 import 'package:mas_nur_flutter/shared/widgets/app_header.dart';
+import 'package:mas_nur_flutter/shared/widgets/swipe_page_shell.dart';
 
 class PemesananPage extends StatefulWidget {
   const PemesananPage({super.key});
@@ -34,10 +35,12 @@ class _PemesananPageState extends State<PemesananPage> {
           Navigator.pushReplacementNamed(context, DashboardPage.routeName);
         }
       },
-      child: Scaffold(
-        backgroundColor: kColorBackground,
-        drawer: const AppDrawer(),
-        body: Column(
+      child: SwipePageShell(
+        currentIndex: 2,
+        child: Scaffold(
+          backgroundColor: kColorBackground,
+          drawer: const AppDrawer(),
+          body: Column(
           children: [
             const AppHeader(),
             Expanded(
@@ -104,6 +107,7 @@ class _PemesananPageState extends State<PemesananPage> {
           const AppFooter(currentIndex: 2),
         ],
       ),
+      ),   // SwipePageShell
     ),
   );
   }
